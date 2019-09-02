@@ -120,12 +120,14 @@ class Snake
         this.snakeGroup.children[0].rotation.y += Math.sin(y);
         this.snakeGroup.children[0].rotation.z += Math.sin(z);
         
+        /*
         for(var i=1; i<this.blocks; i++)
         {
-            // this.snakeGroup.children[i].rotation.x -= Math.sin(x);
-            // this.snakeGroup.children[i].rotation.y -= Math.sin(y);
-            // this.snakeGroup.children[i].rotation.z -= Math.sin(z);
+            this.snakeGroup.children[i].rotation.x -= Math.sin(x);
+            this.snakeGroup.children[i].rotation.y -= Math.sin(y);
+            this.snakeGroup.children[i].rotation.z -= Math.sin(z);
         }
+        */
     }
 
     checkCollision()
@@ -214,17 +216,18 @@ class Snake
                 snake.move(-0.1, 0, 0);
                 break;
             
-            // caso in cui viene mangiato un uovo addx1
-            // shift
+            // shift = add 1
             case(16):
                 snake.addBlockEgg();
                 break;
             
+            // MAIUSC = add 2
             case(20):
                 snake.addBlockEgg();
                 snake.addBlockEgg();
-                break;
-            
+                break;  
+                
+            // spacebar = remove 1
             case(32):
                 snake.redRemoveBlock();
                 break;
