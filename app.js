@@ -1,4 +1,3 @@
-
 class Game
 {
     constructor()
@@ -37,7 +36,6 @@ class Game
         this.update = function dummyUpdate() {};
     }
 
-    
     addLights()
     {
         var spotLight = new THREE.SpotLight( 0xDDDDDD, 0.5);
@@ -65,9 +63,7 @@ class Game
         this.scene.add(directLight1);
         const dlh1 = new THREE.DirectionalLightHelper( directLight1 );
         this.scene.add(dlh1);
-        */
-
-        /*
+        
         const directLight2 = new THREE.DirectionalLight(0xffffff, 2);
         directLight2.castShadow = true;
         directLight2.position.set(-15.8, 5.2, 8);
@@ -75,6 +71,7 @@ class Game
         const dlh2 = new THREE.DirectionalLightHelper( directLight2 );
         this.scene.add(dlh2);
         */
+        
     }
 
     animate()
@@ -82,13 +79,9 @@ class Game
         requestAnimationFrame(this.animate.bind(this));
     
         this.stats.begin();
-        
         this.controls.update();
-
         this.stats.end();
-        
         this.update();
-
         this.render();
     }
     
@@ -123,8 +116,16 @@ var globalMap = makeMap();
 var snake;
 var food;
 
+var delta = 0;
+
+// var audioname = new Audio('audio.mp3');
+
+
 window.onload = function main()
-{
+{   
+    
+    // audioname.play();
+
     game.update = updateFunction;
     game.addLights();
 
@@ -138,24 +139,39 @@ window.onload = function main()
     snake.addBlock();
     snake.addBlock();
 
-    food = new Food(new THREE.Vector3(5,2,0));
-    food.build();
+    // food = new Food(new THREE.Vector3(10,2,2));
+    // food.build();
+
+    // min(y) = 2
+    egg = new Egg(new THREE.Vector3(0,2,10));
+    egg.build();
 
     game.animate();
+
+
 }
 
 document.onkeydown = function checkKey(e)
 {
     globalKeyPressed = (e || window.event).keyCode;
+
+    // [ E ] button adds an Egg
+    if(globalKeyPressed == 69) egg.addEgg();
 }
 
 
 // Needed by Game class
 var updateFunction = function ()
-{
+{   
+
+    snake.swag(delta);
+    // attualmente utilizzo un delta (contatore)
+    delta+=0.07;
+
     snake.update();
-    food.update();
-    
-    //globalKeyPressed = null;
-    
+    // food.update();
+    egg.update();
+
+
+
 }   

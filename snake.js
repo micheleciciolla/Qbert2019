@@ -24,10 +24,11 @@ class Snake
         this.snakeGroup.position.x = this.snakePosition.x;
         this.snakeGroup.position.y = this.snakePosition.y;
         this.snakeGroup.position.z = this.snakePosition.z;
-
+        
         this.snakeGroup.rotation.x = this.snakeRotation.x;
         this.snakeGroup.rotation.y = this.snakeRotation.y;
         this.snakeGroup.rotation.z = this.snakeRotation.z;
+        
         
         var headGeometry = new THREE.DodecahedronBufferGeometry(1);
         var headMaterial = new THREE.MeshPhongMaterial({
@@ -48,43 +49,82 @@ class Snake
     }
 
     addBlock()
-    {
-
+    {   
+        // ADD BLOCK CLASSICO
         var blockMesh = new THREE.Mesh(this.blockGeometry, this.blockMaterial);
         blockMesh.castShadow = true;
         blockMesh.receiveShadow = true;
-        blockMesh.position.z = 1 - (1.2 * this.blocks);
+        blockMesh.position.z = - (1.1 * this.blocks);
         blockMesh.name = "Snake:Tail_" + this.blocks;
 
         this.snakeGroup.add(blockMesh);
         this.blocks++;
+
     }
 
-    move(x, y, z)
-    {
+    addBlockEgg(){
 
+        // ADD BLOCK DOPO EAT
+        var materiale = new THREE.MeshBasicMaterial( { color: Math.random()*0xffff00 } );
+        var blockMesh = new THREE.Mesh(this.blockGeometry, materiale);
+        blockMesh.castShadow = true;
+        blockMesh.receiveShadow = true;
+        blockMesh.position.z = - (1.1 * this.blocks);
+        blockMesh.name = "Snake:Tail_" + this.blocks;
+
+        this.snakeGroup.add(blockMesh);
+        this.blocks++;
+
+        globalKeyPressed = null;
+        
+    }
+
+    redRemoveBlock(){
+
+        // la testa non può essere cancellata
+        if(this.blocks > 2) {
+            this.blocks--;
+            this.snakeGroup.remove(this.snakeGroup.children[this.blocks]);
+            globalKeyPressed = null;
+            // this.redAlert();
+        }
+        else this.blockMaterial.color = new THREE.Color("rgb(255, 0, 0)");
+
+    }
+
+    redAlert(){
+
+        // quando snake perde un blocco il suo corpo per un secondo è red
+
+        // TO-DO
+    }
+
+    swag(delta){
+        // genera movimento sinusoidale snake
+        for(var i=0; i<this.blocks; i++)
+        {   
+            this.snakeGroup.children[i].position.x = 0.25 * Math.cos(delta + i);
+        }
+    }
+
+    move(x, y, z){
+        
+        // testa
         this.snakeGroup.position.x += x;
         this.snakeGroup.position.y += y;
         this.snakeGroup.position.z += z;
         
+        // primo blocco
+        
         this.snakeGroup.children[0].rotation.x += Math.sin(x);
         this.snakeGroup.children[0].rotation.y += Math.sin(y);
         this.snakeGroup.children[0].rotation.z += Math.sin(z);
-
+        
         for(var i=1; i<this.blocks; i++)
         {
-            if(i%2)
-            {
-                this.snakeGroup.children[i].rotation.x -= Math.sin(x);
-                this.snakeGroup.children[i].rotation.y -= Math.sin(y);
-                this.snakeGroup.children[i].rotation.z -= Math.sin(z);
-            }
-            else
-            {
-                this.snakeGroup.children[i].rotation.x += Math.sin(x);
-                this.snakeGroup.children[i].rotation.y += Math.sin(y);
-                this.snakeGroup.children[i].rotation.z += Math.sin(z);
-            }
+            // this.snakeGroup.children[i].rotation.x -= Math.sin(x);
+            // this.snakeGroup.children[i].rotation.y -= Math.sin(y);
+            // this.snakeGroup.children[i].rotation.z -= Math.sin(z);
         }
     }
 
@@ -128,8 +168,7 @@ class Snake
 
         //console.log("faceDir: ", faceDir);
         //console.log("Group position: ", this.snakeGroup.position);
-        if(intersects.length != 0)
-        {       
+        if(intersects.length != 0){       
             console.log(intersects);
 
             for(var i=0; i<intersects.length; i++)
@@ -145,8 +184,7 @@ class Snake
         }
     }
 
-    setPosition(pos, value)
-    {
+    setPosition(pos, value){
         if(pos == "x")
             this.snakeGroup.position.x = value;
 
@@ -157,8 +195,7 @@ class Snake
             this.snakeGroup.position.z = value;
     }
 
-    update()
-    {
+    update(){
         switch(globalKeyPressed)
         {
             case(87):
@@ -176,9 +213,23 @@ class Snake
             case(68):
                 snake.move(-0.1, 0, 0);
                 break;
-
-            default:
+            
+            // caso in cui viene mangiato un uovo addx1
+            // shift
+            case(16):
+                snake.addBlockEgg();
                 break;
+            
+            case(20):
+                snake.addBlockEgg();
+                snake.addBlockEgg();
+                break;
+            
+            case(32):
+                snake.redRemoveBlock();
+                break;
+
+            
         }
         
         this.checkCollision();
