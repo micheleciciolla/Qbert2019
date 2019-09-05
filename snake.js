@@ -1,9 +1,12 @@
+var move = 1;
+
 class Snake
 {
     constructor()
     {
         this.snakeLenght = 0;
-        this.snakePosition = new THREE.Vector3(0, 2, 0);
+
+        this.snakePosition = new THREE.Vector3(0, 1, 0);
         this.snakeRotation = new THREE.Vector3(0, 0, 0);
 
         this.snakeGroup = new THREE.Group();
@@ -15,6 +18,12 @@ class Snake
             depthTest: true,
         });
         this.rayCaster = new THREE.Raycaster();
+
+        // this is a dictionary containing an history of position of head
+        this.headHistory = {};
+
+        // initially snake is oriented vs positive Z axis
+        this.snakeDirection = new THREE.Vector3(0, 0, 1); 
     }
 
     buildHead()
@@ -30,7 +39,7 @@ class Snake
         this.snakeGroup.rotation.z = this.snakeRotation.z;
         
         
-        var headGeometry = new THREE.DodecahedronBufferGeometry(1);
+        var headGeometry = new THREE.CubeGeometry(1, 1);
         var headMaterial = new THREE.MeshPhongMaterial({
             color: 0xFFFF00, 
             wireframe: false,
@@ -46,6 +55,10 @@ class Snake
         game.scene.add(this.snakeGroup);
 
         this.blocks = 1;
+        // aggiungo le prime due posizini coincidenti
+        this.headHistory[0] = this.snakePosition;
+        this.headHistory[1] = this.snakePosition;
+
     }
 
     addBlock()
@@ -54,7 +67,7 @@ class Snake
         var blockMesh = new THREE.Mesh(this.blockGeometry, this.blockMaterial);
         blockMesh.castShadow = true;
         blockMesh.receiveShadow = true;
-        blockMesh.position.z = - (1.1 * this.blocks);
+        blockMesh.position.z = - (1.2 * this.blocks);
         blockMesh.name = "Snake:Tail_" + this.blocks;
 
         this.snakeGroup.add(blockMesh);
@@ -66,10 +79,18 @@ class Snake
 
         // ADD BLOCK DOPO EAT
         var materiale = new THREE.MeshBasicMaterial( { color: Math.random()*0xffff00 } );
+        
         var blockMesh = new THREE.Mesh(this.blockGeometry, materiale);
         blockMesh.castShadow = true;
         blockMesh.receiveShadow = true;
-        blockMesh.position.z = - (1.1 * this.blocks);
+
+        // Here i understand where to put block according to direction 
+        // NB. Just of this.snakeDirection is different from 0
+
+        blockMesh.position.x = - (1.2 * this.blocks)* ( this.snakeDirection.x );
+        blockMesh.position.y = - (1.2 * this.blocks)* ( this.snakeDirection.y );
+        blockMesh.position.z = - (1.2 * this.blocks)* ( this.snakeDirection.z );
+
         blockMesh.name = "Snake:Tail_" + this.blocks;
 
         this.snakeGroup.add(blockMesh);
@@ -109,81 +130,21 @@ class Snake
 
     move(x, y, z){
         
-        // testa
+        //this.headHistory.
+
         this.snakeGroup.position.x += x;
         this.snakeGroup.position.y += y;
         this.snakeGroup.position.z += z;
-        
-        // primo blocco
-        
-        this.snakeGroup.children[0].rotation.x += Math.sin(x);
-        this.snakeGroup.children[0].rotation.y += Math.sin(y);
-        this.snakeGroup.children[0].rotation.z += Math.sin(z);
-        
+
         /*
         for(var i=1; i<this.blocks; i++)
         {
-            this.snakeGroup.children[i].rotation.x -= Math.sin(x);
-            this.snakeGroup.children[i].rotation.y -= Math.sin(y);
-            this.snakeGroup.children[i].rotation.z -= Math.sin(z);
+            this.snakeGroup.children[i].position.x = this.snakeGroup.children[i-1].position.x;
+            this.snakeGroup.children[i].position.y = this.snakeGroup.children[i-1].position.y;
+            this.snakeGroup.children[i].position.z = this.snakeGroup.children[i-1].position.z;
         }
         */
-    }
-
-    checkCollision()
-    {
-        /*
-        // Check gravity
-        var gravityDir = new THREE.Vector3(0, 0, 0);
-        gravityDir.x = this.snakeGroup.position.x;
-        gravityDir.y = -1.5;
-        gravityDir.z = this.snakeGroup.position.z;
-
-        this.rayCaster.set(this.snakeGroup.position, gravityDir);
-        var intersects = this.rayCaster.intersectObjects( game.scene.children );
         
-        if(intersects.length != 0)
-        {
-            for(var i=0; i<intersects.length; i++)
-            {
-                if( intersects[i].object.name == "Ground" &&
-                    intersects[i].distance < 1.5)
-                {
-                    this.move(0, 0.1, 0);
-                    continue;
-                }
-            }
-        }
-        else
-        {
-            if(this.snakeGroup.position.y > 2.5 && this.snakeGroup.position.y < 1.5)
-                this.move(0, -0.1, 0);
-        }
-        */
-        var faceDir = new THREE.Vector3(0, 0, 0);
-        faceDir.x = this.snakeGroup.position.x;
-        faceDir.y = this.snakeGroup.position.y;
-        faceDir.z = this.snakeGroup.position.z;
-
-        this.rayCaster.set(this.snakeGroup.position, faceDir);
-        var intersects = this.rayCaster.intersectObjects( game.scene.children );
-
-        //console.log("faceDir: ", faceDir);
-        //console.log("Group position: ", this.snakeGroup.position);
-        if(intersects.length != 0){       
-            console.log(intersects);
-
-            for(var i=0; i<intersects.length; i++)
-            {
-                if( intersects[i].object.name == "FoodGroup" )
-                {
-                    console.log("OK");
-                    //game.scene.del(game.scene.getObjectByName("FoodGroup"));
-                    this.addBlock();
-                    continue;
-                }
-            }
-        }
     }
 
     setPosition(pos, value){
@@ -197,23 +158,41 @@ class Snake
             this.snakeGroup.position.z = value;
     }
 
+    setOrientation(x, y, z) {
+
+        // used to set orientation of snake head
+        this.snakeDirection = new THREE.Vector3(x, y, z);
+    }
+
     update(){
+
         switch(globalKeyPressed)
-        {
+        {   
+            // [ W ]
             case(87):
-                snake.move(0, 0, +0.1);
+                snake.move(0, 0, +move);
+                snake.setOrientation(0,0,1);
                 break;
 
+            // [ S ] 
             case(83):
-                snake.move(0, 0, -0.1);
+                snake.move(0, 0, -move);
+                snake.setOrientation(0,0,-1);
+
                 break;
 
+            // [A]
             case(65):
-                snake.move(+0.1, 0, 0);
+                snake.move(+move, 0, 0);
+                snake.setOrientation(+1,0,0);
+
                 break;
-            
+
+            // [ D ]
             case(68):
-                snake.move(-0.1, 0, 0);
+                snake.move(-move, 0, 0);
+                snake.setOrientation(-1,0,0);
+
                 break;
             
             // shift = add 1
@@ -232,9 +211,7 @@ class Snake
                 snake.redRemoveBlock();
                 break;
 
-            
         }
         
-        this.checkCollision();
     }
 };
