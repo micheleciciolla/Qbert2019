@@ -224,7 +224,7 @@ class Snake
     addBlockEgg(){
 
     	//TEXTURE
-        var texture = new THREE.TextureLoader().load('textures/skin.PNG');
+        var texture = new THREE.TextureLoader().load('textures/skin.png');
 
         // ADD BLOCK DOPO EAT
 
