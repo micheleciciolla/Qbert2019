@@ -50,7 +50,7 @@ class Food
         
         blockMesh.rotation.x = 90 / (Math.PI/2);
         blockMesh.rotation.z = 90 / (Math.PI/2);
-        blockMesh.position.x = +1;
+        blockMesh.position.x = +10;
         blockMesh.position.y = +1;
         blockMesh.position.z = +1;
         this.group.add(blockMesh);
@@ -62,7 +62,7 @@ class Food
         
         blockMesh.rotation.x = 180 / (Math.PI/2);
         blockMesh.rotation.z = 180 / (Math.PI/2);
-        blockMesh.position.x = -1;
+        blockMesh.position.x = -10;
         blockMesh.position.y = +1;
         blockMesh.position.z = +1;
         this.group.add(blockMesh);
@@ -74,14 +74,43 @@ class Food
         game.scene.add(this.group);
     }
 
+
+
+
+
+    //TO IMPLEMENT BETTER
+    /*randomFood() {
+
+            var height = 100;
+            var width = 100;
+
+            var posX = Math.floor(Math.random() * height / 2); 
+            posX *= Math.floor(Math.random() * 2) == 1 ? 1 : -1; 
+
+            var posZ = Math.floor(Math.random() * width / 2);
+            posZ *= Math.floor(Math.random() * 2) == 1 ? 1 : -1; 
+
+
+            this.group.position.x = posX;
+            
+            this.group.position.z = posZ; 
+        }*/
+
+
+
+
+
+
+
     update()
     {
+        //GRUPPO DI OGGETTI CIBO
         var t = game.timer.getElapsedTime();
+        //food.randomFood();
+        //this.group.rotation.y = t*25/(2*Math.PI);
+        //this.group.rotation.z = t*10/(2*Math.PI);
+        //this.group.rotation.x = t*35/(2*Math.PI);
         
-        this.group.rotation.y = t*25/(2*Math.PI);
-        this.group.rotation.z = t*10/(2*Math.PI);
-        this.group.rotation.x = t*35/(2*Math.PI);
-        
-        this.group.position.y += Math.sin(25*t)/100;       
+        //this.group.position.y +=100;       
     }
 }
