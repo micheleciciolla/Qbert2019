@@ -1,3 +1,4 @@
+var loadTexture = false;
 
 class Game {
     constructor() {
@@ -235,9 +236,12 @@ window.onload = function main() {
     game.update = updateFunction;
     game.addLights();
 
-    game.createRiver(10, 0, 100, -0.4, 0);  //larghezza altezza lunghezza posY posZ
-    game.createSkyBox();
-    game.createTrees();
+    if (this.loadTexture){
+        
+        game.createRiver(10, 0, 100, -0.4, 0);  //larghezza altezza lunghezza posY posZ
+        game.createSkyBox();
+        game.createTrees();
+    }
 
     game.scene.add(globalMap);
 

@@ -228,8 +228,9 @@ class Snake
 
         // ADD BLOCK DOPO EAT
 
-        var materiale = new THREE.MeshBasicMaterial({ map: texture });
-        // var materiale = new THREE.MeshBasicMaterial( { color: Math.random()*0xffff00 } );
+        // var materiale = new THREE.MeshBasicMaterial({ map: texture });
+
+        var materiale = new THREE.MeshBasicMaterial( { color: Math.random()*0xffff00 } );
 
         var blockMesh = new THREE.Mesh(this.blockGeometry, materiale);
         blockMesh.castShadow = true;
@@ -341,7 +342,13 @@ class Snake
         */
         
         if (this.snakeGroup.children.length > 1) {
-            for (var i = this.snakeGroup.children.length - 1; i > 0; i--) {
+
+            this.snakeGroup.children[1].position.x = this.snakeGroup.children[0].position.x- x*1.1 ;
+            this.snakeGroup.children[1].position.y = this.snakeGroup.children[0].position.y- y*1.1 - 0.5 ;
+            this.snakeGroup.children[1].position.z = this.snakeGroup.children[0].position.z- z*1.1 ;
+
+            for (var i = this.snakeGroup.children.length - 1; i > 1; i--) {
+                
                 this.snakeGroup.children[i].position.x = this.snakeGroup.children[i - 1].position.x; //  - x*1.1 ;
                 this.snakeGroup.children[i].position.y = this.snakeGroup.children[i - 1].position.y; //  - y*1.1 ;
                 this.snakeGroup.children[i].position.z = this.snakeGroup.children[i - 1].position.z; //  - z*1.1 ;
