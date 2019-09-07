@@ -95,6 +95,7 @@ class Game {
     }
 
 
+    //Creazione di un oggetto immagine "albero" nel workspace
     createTrees() {
 
         var i, tree;
@@ -107,23 +108,18 @@ class Game {
                 false
         });
         for (i = 0; trees.posZRight - (i * 200) > -scr.w; i++) {
-            /* Right trees.  */
-            tree = new THREE.Sprite(treeMaterial); /* Use sprites so that
-                                 * the trees will
-                                 * always point to 
-                                 * the camera.  */
-            /* z distance between each tree is 200.  */
-            tree.position.set(trees.posXRight, trees.posYRight,
-                trees.posZRight - (i * 200));
+            //albero
+            tree = new THREE.Sprite(treeMaterial);
+            /* Use sprites so that
+             * the trees will
+             * always point to 
+             * the camera.  */
+
+            tree.position.set(trees.posXRight, trees.posYRight, trees.posZRight - (i * 400));
             tree.scale.set(trees.scaleX, trees.scaleY, 1.0);
             this.scene.add(tree);
 
-            /* Left trees.  */
-            tree = new THREE.Sprite(treeMaterial);
-            tree.position.set(-trees.posXRight, trees.posYRight,
-                trees.posZRight - (i * 200));
-            tree.scale.set(trees.scaleX, trees.scaleY, 1.0);
-            this.scene.add(tree);
+
         }
 
     }
