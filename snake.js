@@ -1,5 +1,6 @@
 var move = 0.15; // velocity of snake (used in moveHead)
 
+
 class Snake
 {
     constructor()
@@ -11,18 +12,15 @@ class Snake
         this.snakeGroup = new THREE.Group();
         this.snakeGroup.name = "SnakeGroup";
 
-        this.blockGeometry = new THREE.CubeGeometry(1, 1);
+        this.blockGeometry = new THREE.CubeGeometry(1,1);  
         this.blockMaterial = new THREE.MeshPhongMaterial({
             color: 0xAAFF55, 
             wireframe: false,
             depthTest: true,
         });
 
-        this.skinMaterial = new THREE.MeshPhongMaterial({
-            color: 0xAAFF55, 
-            wireframe: false,
-            depthTest: true,
-        });        
+
+
         this.whiteMaterial = new THREE.MeshPhongMaterial({
             color: 0xFFFFFF, 
             wireframe: false,
@@ -63,19 +61,86 @@ class Snake
         //head.rotation.set(0, -Math.PI, 0);
         this.snakeGroup.add(head);
 
-        const faceGeometryUP = new THREE.BoxGeometry(1, 0.7, 1.5);
+
+        var textureH = new THREE.TextureLoader().load('textures/skin.png');
+        this.skinMaterial = new THREE.MeshBasicMaterial({ map: textureH });
+
+        // const faceGeometryBIG = new THREE.BoxGeometry(1.5, 1.5, 1.5);       
+        const faceGeometryBIG = new THREE.CylinderGeometry(1, 1.2, 1.5, 5);
+        const faceBIG = new THREE.Mesh(faceGeometryBIG, this.skinMaterial);
+        faceBIG.castShadow = true;
+        faceBIG.receiveShadow = true;
+        faceBIG.position.set(0, -0.2, -1.2); 
+        faceBIG.rotation.set(1.55, 0, 0);
+        head.add(faceBIG);
+
+
+        const faceGeometryBIGRIGHT = new THREE.BoxGeometry(0.15, 0.7, 2);
+        const faceBIGRIGHT = new THREE.Mesh(faceGeometryBIGRIGHT, this.skinMaterial);
+        faceBIGRIGHT.castShadow = true;
+        faceBIGRIGHT.receiveShadow = true;
+        faceBIGRIGHT.position.set(0.8, -0.3, -1.2);     
+        faceBIGRIGHT.rotation.set(0, -0.7, 0);
+        head.add(faceBIGRIGHT);
+
+
+
+        const faceGeometryBIGLEFT = new THREE.BoxGeometry(0.15, 0.7, 2);
+        const faceBIGLEFT = new THREE.Mesh(faceGeometryBIGLEFT, this.skinMaterial);
+        faceBIGLEFT.castShadow = true;
+        faceBIGLEFT.receiveShadow = true;
+        faceBIGLEFT.position.set(-0.8, -0.3, -1.2);     
+        faceBIGLEFT.rotation.set(0, 0.7, 0);
+        head.add(faceBIGLEFT);
+
+
+
+
+        const faceGeometrySQUAME1 = new THREE.BoxGeometry(0.2, 0.5, 0.5);
+        const faceSQUAME1 = new THREE.Mesh(faceGeometrySQUAME1, this.redMaterial);
+        faceSQUAME1.castShadow = true;
+        faceSQUAME1.receiveShadow = true;
+        faceSQUAME1.position.set(0, 0.57, -0.85);      
+        faceSQUAME1.rotation.set(0.77, 0, 0);
+        head.add(faceSQUAME1);
+
+
+
+
+        const faceGeometrySQUAME2 = new THREE.BoxGeometry(0.2, 0.5, 0.5);
+        const faceSQUAME2 = new THREE.Mesh(faceGeometrySQUAME2, this.redMaterial);
+        faceSQUAME2.castShadow = true;
+        faceSQUAME2.receiveShadow = true;
+        faceSQUAME2.position.set(0, 0.67, -1.2);      
+        faceSQUAME2.rotation.set(0.77, 0, 0);
+        head.add(faceSQUAME2);
+
+
+
+        const faceGeometrySQUAME3 = new THREE.BoxGeometry(0.2, 0.5, 0.5);
+        const faceSQUAME3 = new THREE.Mesh(faceGeometrySQUAME3, this.redMaterial);
+        faceSQUAME3.castShadow = true;
+        faceSQUAME3.receiveShadow = true;
+        faceSQUAME3.position.set(0, 0.77, -1.55);      
+        faceSQUAME3.rotation.set(0.77, 0, 0);
+        head.add(faceSQUAME3);
+
+
+
+        const faceGeometryUP = new THREE.BoxGeometry(1, 0.4, 2.5);
         const faceUP = new THREE.Mesh(faceGeometryUP, this.skinMaterial);
         faceUP.castShadow = true;
         faceUP.receiveShadow = true;
         faceUP.position.z = -0.2;
-        faceUP.position.y = -0.5;
+        faceUP.position.y = -0.3;
         head.add(faceUP);
         
-        const faceGeometryDOWN = new THREE.BoxGeometry(1, 0.2, 1.2);
+
+        const faceGeometryDOWN = new THREE.BoxGeometry(1, 0.2, 2);
         const faceDOWN = new THREE.Mesh(faceGeometryDOWN, this.skinMaterial);
         faceDOWN.castShadow = true;
         faceDOWN.receiveShadow = true;
-        faceDOWN.position.set(0, -1, -0.25);
+        faceDOWN.position.set(0, -0.8, -0.25);
         // faceDOWN.rotation.set(0.1, 0, 0);        
         faceDOWN.rotation.set(0.5, 0, 0);
         head.add(faceDOWN);
@@ -94,6 +159,136 @@ class Snake
         toothLEFT.position.set(-0.4, 0.2, 0.5);
         faceDOWN.add(toothLEFT); 
 
+        
+        const toothGeometryRIGHT1 = new THREE.ConeGeometry( 0.05, 0.2, 32 );
+        const toothRIGHT1 = new THREE.Mesh(toothGeometryRIGHT1, this.whiteMaterial);
+        toothRIGHT1.castShadow = true;
+        toothRIGHT1.receiveShadow = true;
+        toothRIGHT1.position.set(0.4, 0.2, 0.7);
+        faceDOWN.add(toothRIGHT1);
+
+        const toothGeometryLEFT1 = new THREE.ConeGeometry( 0.05, 0.2, 32 );
+        const toothLEFT1 = new THREE.Mesh(toothGeometryLEFT1, this.whiteMaterial);
+        toothLEFT1.castShadow = true;
+        toothLEFT1.receiveShadow = true;
+        toothLEFT1.position.set(-0.4, 0.2, 0.7);
+        faceDOWN.add(toothLEFT1); 
+
+
+
+        const toothGeometryRIGHT2 = new THREE.ConeGeometry( 0.05, 0.2, 32 );
+        const toothRIGHT2 = new THREE.Mesh(toothGeometryRIGHT2, this.whiteMaterial);
+        toothRIGHT2.castShadow = true;
+        toothRIGHT2.receiveShadow = true;
+        toothRIGHT2.position.set(0.4, 0.2, 0.9);
+        faceDOWN.add(toothRIGHT2);
+
+        const toothGeometryLEFT2 = new THREE.ConeGeometry( 0.05, 0.2, 32 );
+        const toothLEFT2 = new THREE.Mesh(toothGeometryLEFT2, this.whiteMaterial);
+        toothLEFT2.castShadow = true;
+        toothLEFT2.receiveShadow = true;
+        toothLEFT2.position.set(-0.4, 0.2, 0.9);
+        faceDOWN.add(toothLEFT2); 
+
+
+        const toothGeometryRIGHT3 = new THREE.ConeGeometry( 0.05, 0.2, 32 );
+        const toothRIGHT3 = new THREE.Mesh(toothGeometryRIGHT3, this.whiteMaterial);
+        toothRIGHT3.castShadow = true;
+        toothRIGHT3.receiveShadow = true;
+        toothRIGHT3.position.set(0.2, 0.2, 0.9);
+        faceDOWN.add(toothRIGHT3);
+
+        const toothGeometryLEFT3 = new THREE.ConeGeometry( 0.05, 0.2, 32 );
+        const toothLEFT3 = new THREE.Mesh(toothGeometryLEFT3, this.whiteMaterial);
+        toothLEFT3.castShadow = true;
+        toothLEFT3.receiveShadow = true;
+        toothLEFT3.position.set(-0.2, 0.2, 0.9);
+        faceDOWN.add(toothLEFT3); 
+
+        const toothGeometryLEFTCENTRAL = new THREE.ConeGeometry( 0.05, 0.2, 32 );
+        const toothLEFTCENTRAL = new THREE.Mesh(toothGeometryLEFTCENTRAL, this.whiteMaterial);
+        toothLEFTCENTRAL.castShadow = true;
+        toothLEFTCENTRAL.receiveShadow = true;
+        toothLEFTCENTRAL.position.set(0, 0.2, 0.9);
+        faceDOWN.add(toothLEFTCENTRAL); 
+
+
+
+        const toothGeometryRIGHTUP = new THREE.ConeGeometry( 0.05, 0.2, 32 );
+        const toothRIGHTUP = new THREE.Mesh(toothGeometryRIGHTUP, this.whiteMaterial);
+        toothRIGHTUP.castShadow = true;
+        toothRIGHTUP.receiveShadow = true;
+        toothRIGHTUP.position.set(0.4, -0.3, 0.7);       
+        toothRIGHTUP.rotation.set(3.14, 0, 0);
+        faceUP.add(toothRIGHTUP);
+
+        const toothGeometryLEFTUP = new THREE.ConeGeometry( 0.05, 0.2, 32 );
+        const toothLEFTUP = new THREE.Mesh(toothGeometryLEFTUP, this.whiteMaterial);
+        toothLEFTUP.castShadow = true;
+        toothLEFTUP.receiveShadow = true;
+        toothLEFTUP.position.set(-0.4, -0.3, 0.7);     
+        toothLEFTUP.rotation.set(3.14, 0, 0);
+        faceUP.add(toothLEFTUP); 
+
+        
+        const toothGeometryRIGHTUP1 = new THREE.ConeGeometry( 0.05, 0.2, 32 );
+        const toothRIGHTUP1 = new THREE.Mesh(toothGeometryRIGHTUP1, this.whiteMaterial);
+        toothRIGHTUP1.castShadow = true;
+        toothRIGHTUP1.receiveShadow = true;
+        toothRIGHTUP1.position.set(0.4, -0.3, 0.9);     
+        toothRIGHTUP1.rotation.set(3.14, 0, 0);
+        faceUP.add(toothRIGHTUP1);
+
+        const toothGeometryLEFTUP1 = new THREE.ConeGeometry( 0.05, 0.2, 32 );
+        const toothLEFTUP1 = new THREE.Mesh(toothGeometryLEFTUP1, this.whiteMaterial);
+        toothLEFTUP1.castShadow = true;
+        toothLEFTUP1.receiveShadow = true;
+        toothLEFTUP1.position.set(-0.4, -0.3, 0.9);     
+        toothLEFTUP1.rotation.set(3.14, 0, 0);
+        faceUP.add(toothLEFTUP1); 
+
+
+
+        const toothGeometryRIGHTUP2 = new THREE.ConeGeometry( 0.05, 0.2, 32 );
+        const toothRIGHTUP2 = new THREE.Mesh(toothGeometryRIGHTUP2, this.whiteMaterial);
+        toothRIGHTUP2.castShadow = true;
+        toothRIGHTUP2.receiveShadow = true;
+        toothRIGHTUP2.position.set(0.4, -0.3, 1.1);     
+        toothRIGHTUP2.rotation.set(3.14, 0, 0);
+        faceUP.add(toothRIGHTUP2);
+
+        const toothGeometryLEFTUP2 = new THREE.ConeGeometry( 0.05, 0.2, 32 );
+        const toothLEFTUP2 = new THREE.Mesh(toothGeometryLEFTUP2, this.whiteMaterial);
+        toothLEFTUP2.castShadow = true;
+        toothLEFTUP2.receiveShadow = true;
+        toothLEFTUP2.position.set(-0.4, -0.3, 1.1);     
+        toothLEFTUP2.rotation.set(3.14, 0, 0);
+        faceUP.add(toothLEFTUP2); 
+
+
+        const toothGeometryRIGHTUP3 = new THREE.ConeGeometry( 0.05, 0.2, 32 );
+        const toothRIGHTUP3 = new THREE.Mesh(toothGeometryRIGHTUP3, this.whiteMaterial);
+        toothRIGHTUP3.castShadow = true;
+        toothRIGHTUP3.receiveShadow = true;
+        toothRIGHTUP3.position.set(0.2, -0.3, 1.1);     
+        toothRIGHTUP3.rotation.set(3.14, 0, 0);
+        faceUP.add(toothRIGHTUP3);
+
+        const toothGeometryLEFTUP3 = new THREE.ConeGeometry( 0.05, 0.2, 32 );
+        const toothLEFTUP3 = new THREE.Mesh(toothGeometryLEFTUP3, this.whiteMaterial);
+        toothLEFTUP3.castShadow = true;
+        toothLEFTUP3.receiveShadow = true;
+        toothLEFTUP3.position.set(-0.2, -0.3, 1.1);     
+        toothLEFTUP3.rotation.set(3.14, 0, 0);
+        faceUP.add(toothLEFTUP3); 
+
+        const toothGeometryLEFTUPCENTRAL = new THREE.ConeGeometry( 0.05, 0.2, 32 );
+        const toothLEFTUPCENTRAL = new THREE.Mesh(toothGeometryLEFTUPCENTRAL, this.whiteMaterial);
+        toothLEFTUPCENTRAL.castShadow = true;
+        toothLEFTUPCENTRAL.receiveShadow = true;
+        toothLEFTUPCENTRAL.position.set(0, -0.3, 1.1);     
+        toothLEFTUPCENTRAL.rotation.set(3.14, 0, 0);
+        faceUP.add(toothLEFTUPCENTRAL); 
         /*          
         const tongueGeometry = new THREE.SphereGeometry(0.5,3,6,1.2,0.8,3,2.2);
         const tongue = new THREE.Mesh(tongueGeometry, this.redMaterial);
@@ -122,19 +317,19 @@ class Snake
         head.add(tongue);
         */
 
-        const eyeGeometryRIGHT = new THREE.SphereGeometry(0.2,0.2,0.2);
+        const eyeGeometryRIGHT = new THREE.SphereGeometry(0.15,0.15,0.15);
         const eyeRIGHT = new THREE.Mesh(eyeGeometryRIGHT, this.whiteMaterial);
         eyeRIGHT.castShadow = true;
         eyeRIGHT.receiveShadow = true;
-        eyeRIGHT.position.set(0.5, -0.45, 0.15);
+        eyeRIGHT.position.set(0.5, 0.2, -0.45);
         eyeRIGHT.rotation.set(1.65, 0, 0);
         head.add(eyeRIGHT);
 
-        const eyeGeometryLEFT = new THREE.SphereGeometry(0.2,0.2,0.2);
+        const eyeGeometryLEFT = new THREE.SphereGeometry(0.15,0.15,0.15);
         const eyeLEFT = new THREE.Mesh(eyeGeometryLEFT, this.whiteMaterial);
         eyeLEFT.castShadow = true;
         eyeLEFT.receiveShadow = true;
-        eyeLEFT.position.set(-0.5, -0.45, 0.15);
+        eyeLEFT.position.set(-0.5, 0.2, -0.45);
         eyeLEFT.rotation.set(1.65, 0, 0);
         head.add(eyeLEFT);  
 
@@ -142,21 +337,30 @@ class Snake
         const pupilRIGHT = new THREE.Mesh(pupilGeometryRIGHT, this.blackMaterial);
         pupilRIGHT.castShadow = true;
         pupilRIGHT.receiveShadow = true;
-        pupilRIGHT.position.set(0.18, 0, 0);
+        pupilRIGHT.position.set(0.0, 0.15, 0);
         eyeRIGHT.add(pupilRIGHT);
 
         const pupilGeometryLEFT = new THREE.SphereGeometry(0.05,0.05,0.05);
         const pupilLEFT = new THREE.Mesh(pupilGeometryLEFT, this.blackMaterial);
         pupilLEFT.castShadow = true;
         pupilLEFT.receiveShadow = true;
-        pupilLEFT.position.set(-0.18, 0, 0);
+        pupilLEFT.position.set(0.0, 0.15, 0);
         eyeLEFT.add(pupilLEFT); 
+
+
+        const noseGeometryBIG = new THREE.BoxGeometry(0.4, 0.3, 2);
+        const noseBIG = new THREE.Mesh(noseGeometryBIG, this.skinMaterial);
+        noseBIG.castShadow = true;
+        noseBIG.receiveShadow = true;
+        noseBIG.position.set(0, -0.1, -0.2);
+        head.add(noseBIG);
+
 
         const noseGeometryRIGHT = new THREE.CylinderGeometry(0.07, 0.07, 0.2, 8);
         const nosefaceRIGHT = new THREE.Mesh(noseGeometryRIGHT, this.blackMaterial);
         nosefaceRIGHT.castShadow = true;
         nosefaceRIGHT.receiveShadow = true;
-        nosefaceRIGHT.position.set(0.15, -0.45, 0.5);
+        nosefaceRIGHT.position.set(0.15, -0.2, 1);
         nosefaceRIGHT.rotation.set(1.65, 0, 0);
         head.add(nosefaceRIGHT);
 
@@ -164,44 +368,9 @@ class Snake
         const nosefaceLEFT = new THREE.Mesh(noseGeometryLEFT, this.blackMaterial);
         nosefaceLEFT.castShadow = true;
         nosefaceLEFT.receiveShadow = true;
-        nosefaceLEFT.position.set(-0.15, -0.45, 0.5);
+        nosefaceLEFT.position.set(-0.15, -0.2, 1);
         nosefaceLEFT.rotation.set(1.65, 0, 0);
         head.add(nosefaceLEFT);  
-
-/*         
-        const woolGeometry = new THREE.BoxGeometry(0.84, 0.46, 0.9);
-        const wool = new THREE.Mesh(woolGeometry, this.woolMaterial);
-        wool.position.set(0, 0.12, 0.07);
-        head.add(wool);
-        
-        const rightEyeGeometry = new THREE.CylinderGeometry(0.08, 0.1, 0.06, 6);
-        const rightEye = new THREE.Mesh(rightEyeGeometry, this.darkMaterial);
-        rightEye.castShadow = true;
-        rightEye.receiveShadow = true;
-        rightEye.position.set(0.35, -0.48, 0.33);
-        rightEye.rotation.set(0, 0, 0);
-        head.add(rightEye);
-        
-        const leftEye = rightEye.clone();
-        leftEye.position.x = -rightEye.position.x;
-        leftEye.rotation.z = -rightEye.rotation.z;
-        head.add(leftEye);
-        
-        const rightEarGeometry = new THREE.BoxGeometry(0.12, 0.5, 0.3);
-        rightEarGeometry.translate(0, -0.25, 0);
-        this.rightEar = new THREE.Mesh(rightEarGeometry, this.skinMaterial);
-        this.rightEar.castShadow = true;
-        this.rightEar.receiveShadow = true;
-        this.rightEar.position.set(0.35, -0.12, -0.07);
-        this.rightEar.rotation.set(0,0,0);
-        head.add(this.rightEar);
-        
-        this.leftEar = this.rightEar.clone();
-        this.leftEar.position.x = -this.rightEar.position.x;
-        this.leftEar.rotation.z = -this.rightEar.rotation.z;
-        head.add(this.leftEar);
- */
-
         game.scene.add(this.snakeGroup);
         this.blocks = 1;
     }
@@ -228,9 +397,8 @@ class Snake
 
         // ADD BLOCK DOPO EAT
 
-        // var materiale = new THREE.MeshBasicMaterial({ map: texture });
-
-        var materiale = new THREE.MeshBasicMaterial( { color: Math.random()*0xffff00 } );
+        var materiale = new THREE.MeshBasicMaterial({ map: texture });
+        // var materiale = new THREE.MeshBasicMaterial( { color: Math.random()*0xffff00 } );
 
         var blockMesh = new THREE.Mesh(this.blockGeometry, materiale);
         blockMesh.castShadow = true;
@@ -323,10 +491,8 @@ class Snake
     moveHead(x, y, z){
         /*
             Impartisce i comandi alla testa
-            Aggiunto per pulizia e per usi futuri (if WallHit then goRight)
-            
+            Aggiunto per pulizia e per usi futuri (if WallHit then goRight)  
         */
-
         this.snakeGroup.children[0].position.z += z
         this.snakeGroup.children[0].position.y += y
         this.snakeGroup.children[0].position.x += x
@@ -335,29 +501,31 @@ class Snake
     updateBody(x,y,z) {
         /*
             Questo metodo riceve in input le informazione relative alle direzione del serpente
-            potrebbero essere utili per sistema la spostamento del corpo
-
-            la parte commentata al lato è un prototipo per sistema lo spostamento del corpo
-            se viene decommentata da' l' idea
+            potrebbero essere utili per sistema la spostamento del corpo           
         */
         
         if (this.snakeGroup.children.length > 1) {
 
-            this.snakeGroup.children[1].position.x = this.snakeGroup.children[0].position.x- x*1.1 ;
-            this.snakeGroup.children[1].position.y = this.snakeGroup.children[0].position.y- y*1.1 - 0.5 ;
-            this.snakeGroup.children[1].position.z = this.snakeGroup.children[0].position.z- z*1.1 ;
+            this.snakeGroup.children[1].visible = false;
+
+            this.snakeGroup.children[1].position.x = this.snakeGroup.children[0].position.x ;
+            this.snakeGroup.children[1].position.y = this.snakeGroup.children[0].position.y ;
+            this.snakeGroup.children[1].position.z = this.snakeGroup.children[0].position.z ;
 
             for (var i = this.snakeGroup.children.length - 1; i > 1; i--) {
                 
-                this.snakeGroup.children[i].position.x = this.snakeGroup.children[i - 1].position.x; //  - x*1.1 ;
-                this.snakeGroup.children[i].position.y = this.snakeGroup.children[i - 1].position.y; //  - y*1.1 ;
-                this.snakeGroup.children[i].position.z = this.snakeGroup.children[i - 1].position.z; //  - z*1.1 ;
-                ;
+                this.snakeGroup.children[i].position.x = this.snakeGroup.children[i - 1].position.x - x*1.1 ;  //per garantire che ogni cubo si veda
+                this.snakeGroup.children[i].position.y = this.snakeGroup.children[i - 1].position.y - y*1.1 ;
+                this.snakeGroup.children[i].position.z = this.snakeGroup.children[i - 1].position.z - z*1.1 ;
+                
             }
         }
     }
 
     move() {
+
+
+       
         
         switch (globalKeyPressed) {
 
@@ -370,40 +538,44 @@ class Snake
 
             // [ Z ]
             case (90):
+                
                 snake.moveHead(0, +move, 0);
                 snake.setOrientation(0, +1, 0);
                 this.updateBody(0, +1, 0);
-
                 break;
 
             // [ X ]
             case (88):
+                
                 snake.moveHead(0, -move, 0);
                 snake.setOrientation(0, -1, 0);
                 this.updateBody(0, -1, 0);
                 break;
+
             // [ W ]
             case (87):
+                
                 snake.moveHead(0, 0, +move);
                 snake.setOrientation(0, 0, 1);
                 this.updateBody(0, 0, 1);
-
                 break;
 
             // [ S ] 
             case (83):
+            
                 snake.moveHead(0, 0, -move);
                 snake.setOrientation(0, 0, -1);
+                
                 this.updateBody(0, 0, -1);
 
                 break;
 
             // [ A ]
             case (65):
+           
                 snake.moveHead(+move, 0, 0);
                 snake.setOrientation(+1, 0, 0);
                 this.updateBody(+1, 0, 0);
-
                 break;
 
             // [ D ]
@@ -411,7 +583,6 @@ class Snake
                 snake.moveHead(-move, 0, 0);
                 snake.setOrientation(-1, 0, 0);
                 this.updateBody(-1, 0, 0);
-
                 break;
 
             // shift = add 1

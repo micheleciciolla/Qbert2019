@@ -1,4 +1,3 @@
-var loadTexture = false;
 
 class Game {
     constructor() {
@@ -76,6 +75,7 @@ class Game {
         */
     }
 
+
     /* Creates river.  */
     createRiver(dimX, dimY, dimZ, posY, posZ) {
 
@@ -83,7 +83,7 @@ class Game {
 
 
         lRiverGeometry = new THREE.BoxGeometry(dimX, dimY, dimZ);
-        lRiverTex = applyTex("textures/water512.jpg", 4, 8);
+        lRiverTex = applyTex("textures/water.jpg", 4, 8);
 
         lRiverMaterial = new THREE.MeshBasicMaterial({ map: lRiverTex });
         lRiver = new THREE.Mesh(lRiverGeometry, lRiverMaterial);
@@ -96,31 +96,32 @@ class Game {
     }
 
 
+
     //Creazione di un oggetto immagine "albero" nel workspace
-    createTrees() {
+    createTrees()
+    {
 
-        var i, tree;
-        var treeTexture = THREE.ImageUtils.loadTexture("textures/tree.png");
+    var i, tree;
+    var treeTexture = THREE.ImageUtils.loadTexture("textures/tree.png");
 
 
-        var treeMaterial = new THREE.SpriteMaterial({
-            map: treeTexture,
-            useScreenCoordinates:
-                false
-        });
-        for (i = 0; trees.posZRight - (i * 200) > -scr.w; i++) {
+    var treeMaterial = new THREE.SpriteMaterial ({ map: treeTexture, 
+                               useScreenCoordinates: 
+                               false });
+        for (i = 0; trees.posZRight - (i * 200) > -scr.w; i++)
+        {
             //albero
-            tree = new THREE.Sprite(treeMaterial);
-            /* Use sprites so that
-             * the trees will
-             * always point to 
-             * the camera.  */
+            tree = new THREE.Sprite (treeMaterial); 
+                                /* Use sprites so that
+                                 * the trees will
+                                 * always point to 
+                                 * the camera.  */
+            
+                    tree.position.set (trees.posXRight , trees.posYRight,trees.posZRight - (i * 400));
+                    tree.scale.set (trees.scaleX, trees.scaleY, 1.0);
+                    this.scene.add (tree);
 
-            tree.position.set(trees.posXRight, trees.posYRight, trees.posZRight - (i * 400));
-            tree.scale.set(trees.scaleX, trees.scaleY, 1.0);
-            this.scene.add(tree);
-
-
+            
         }
 
     }
@@ -235,13 +236,11 @@ var scr = /* Screen dimensions.  */
 window.onload = function main() {
     game.update = updateFunction;
     game.addLights();
+    
 
-    if (this.loadTexture){
-        
-        game.createRiver(10, 0, 100, -0.4, 0);  //larghezza altezza lunghezza posY posZ
-        game.createSkyBox();
-        game.createTrees();
-    }
+    game.createRiver(10, 0, 100, -0.4, 0);  //larghezza altezza lunghezza posY posZ
+    game.createSkyBox();
+    game.createTrees();
 
     game.scene.add(globalMap);
 
