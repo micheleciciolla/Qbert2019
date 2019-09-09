@@ -272,7 +272,7 @@ var updateFunction = function () {
     egg.update();
     duck.update();
 
-    if(snake.isDead == true) location.reload(); 
+    if(snake.isDead == true){ location.reload(); break;}
 
     // globalKeyPressed = null;
 
