@@ -1,5 +1,5 @@
-// flaviuzzo se lo ritogli ti meno il corpo!
-var textureAttive = true;
+// flaviuzzo se lo ritogli ti meno le mani!
+var textureAttive = false;
 
 class Game {
     constructor() {
@@ -9,6 +9,7 @@ class Game {
 
         this.scene = new THREE.Scene();
         this.scene.background = new THREE.Color(0x00);    // Dark black background
+
 
         this.camera = new THREE.PerspectiveCamera(75, this.width / this.height, 0.1, 200);
         this.camera.lookAt(this.scene.position);
@@ -94,29 +95,29 @@ class Game {
     }
 
     //Creazione di un oggetto immagine "albero" nel workspace
-    createTrees()
-    {
+    createTrees() {
 
-    var i, tree;
-    var treeTexture = THREE.ImageUtils.loadTexture("textures/tree.png");
+        var i, tree;
+        var treeTexture = THREE.ImageUtils.loadTexture("textures/tree.png");
 
-    var treeMaterial = new THREE.SpriteMaterial ({ map: treeTexture, 
-                               useScreenCoordinates: 
-                               false });
-        for (i = 0; trees.posZRight - (i * 200) > -scr.w; i++)
-        {
+        var treeMaterial = new THREE.SpriteMaterial({
+            map: treeTexture,
+            useScreenCoordinates:
+                false
+        });
+        for (i = 0; trees.posZRight - (i * 200) > -scr.w; i++) {
             //albero
-            tree = new THREE.Sprite (treeMaterial); 
-                                /* Use sprites so that
-                                 * the trees will
-                                 * always point to 
-                                 * the camera.  */
-            
-                    tree.position.set (trees.posXRight , trees.posYRight,trees.posZRight - (i * 400));
-                    tree.scale.set (trees.scaleX, trees.scaleY, 1.0);
-                    this.scene.add (tree);
+            tree = new THREE.Sprite(treeMaterial);
+            /* Use sprites so that
+             * the trees will
+             * always point to 
+             * the camera.  */
 
-            
+            tree.position.set(trees.posXRight, trees.posYRight, trees.posZRight - (i * 400));
+            tree.scale.set(trees.scaleX, trees.scaleY, 1.0);
+            this.scene.add(tree);
+
+
         }
 
     }
@@ -150,6 +151,40 @@ class Game {
         sky = new THREE.Mesh(new THREE.BoxGeometry(4096, 4096, 4096),
             skyMaterial);
         this.scene.add(sky);
+
+    }
+
+    addText(){
+        /* 
+            Function to add text in the scene 
+        */
+        var loader = new THREE.FontLoader();
+        loader.load( 'js/helvetiker_regular.typeface.json', function ( font ){
+
+            console.log("textiniziale");
+
+            var text = new THREE.TextGeometry( 'ZetaSnake!', { 
+
+                font: font,
+                size: 80,
+                height: 5,
+                curveSegments: 12,
+                bevelEnabled: true,
+                bevelThickness: 10,
+                bevelSize: 8,
+                bevelOffset: 0,
+                bevelSegments: 5,
+                position: (12,12,12)
+                
+            } );
+
+            scene.add(text);
+            console.log("textfinale");
+
+
+        } );
+
+        
 
     }
 
@@ -220,14 +255,17 @@ window.onload = function main() {
 
     game.update = updateFunction;
     game.addLights();
-    
-    if(textureAttive){
+
+    if (textureAttive) {
         game.createRiver(10, 0, 100, -0.4, 0);  //larghezza altezza lunghezza posY posZ
         game.createSkyBox();
         game.createTrees();
+
     }
 
     game.scene.add(globalMap);
+
+    game.addText();
 
     snake = new Snake();
     snake.buildHead();
@@ -264,6 +302,7 @@ document.onkeydown = function checkKey(e) {
 
 // Needed by Game class
 var updateFunction = function () {
+
     // snake.swag(delta);
     delta += 0.7;
 
@@ -272,7 +311,8 @@ var updateFunction = function () {
     egg.update();
     duck.update();
 
-    if(snake.isDead == true) location.reload(); 
+    // TODO
+    // if (snake.isDead == true) location.reload();
 
     // globalKeyPressed = null;
 

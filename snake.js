@@ -422,9 +422,23 @@ class Snake {
     }
 
     swag(delta) {
-        // genera movimento sinusoidale snake
+
+        /* 
+            I blocchi devono oscillare in base alla direzione di snake (al momento va in conflitto con updateBody)
+        */
+       
         for (var i = 1; i < this.blocks; i++) {
-            this.snakeGroup.children[i].rotation.z = 0.004 * Math.cos(delta + i);
+
+            if (this.isEqual(this.snakeDirection, [0, 0, 1]) || this.isEqual(this.snakeDirection, [0, 0, -1]))
+                this.snakeGroup.children[i].position.x = Math.cos(delta / 7 + i) / 8;
+
+            if (this.isEqual(this.snakeDirection, [0, 1, 0]) || this.isEqual(this.snakeDirection, [0, -1, 0]))
+                this.snakeGroup.children[i].position.y = Math.cos(delta / 7 + i) / 8;
+
+            if (this.isEqual(this.snakeDirection, [1, 0, 0]) || this.isEqual(this.snakeDirection, [1, 0, 0]))
+                this.snakeGroup.children[i].position.z = Math.cos(delta / 7 + i) / 8;
+            
+
         }
     }
 
@@ -499,7 +513,7 @@ class Snake {
         }
     }
 
-    equal(current, next) {
+    isEqual(current, next) {
 
         /*
             metodo che confronta due oggetti Three.Vector
@@ -526,7 +540,7 @@ class Snake {
             // [ Z ]
             case (90):
 
-                if (snake.equal(this.snakeDirection, [0, -1, 0])) {
+                if (snake.isEqual(this.snakeDirection, [0, -1, 0])) {
                     console.log("Game Over");
                     this.isDead = true;
                     break;
@@ -540,7 +554,7 @@ class Snake {
             // [ X ]
             case (88):
 
-                if (snake.equal(this.snakeDirection, [0, 1, 0])) {
+                if (snake.isEqual(this.snakeDirection, [0, 1, 0])) {
                     console.log("Game Over");
                     this.isDead = true;
                     break;
@@ -554,7 +568,7 @@ class Snake {
 
             // [ W ]
             case (87):
-                if (snake.equal(this.snakeDirection, [0, 0, -1])) {
+                if (snake.isEqual(this.snakeDirection, [0, 0, -1])) {
                     console.log("Game Over");
                     this.isDead = true;
                     break;
@@ -566,7 +580,7 @@ class Snake {
 
             // [ S ] 
             case (83):
-                if (snake.equal(this.snakeDirection, [0, 0, 1])) {
+                if (snake.isEqual(this.snakeDirection, [0, 0, 1])) {
                     console.log("Game Over");
                     this.isDead = true;
                     break;
@@ -578,7 +592,7 @@ class Snake {
 
             // [ A ]
             case (65):
-                if (snake.equal(this.snakeDirection, [-1, 0, 0])) {
+                if (snake.isEqual(this.snakeDirection, [-1, 0, 0])) {
                     console.log("Game Over");
                     this.isDead = true;
                     break;
@@ -590,7 +604,7 @@ class Snake {
 
             // [ D ]
             case (68):
-                if (snake.equal(this.snakeDirection, [1, 0, 0])) {
+                if (snake.isEqual(this.snakeDirection, [1, 0, 0])) {
                     console.log("Game Over");
                     this.isDead = true;
                     break;
