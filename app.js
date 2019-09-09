@@ -1,5 +1,5 @@
 // flaviuzzo se lo ritogli ti meno il corpo!
-var textureAttive = false;
+var textureAttive = true;
 
 class Game {
     constructor() {
@@ -232,9 +232,10 @@ window.onload = function main() {
 
     snake = new Snake();
     snake.buildHead();
-    snake.addBlock();
-    snake.addBlock();
-    snake.addBlock();
+
+    snake.addBlockEgg();
+    snake.addBlockEgg();
+    snake.addBlockEgg();
 
     egg = new Egg(new THREE.Vector3(0, 2, 10));
     egg.build();

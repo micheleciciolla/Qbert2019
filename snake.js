@@ -343,13 +343,14 @@ class Snake {
 
     addBlock() {
 
+        // not used anymore
+
         //TEXTURE
         var texture = new THREE.TextureLoader().load('textures/skin.png');
 
-        // ADD BLOCK DOPO EAT
         var materiale = new THREE.MeshBasicMaterial({ map: texture });
-
         var blockMesh = new THREE.Mesh(this.blockGeometry, materiale);
+
         blockMesh.castShadow = true;
         blockMesh.receiveShadow = true;
         blockMesh.position.z = - (1.1 * this.blocks);
@@ -366,10 +367,8 @@ class Snake {
         //TEXTURE
         var texture = new THREE.TextureLoader().load('textures/skin.png');
 
-        // ADD BLOCK DOPO EAT
-
         var materiale = new THREE.MeshBasicMaterial({ map: texture });
-        if(game.textureAttive) materiale = new THREE.MeshBasicMaterial( { color: Math.random()*0xffff00 } );
+        if(textureAttive) materiale = new THREE.MeshBasicMaterial( { color: Math.random()*0xffff00 } );
 
         var blockMesh = new THREE.Mesh(this.blockGeometry, materiale);
         blockMesh.castShadow = true;
@@ -381,9 +380,9 @@ class Snake {
             cosi poi quando ci si muove la testa li richiama tutti a se
         */
 
-        var farawayinthegalaxy = 1;
+        var farawayinthegalaxy = 1; // not used anymore
 
-        console.log(this.blocks); // usato per vedere se aggiorna bene il numero di blocchi sulla console
+        console.log(this.blocks);
         var lastNode = Number(this.blocks);
 
         blockMesh.position.x = this.snakeGroup.children[lastNode-1].position.x - this.snakeDirection.x*1.1;
@@ -480,7 +479,7 @@ class Snake {
 
         if (this.snakeGroup.children.length > 1) {
 
-            this.snakeGroup.children[1].visible = false;
+            this.snakeGroup.children[1].visible = false; // BUG GRAFICO
 
             this.snakeGroup.children[1].position.x = this.snakeGroup.children[0].position.x;
             this.snakeGroup.children[1].position.y = this.snakeGroup.children[0].position.y;
