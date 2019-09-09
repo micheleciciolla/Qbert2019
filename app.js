@@ -1,5 +1,5 @@
 // flaviuzzo se lo ritogli ti meno il corpo!
-var textureAttive = false;
+var textureAttive = true;
 
 class Game {
     constructor() {
