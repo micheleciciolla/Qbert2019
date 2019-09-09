@@ -368,7 +368,7 @@ class Snake {
         var texture = new THREE.TextureLoader().load('textures/skin.png');
 
         var materiale = new THREE.MeshBasicMaterial({ map: texture });
-        if(textureAttive) materiale = new THREE.MeshBasicMaterial( { color: Math.random()*0xffff00 } );
+        if(!textureAttive) materiale = new THREE.MeshBasicMaterial( { color: Math.random()*0xffff00 } );
 
         var blockMesh = new THREE.Mesh(this.blockGeometry, materiale);
         blockMesh.castShadow = true;
