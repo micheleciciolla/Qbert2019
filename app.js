@@ -1,12 +1,15 @@
+// flaviuzzo se lo ritogli ti meno il corpo!
+var textureAttive = false;
 
 class Game {
     constructor() {
+
+
         this.width = window.innerWidth;
         this.height = window.innerHeight;
 
         this.scene = new THREE.Scene();
         this.scene.background = new THREE.Color(0x00);    // Dark black background
-
 
         this.camera = new THREE.PerspectiveCamera(75, this.width / this.height, 0.1, 200);
         this.camera.lookAt(this.scene.position);
@@ -34,8 +37,6 @@ class Game {
 
         this.update = function dummyUpdate() { };
     }
-
-
 
     addLights() {
         var spotLight = new THREE.SpotLight(0xDDDDDD, 0.5);
@@ -75,12 +76,10 @@ class Game {
         */
     }
 
-
     /* Creates river.  */
     createRiver(dimX, dimY, dimZ, posY, posZ) {
 
         var lRiver, lRiverGeometry, lRiverMaterial, lRiverTex;
-
 
         lRiverGeometry = new THREE.BoxGeometry(dimX, dimY, dimZ);
         lRiverTex = applyTex("textures/water.jpg", 4, 8);
@@ -94,8 +93,6 @@ class Game {
         this.scene.add(lRiver);
 
     }
-
-
 
     //Creazione di un oggetto immagine "albero" nel workspace
     createTrees()
@@ -125,7 +122,6 @@ class Game {
         }
 
     }
-
 
     /* Function that creates the skybox with 512*512 size pictures.  */
     createSkyBox() {
@@ -158,13 +154,6 @@ class Game {
         this.scene.add(sky);
 
     }
-
-
-
-
-
-
-
 
     animate() {
         requestAnimationFrame(this.animate.bind(this));
@@ -229,23 +218,23 @@ var scr = /* Screen dimensions.  */
 }
 //////////////////////////
 
-
-
-
-
 window.onload = function main() {
     game.update = updateFunction;
     game.addLights();
     
-
-    game.createRiver(10, 0, 100, -0.4, 0);  //larghezza altezza lunghezza posY posZ
-    game.createSkyBox();
-    game.createTrees();
+    if(textureAttive){
+        game.createRiver(10, 0, 100, -0.4, 0);  //larghezza altezza lunghezza posY posZ
+        game.createSkyBox();
+        game.createTrees();
+    }
 
     game.scene.add(globalMap);
 
     snake = new Snake();
     snake.buildHead();
+    snake.addBlock();
+    snake.addBlock();
+    snake.addBlock();
 
     egg = new Egg(new THREE.Vector3(0, 2, 10));
     egg.build();
@@ -253,11 +242,13 @@ window.onload = function main() {
     duck = new Duck(new THREE.Vector3(0, 2, 20));
     duck.build();
 
+    /*
 
-    /*food = new Food(new THREE.Vector3(5,2,0));
+    food = new Food(new THREE.Vector3(5,2,0));
     food.build();
-    //food.randomFood(); */
+    food.randomFood(); 
 
+    */
     game.animate();
 }
 
@@ -270,7 +261,6 @@ document.onkeydown = function checkKey(e) {
     if (globalKeyPressed == 82) duck.addDuck();
 
 }
-
 
 // Needed by Game class
 var updateFunction = function () {
