@@ -4,7 +4,6 @@ var textureAttive = true;
 class Game {
     constructor() {
 
-
         this.width = window.innerWidth;
         this.height = window.innerHeight;
 
@@ -100,7 +99,6 @@ class Game {
 
     var i, tree;
     var treeTexture = THREE.ImageUtils.loadTexture("textures/tree.png");
-
 
     var treeMaterial = new THREE.SpriteMaterial ({ map: treeTexture, 
                                useScreenCoordinates: 
@@ -219,6 +217,7 @@ var scr = /* Screen dimensions.  */
 //////////////////////////
 
 window.onload = function main() {
+
     game.update = updateFunction;
     game.addLights();
     
@@ -272,6 +271,8 @@ var updateFunction = function () {
     //food.update();
     egg.update();
     duck.update();
+
+    if(snake.isDead == true) location.reload(); 
 
     // globalKeyPressed = null;
 

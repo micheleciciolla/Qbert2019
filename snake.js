@@ -1,6 +1,9 @@
 var move = 0.15; // velocity of snake (used in moveHead)
 class Snake {
     constructor() {
+
+        this.isDead = false;
+
         this.snakeLenght = 0;
         this.snakePosition = new THREE.Vector3(0, 2, 0);
         this.snakeRotation = new THREE.Vector3(0, 0, 0);
@@ -56,6 +59,8 @@ class Snake {
 
         var textureH = new THREE.TextureLoader().load('textures/skin.png');
         this.skinMaterial = new THREE.MeshBasicMaterial({ map: textureH });
+        if (!textureAttive) this.skinMaterial = new THREE.MeshBasicMaterial({ color: Math.random() * 0xffff00 });
+
 
         // const faceGeometryBIG = new THREE.BoxGeometry(1.5, 1.5, 1.5);       
         const faceGeometryBIG = new THREE.CylinderGeometry(1, 1.2, 1.5, 5);
@@ -368,7 +373,7 @@ class Snake {
         var texture = new THREE.TextureLoader().load('textures/skin.png');
 
         var materiale = new THREE.MeshBasicMaterial({ map: texture });
-        if(!textureAttive) materiale = new THREE.MeshBasicMaterial( { color: Math.random()*0xffff00 } );
+        if (!textureAttive) materiale = new THREE.MeshBasicMaterial({ color: Math.random() * 0xffff00 });
 
         var blockMesh = new THREE.Mesh(this.blockGeometry, materiale);
         blockMesh.castShadow = true;
@@ -385,9 +390,9 @@ class Snake {
         console.log(this.blocks);
         var lastNode = Number(this.blocks);
 
-        blockMesh.position.x = this.snakeGroup.children[lastNode-1].position.x - this.snakeDirection.x*1.1;
-        blockMesh.position.y = this.snakeGroup.children[lastNode-1].position.y - this.snakeDirection.y*1.1;
-        blockMesh.position.z = this.snakeGroup.children[lastNode-1].position.z - this.snakeDirection.z*1.1;
+        blockMesh.position.x = this.snakeGroup.children[lastNode - 1].position.x - this.snakeDirection.x * 1.1;
+        blockMesh.position.y = this.snakeGroup.children[lastNode - 1].position.y - this.snakeDirection.y * 1.1;
+        blockMesh.position.z = this.snakeGroup.children[lastNode - 1].position.z - this.snakeDirection.z * 1.1;
 
         blockMesh.name = "Snake:Tail_" + this.blocks;
 
@@ -400,13 +405,12 @@ class Snake {
     redRemoveBlock() {
 
         // la testa non può essere cancellata
-        if (this.blocks > 2) {
+        if (this.blocks > 4) {
             this.blocks--;
             this.snakeGroup.remove(this.snakeGroup.children[this.blocks]);
             globalKeyPressed = null;
             // this.redAlert();
         }
-        else this.blockMaterial.color = new THREE.Color("rgb(255, 0, 0)"); // temporaneo
 
     }
 
@@ -495,6 +499,19 @@ class Snake {
         }
     }
 
+    equal(current, next) {
+
+        /*
+            metodo che confronta due oggetti Three.Vector
+        */
+
+        if (Number(current.x) == next[0])
+            if (Number(current.y) == next[1])
+                if (Number(current.z) == next[2])
+                    return true;
+        return false;
+    }
+
     move() {
 
         switch (globalKeyPressed) {
@@ -509,6 +526,12 @@ class Snake {
             // [ Z ]
             case (90):
 
+                if (snake.equal(this.snakeDirection, [0, -1, 0])) {
+                    console.log("Game Over");
+                    this.isDead = true;
+                    break;
+                }
+
                 snake.moveHead(0, +move, 0);
                 snake.setOrientation(0, +1, 0);
                 this.updateBody(0, +1, 0);
@@ -517,14 +540,25 @@ class Snake {
             // [ X ]
             case (88):
 
+                if (snake.equal(this.snakeDirection, [0, 1, 0])) {
+                    console.log("Game Over");
+                    this.isDead = true;
+                    break;
+                }
+
                 snake.moveHead(0, -move, 0);
                 snake.setOrientation(0, -1, 0);
                 this.updateBody(0, -1, 0);
                 break;
 
+
             // [ W ]
             case (87):
-
+                if (snake.equal(this.snakeDirection, [0, 0, -1])) {
+                    console.log("Game Over");
+                    this.isDead = true;
+                    break;
+                }
                 snake.moveHead(0, 0, +move);
                 snake.setOrientation(0, 0, 1);
                 this.updateBody(0, 0, 1);
@@ -532,7 +566,11 @@ class Snake {
 
             // [ S ] 
             case (83):
-
+                if (snake.equal(this.snakeDirection, [0, 0, 1])) {
+                    console.log("Game Over");
+                    this.isDead = true;
+                    break;
+                }
                 snake.moveHead(0, 0, -move);
                 snake.setOrientation(0, 0, -1);
                 this.updateBody(0, 0, -1);
@@ -540,7 +578,11 @@ class Snake {
 
             // [ A ]
             case (65):
-
+                if (snake.equal(this.snakeDirection, [-1, 0, 0])) {
+                    console.log("Game Over");
+                    this.isDead = true;
+                    break;
+                }
                 snake.moveHead(+move, 0, 0);
                 snake.setOrientation(+1, 0, 0);
                 this.updateBody(+1, 0, 0);
@@ -548,6 +590,11 @@ class Snake {
 
             // [ D ]
             case (68):
+                if (snake.equal(this.snakeDirection, [1, 0, 0])) {
+                    console.log("Game Over");
+                    this.isDead = true;
+                    break;
+                }
                 snake.moveHead(-move, 0, 0);
                 snake.setOrientation(-1, 0, 0);
                 this.updateBody(-1, 0, 0);
