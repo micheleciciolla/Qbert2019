@@ -505,7 +505,7 @@ class Snake {
 
             for (var i = this.snakeGroup.children.length - 1; i > 1; i--) {
 
-                this.snakeGroup.children[i].position.x = this.snakeGroup.children[i - 1].position.x - x * 1.1;
+                this.snakeGroup.children[i].position.x = this.snakeGroup.children[i - 1].position.x - x * 1.1; //offset per garantire che ogni cubo si veda
                 this.snakeGroup.children[i].position.y = this.snakeGroup.children[i - 1].position.y - y * 1.1;
                 this.snakeGroup.children[i].position.z = this.snakeGroup.children[i - 1].position.z - z * 1.1;
 

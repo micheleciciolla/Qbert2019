@@ -1,4 +1,4 @@
-// flaviuzzo se lo ritogli ti meno le mani!
+// TOGGLE enable-disable textures
 var textureAttive = true;
 
 class Game {
@@ -9,7 +9,6 @@ class Game {
 
         this.scene = new THREE.Scene();
         this.scene.background = new THREE.Color(0x00);    // Dark black background
-
 
         this.camera = new THREE.PerspectiveCamera(75, this.width / this.height, 0.1, 200);
         this.camera.lookAt(this.scene.position);
@@ -94,6 +93,45 @@ class Game {
 
     }
 
+    /* Creates texture for the floor.  */
+    createFloorSx(dimX, dimY, dimZ, posX, posY, posZ) {
+
+        var lFloor, lFloorGeometry, lFloorMaterial, lFloorTex;
+
+
+        lFloorGeometry = new THREE.BoxGeometry(dimX, dimY, dimZ);
+        lFloorTex = applyTex("textures/grass.jpg", 8, 8);
+
+        lFloorMaterial = new THREE.MeshBasicMaterial({ map: lFloorTex });
+        lFloor = new THREE.Mesh(lFloorGeometry, lFloorMaterial);
+
+        lFloor.position.x = posX;
+        lFloor.position.y = posY;
+        lFloor.position.z = posZ;
+
+        this.scene.add(lFloor);
+
+    }
+
+    createFloorDx(dimX, dimY, dimZ, posX, posY, posZ) {
+
+        var lFloor, lFloorGeometry, lFloorMaterial, lFloorTex;
+
+
+        lFloorGeometry = new THREE.BoxGeometry(dimX, dimY, dimZ);
+        lFloorTex = applyTex("textures/grass.jpg", 8, 8);
+
+        lFloorMaterial = new THREE.MeshBasicMaterial({ map: lFloorTex });
+        lFloor = new THREE.Mesh(lFloorGeometry, lFloorMaterial);
+
+        lFloor.position.x = posX;
+        lFloor.position.y = posY;
+        lFloor.position.z = posZ;
+
+        this.scene.add(lFloor);
+
+    }
+
     //Creazione di un oggetto immagine "albero" nel workspace
     createTrees() {
 
@@ -105,6 +143,7 @@ class Game {
             useScreenCoordinates:
                 false
         });
+
         for (i = 0; trees.posZRight - (i * 200) > -scr.w; i++) {
             //albero
             tree = new THREE.Sprite(treeMaterial);
@@ -127,10 +166,12 @@ class Game {
 
         var path, urls, textureCube, shader, skyMaterial, sky;
 
+        path = "textures/dark/";
 
-        path = "textures/";
-        urls = [path + "posx.jpg", path + "negx.jpg", path + "posy.jpg",
-        path + "negy.jpg", path + "posz.jpg", path + "negz.jpg"];
+        //front-px //back-nx //up-py //down-ny //right-pz //left-nz
+
+        urls = [path + "totality_ft.jpg", path + "totality_bk.jpg", path + "totality_up.jpg",
+        path + "totality_dn.jpg", path + "totality_rt.jpg", path + "totality_lf.jpg"];
 
         textureCube = THREE.ImageUtils.loadTextureCube(urls);
         textureCube.format = THREE.RGBFormat;
@@ -151,40 +192,6 @@ class Game {
         sky = new THREE.Mesh(new THREE.BoxGeometry(4096, 4096, 4096),
             skyMaterial);
         this.scene.add(sky);
-
-    }
-
-    addText(){
-        /* 
-            Function to add text in the scene 
-        */
-        var loader = new THREE.FontLoader();
-        loader.load( 'js/helvetiker_regular.typeface.json', function ( font ){
-
-            console.log("textiniziale");
-
-            var text = new THREE.TextGeometry( 'ZetaSnake!', { 
-
-                font: font,
-                size: 80,
-                height: 5,
-                curveSegments: 12,
-                bevelEnabled: true,
-                bevelThickness: 10,
-                bevelSize: 8,
-                bevelOffset: 0,
-                bevelSegments: 5,
-                position: (12,12,12)
-                
-            } );
-
-            scene.add(text);
-            console.log("textfinale");
-
-
-        } );
-
-        
 
     }
 
@@ -257,15 +264,15 @@ window.onload = function main() {
     game.addLights();
 
     if (textureAttive) {
-        game.createRiver(10, 0, 100, -0.4, 0);  //larghezza altezza lunghezza posY posZ
+        game.createRiver(10, 0, 100, -0.4, 0);  // larghezza altezza lunghezza posY posZ
+	    game.createFloorSx(50,0,100,30,-0.4,0);
+	    game.createFloorDx(50,0,100,-30,-0.4,0);
         game.createSkyBox();
         game.createTrees();
 
     }
 
     game.scene.add(globalMap);
-
-    game.addText();
 
     snake = new Snake();
     snake.buildHead();
@@ -304,10 +311,10 @@ document.onkeydown = function checkKey(e) {
 var updateFunction = function () {
 
     // snake.swag(delta);
-    delta += 0.7;
+    // delta += 0.7;
 
     snake.update();
-    //food.update();
+    // food.update();
     egg.update();
     duck.update();
 
