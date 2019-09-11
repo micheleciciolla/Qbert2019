@@ -81,7 +81,8 @@ class Egg {
         this.group.position.y = this.position.y;
         this.group.position.z = this.position.z;
 
-        game.scene.add(this.group);
+        if(selectWorld!=0)
+        	game.scene.add(this.group);
 
         this.blocks = 1; // adding first egg
 

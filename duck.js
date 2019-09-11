@@ -180,8 +180,8 @@ class Duck {
         this.group.position.x = this.position.x;
         this.group.position.y = this.position.y;
         this.group.position.z = this.position.z;
-
-        game.scene.add(this.group);
+        if(selectWorld != 0)
+            game.scene.add(this.group);
 
         this.blocks = 1; // adding first Duck
 

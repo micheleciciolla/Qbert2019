@@ -1,7 +1,17 @@
-// TOGGLE enable-disable textures
-var textureAttive = true;
+
+//NB il select level / go che si alterna nella schermata va fatto meglio, o tolto ! ! ! 
+
+
+
+var textureAttive = true;   //per la texture
+var selectWorld = 1;        //0 is intro by default: you can choose between 1 2 3
+var musicOn = false;        //per la musica
+
+
 
 class Game {
+
+
     constructor() {
 
         this.width = window.innerWidth;
@@ -10,9 +20,10 @@ class Game {
         this.scene = new THREE.Scene();
         this.scene.background = new THREE.Color(0x00);    // Dark black background
 
+
         this.camera = new THREE.PerspectiveCamera(75, this.width / this.height, 0.1, 200);
         this.camera.lookAt(this.scene.position);
-        this.camera.position.set(0, 3, -10);
+        this.camera.position.set(0, 10, -15);
         this.camera.rotation.y -= 30 / (2 * Math.PI);
 
         this.renderer = new THREE.WebGLRenderer({ alpha: true });
@@ -35,7 +46,17 @@ class Game {
         this.timer.start();
 
         this.update = function dummyUpdate() { };
+
+        //select between 3 worlds
+        this.worldSelection();
+
+        
+
+        this.music();
+
     }
+
+
 
     addLights() {
         var spotLight = new THREE.SpotLight(0xDDDDDD, 0.5);
@@ -75,13 +96,89 @@ class Game {
         */
     }
 
+    music(){
+        if(musicOn==true){
+
+            // create an AudioListener and add it to the camera
+            var listener = new THREE.AudioListener();
+            this.camera.add( listener );
+
+            // create a global audio source
+            var sound = new THREE.Audio( listener );
+
+            // load a sound and set it as the Audio object's buffer
+            var audioLoader = new THREE.AudioLoader();
+            audioLoader.load( 'sounds/audio.mp3', function( buffer ) {
+                sound.setBuffer( buffer );
+                sound.setLoop( true );
+                sound.setVolume( 0.5 );
+                sound.play();
+            });
+        }
+    }
+
+
+
+
+
+
+    //metodo per selezionare direttamente il mondo che si vuole
+    worldSelection(){
+        if(selectWorld == 0){
+            this.river = "textures/intro/floor.jpeg"
+            this.floorSx = "textures/intro/floor.jpeg"
+            this.floorDx = "textures/intro/floor.jpeg"
+            this.world = "textures/intro/"
+            this.camera.position.x= 1200;
+
+            document.getElementById("go").style.visibility = 'hidden';
+        }
+        
+        if(selectWorld == 1){                       //We are into the Red Planet Mars ! ! !
+            this.river = "textures/mars/river.jpg"
+            this.floorSx = "textures/mars/floor.jpg"
+            this.floorDx = "textures/mars/floor.jpg"
+            this.world = "textures/mars/"
+
+            document.getElementById("Dragon").style.visibility = 'hidden';
+            document.getElementById("Mars").style.visibility = 'hidden';
+            document.getElementById("Landscape").style.visibility = 'hidden';
+            document.getElementById("Dark").style.visibility = 'hidden';
+            document.getElementById("select").style.visibility = 'hidden';
+        }
+        if(selectWorld == 2){                       //We are into the Dark space ! ! !
+            this.river = "textures/dark/river.jpg"
+            this.floorSx = "textures/dark/floor.jpg"
+            this.floorDx = "textures/dark/floor.jpg"
+            this.world = "textures/dark/"
+            
+            document.getElementById("Dragon").style.visibility = 'hidden';
+            document.getElementById("Mars").style.visibility = 'hidden';
+            document.getElementById("Landscape").style.visibility = 'hidden';
+            document.getElementById("Dark").style.visibility = 'hidden';
+            document.getElementById("select").style.visibility = 'hidden';
+        }
+        if(selectWorld == 3){                       //We are into the beautiful Italian hills ! ! !
+            this.river = "textures/land/river.jpg"
+            this.floorSx = "textures/land/floor.jpg"
+            this.floorDx = "textures/land/floor.jpg"
+            this.world = "textures/land/"
+            
+            document.getElementById("Dragon").style.visibility = 'hidden';
+            document.getElementById("Mars").style.visibility = 'hidden';
+            document.getElementById("Landscape").style.visibility = 'hidden';
+            document.getElementById("Dark").style.visibility = 'hidden';
+        }
+    }
+
+
     /* Creates river.  */
     createRiver(dimX, dimY, dimZ, posY, posZ) {
 
         var lRiver, lRiverGeometry, lRiverMaterial, lRiverTex;
 
         lRiverGeometry = new THREE.BoxGeometry(dimX, dimY, dimZ);
-        lRiverTex = applyTex("textures/water.jpg", 4, 8);
+        lRiverTex = applyTex(this.river, 1, 5);     
 
         lRiverMaterial = new THREE.MeshBasicMaterial({ map: lRiverTex });
         lRiver = new THREE.Mesh(lRiverGeometry, lRiverMaterial);
@@ -92,7 +189,6 @@ class Game {
         this.scene.add(lRiver);
 
     }
-
     /* Creates texture for the floor.  */
     createFloorSx(dimX, dimY, dimZ, posX, posY, posZ) {
 
@@ -100,7 +196,7 @@ class Game {
 
 
         lFloorGeometry = new THREE.BoxGeometry(dimX, dimY, dimZ);
-        lFloorTex = applyTex("textures/grass.jpg", 8, 8);
+        lFloorTex = applyTex(this.floorSx, 8, 8);  
 
         lFloorMaterial = new THREE.MeshBasicMaterial({ map: lFloorTex });
         lFloor = new THREE.Mesh(lFloorGeometry, lFloorMaterial);
@@ -119,7 +215,7 @@ class Game {
 
 
         lFloorGeometry = new THREE.BoxGeometry(dimX, dimY, dimZ);
-        lFloorTex = applyTex("textures/grass.jpg", 8, 8);
+        lFloorTex = applyTex(this.floorDx, 8, 8);
 
         lFloorMaterial = new THREE.MeshBasicMaterial({ map: lFloorTex });
         lFloor = new THREE.Mesh(lFloorGeometry, lFloorMaterial);
@@ -136,14 +232,13 @@ class Game {
     createTrees() {
 
         var i, tree;
-        var treeTexture = THREE.ImageUtils.loadTexture("textures/tree.png");
+        var treeTexture = THREE.ImageUtils.loadTexture("textures/land/tree.png");
 
         var treeMaterial = new THREE.SpriteMaterial({
             map: treeTexture,
             useScreenCoordinates:
                 false
         });
-
         for (i = 0; trees.posZRight - (i * 200) > -scr.w; i++) {
             //albero
             tree = new THREE.Sprite(treeMaterial);
@@ -154,24 +249,27 @@ class Game {
 
             tree.position.set(trees.posXRight, trees.posYRight, trees.posZRight - (i * 400));
             tree.scale.set(trees.scaleX, trees.scaleY, 1.0);
-            this.scene.add(tree);
+            if(selectWorld == 3)
+                this.scene.add(tree);
 
 
         }
 
     }
 
+
     /* Function that creates the skybox with 512*512 size pictures.  */
     createSkyBox() {
 
         var path, urls, textureCube, shader, skyMaterial, sky;
 
-        path = "textures/dark/";
+
+        path = this.world;
 
         //front-px //back-nx //up-py //down-ny //right-pz //left-nz
 
-        urls = [path + "totality_ft.jpg", path + "totality_bk.jpg", path + "totality_up.jpg",
-        path + "totality_dn.jpg", path + "totality_rt.jpg", path + "totality_lf.jpg"];
+        urls = [path + "front.jpg", path + "back.jpg", path + "up.jpg",
+        path + "down.jpg", path + "right.jpg", path + "left.jpg"];
 
         textureCube = THREE.ImageUtils.loadTextureCube(urls);
         textureCube.format = THREE.RGBFormat;
@@ -195,6 +293,7 @@ class Game {
 
     }
 
+
     animate() {
         requestAnimationFrame(this.animate.bind(this));
 
@@ -213,6 +312,7 @@ class Game {
         this.renderer.render(this.scene, this.camera);
     }
 }
+
 
 /*
 document.onmousedown = function onMouseDown()
@@ -258,13 +358,14 @@ var scr = /* Screen dimensions.  */
 }
 //////////////////////////
 
+
 window.onload = function main() {
 
     game.update = updateFunction;
     game.addLights();
 
     if (textureAttive) {
-        game.createRiver(10, 0, 100, -0.4, 0);  // larghezza altezza lunghezza posY posZ
+        game.createRiver(10, 0, 100, -0.4, 0);  //larghezza altezza lunghezza posY posZ
 	    game.createFloorSx(50,0,100,30,-0.4,0);
 	    game.createFloorDx(50,0,100,-30,-0.4,0);
         game.createSkyBox();
@@ -273,6 +374,9 @@ window.onload = function main() {
     }
 
     game.scene.add(globalMap);
+
+    
+    
 
     snake = new Snake();
     snake.buildHead();
@@ -295,6 +399,7 @@ window.onload = function main() {
 
     */
     game.animate();
+
 }
 
 document.onkeydown = function checkKey(e) {
@@ -307,16 +412,19 @@ document.onkeydown = function checkKey(e) {
 
 }
 
+
 // Needed by Game class
 var updateFunction = function () {
 
     // snake.swag(delta);
-    // delta += 0.7;
+    delta += 0.7;
 
     snake.update();
-    // food.update();
+    //food.update();
     egg.update();
     duck.update();
+
+
 
     // TODO
     // if (snake.isDead == true) location.reload();
