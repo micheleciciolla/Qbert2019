@@ -4,13 +4,10 @@
 
 
 var textureAttive = true;   //per la texture
-var selectWorld = 1;        //0 is intro by default: you can choose between 1 2 3
+var selectWorld = 0;        //0 is intro by default: you can choose between 1 2 3
 var musicOn = false;        //per la musica
 
-
-
 class Game {
-
 
     constructor() {
 
@@ -47,16 +44,12 @@ class Game {
 
         this.update = function dummyUpdate() { };
 
-        //select between 3 worlds
+        // select between 3 worlds
         this.worldSelection();
-
-        
 
         this.music();
 
     }
-
-
 
     addLights() {
         var spotLight = new THREE.SpotLight(0xDDDDDD, 0.5);
@@ -116,11 +109,6 @@ class Game {
             });
         }
     }
-
-
-
-
-
 
     //metodo per selezionare direttamente il mondo che si vuole
     worldSelection(){
@@ -262,8 +250,6 @@ class Game {
     createSkyBox() {
 
         var path, urls, textureCube, shader, skyMaterial, sky;
-
-
         path = this.world;
 
         //front-px //back-nx //up-py //down-ny //right-pz //left-nz
