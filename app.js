@@ -1,16 +1,10 @@
+// NB il select level / go che si alterna nella schermata va fatto meglio, o tolto !!! 
 
-//NB il select level / go che si alterna nella schermata va fatto meglio, o tolto ! ! ! 
-
-
-
-var textureAttive = true;   //per la texture
-var selectWorld = 1;        //0 is intro by default: you can choose between 1 2 3
-var musicOn = false;        //per la musica
-
-
+var textureAttive = true;   // per la texture
+var selectWorld = 1;        // 0 is intro by default: you can choose between 1 2 3
+var musicOn = false;        // per la musica
 
 class Game {
-
 
     constructor() {
 
@@ -19,7 +13,6 @@ class Game {
 
         this.scene = new THREE.Scene();
         this.scene.background = new THREE.Color(0x00);    // Dark black background
-
 
         this.camera = new THREE.PerspectiveCamera(75, this.width / this.height, 0.1, 200);
         this.camera.lookAt(this.scene.position);
@@ -47,16 +40,12 @@ class Game {
 
         this.update = function dummyUpdate() { };
 
-        //select between 3 worlds
+        // select between 3 worlds
         this.worldSelection();
-
         
-
         this.music();
 
     }
-
-
 
     addLights() {
         var spotLight = new THREE.SpotLight(0xDDDDDD, 0.5);
@@ -117,12 +106,7 @@ class Game {
         }
     }
 
-
-
-
-
-
-    //metodo per selezionare direttamente il mondo che si vuole
+    // metodo per selezionare direttamente il mondo che si vuole
     worldSelection(){
         if(selectWorld == 0){
             this.river = "textures/intro/floor.jpeg"
@@ -133,8 +117,9 @@ class Game {
 
             document.getElementById("go").style.visibility = 'hidden';
         }
-        
-        if(selectWorld == 1){                       //We are into the Red Planet Mars ! ! !
+
+        if(selectWorld == 1){   
+            // We are into the Red Planet Mars ! ! !
             this.river = "textures/mars/river.jpg"
             this.floorSx = "textures/mars/floor.jpg"
             this.floorDx = "textures/mars/floor.jpg"
@@ -146,7 +131,9 @@ class Game {
             document.getElementById("Dark").style.visibility = 'hidden';
             document.getElementById("select").style.visibility = 'hidden';
         }
-        if(selectWorld == 2){                       //We are into the Dark space ! ! !
+        if(selectWorld == 2){ 
+
+            //We are into the Dark space ! ! !                     
             this.river = "textures/dark/river.jpg"
             this.floorSx = "textures/dark/floor.jpg"
             this.floorDx = "textures/dark/floor.jpg"
@@ -158,7 +145,9 @@ class Game {
             document.getElementById("Dark").style.visibility = 'hidden';
             document.getElementById("select").style.visibility = 'hidden';
         }
-        if(selectWorld == 3){                       //We are into the beautiful Italian hills ! ! !
+        if(selectWorld == 3){ 
+
+            //We are into the beautiful Italian hills ! ! !                     
             this.river = "textures/land/river.jpg"
             this.floorSx = "textures/land/floor.jpg"
             this.floorDx = "textures/land/floor.jpg"
@@ -170,7 +159,6 @@ class Game {
             document.getElementById("Dark").style.visibility = 'hidden';
         }
     }
-
 
     /* Creates river.  */
     createRiver(dimX, dimY, dimZ, posY, posZ) {
@@ -189,6 +177,7 @@ class Game {
         this.scene.add(lRiver);
 
     }
+
     /* Creates texture for the floor.  */
     createFloorSx(dimX, dimY, dimZ, posX, posY, posZ) {
 
@@ -228,7 +217,7 @@ class Game {
 
     }
 
-    //Creazione di un oggetto immagine "albero" nel workspace
+    // Creazione di un oggetto immagine "albero" nel workspace
     createTrees() {
 
         var i, tree;
@@ -252,11 +241,8 @@ class Game {
             if(selectWorld == 3)
                 this.scene.add(tree);
 
-
         }
-
     }
-
 
     /* Function that creates the skybox with 512*512 size pictures.  */
     createSkyBox() {
@@ -292,7 +278,6 @@ class Game {
         this.scene.add(sky);
 
     }
-
 
     animate() {
         requestAnimationFrame(this.animate.bind(this));
@@ -358,7 +343,6 @@ var scr = /* Screen dimensions.  */
 }
 //////////////////////////
 
-
 window.onload = function main() {
 
     game.update = updateFunction;
@@ -374,9 +358,6 @@ window.onload = function main() {
     }
 
     game.scene.add(globalMap);
-
-    
-    
 
     snake = new Snake();
     snake.buildHead();
@@ -412,7 +393,6 @@ document.onkeydown = function checkKey(e) {
 
 }
 
-
 // Needed by Game class
 var updateFunction = function () {
 
@@ -423,8 +403,6 @@ var updateFunction = function () {
     //food.update();
     egg.update();
     duck.update();
-
-
 
     // TODO
     // if (snake.isDead == true) location.reload();
