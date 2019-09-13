@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 
+<<<<<<< HEAD
     <head>
         <meta charset=utf-8>
         <link rel="shortcut icon">
@@ -40,11 +41,53 @@
             }
 
             .gametitle {
+=======
+<head>
+    <meta charset=utf-8>
+    <link rel="shortcut icon">
+    <title>MaGiC dRaGoN</title>
+    <style>
+        
+        
+        canvas {
+            width: 100%;
+            height: 100%
+        }
+
+
+
+
+
+        input[type = button] {
+                font-family: monospace;
+            }
+            .alignleft {
+                float: left;
+            }
+            .alignright {
+                float: right;
+            }
+            button.link { 
+                background: transparent;
+                border: none;
+                color:#731010;   
+                font-size:0.9em;
+                z-index:2;
+                text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
+                position:absolute;
+            }
+
+            button.link:hover{
+                color: orange;
+            }
+            .gametitle{
+>>>>>>> b73c7f933c34e7d75c2c286e370aa4a1ee4954ea
                 -moz-user-select: -moz-none;
                 -khtml-user-select: none;
                 -webkit-user-select: none;
                 -o-user-select: none;
                 user-select: none;
+<<<<<<< HEAD
                 font-family: 'Font/Enterprise Bold';
                 background: transparent;
                 border: none;
@@ -66,16 +109,45 @@
                 right: 3%;
             }
 
+=======
+                font-family: 'Font/Enterprise Bold';    
+                background: transparent;
+                border: none;
+                color: orange;   
+                font-size:3.5em; 
+                z-index:2;
+                text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
+                position:absolute;
+            }
+            
+            #Mars {
+                top: 30%;
+                left: 5%;
+                
+            }
+            #Dark {
+                top: 30%;
+                right: 3%; 
+            }
+>>>>>>> b73c7f933c34e7d75c2c286e370aa4a1ee4954ea
             #Landscape {
                 top: 40%;
                 left: 40%;
             }
+<<<<<<< HEAD
 
             #Dragon {
+=======
+            
+            
+            
+            #Dragon{
+>>>>>>> b73c7f933c34e7d75c2c286e370aa4a1ee4954ea
                 top: 10%;
                 left: 30%;
             }
 
+<<<<<<< HEAD
             #GameoverTitle {
                 font-family: 'Font/Enterprise Bold';
                 visibility: hidden;
@@ -122,3 +194,80 @@
     </body>
 
 </html>
+=======
+            #GameoverTitle{
+                font-family: 'Font/Enterprise Bold';
+                visibility: hidden;
+                transform:scale(1.5);
+                top: -1%;
+                left: 36.5%;
+            }
+            
+            @-moz-document url-prefix() {
+                #Gameover{
+                    top:100%;
+                }
+            }
+            
+           
+
+
+    </style>
+</head>
+
+<body>
+     <div style="text-align: center; background-color: purple"> 
+    <span class="centre front" id="select" style="font-family: Impact; font-size: 20px ; ;text-align: center; display: inline-block; background-color:purple; color: black">Select Level:</span>
+    </div>
+
+    <div style="text-align: center; background-color: purple"> 
+    <span class="centre front" id="go" style="font-family: Impact; font-size: 20px ; text-align: center; background-color:purple; color: black">Enjoy:</span>
+    </div>
+
+
+    <button class="link alignleft" style="font-size:3em;"  id="Mars">Mars[1]</button>
+    <button class="link alignright" style="font-size:3em;" id="Dark">Dark World[2]</button>
+    <button class="link alignleft" style="font-size:3em;" id="Landscape">Landscape[3]</button>
+    
+
+    <p class="gametitle" id="Dragon"> The Magic Dragon 
+        <img src="./dragon.png"   style="position :absolute; top:0.0em; left:107%; width: 20%;">
+    </p>
+
+    <p class="gametitle" id="GameoverTitle"> GAME OVER </p>
+
+    
+
+
+
+
+
+
+
+
+
+     
+   
+
+    <script src="js/Stats.js"></script>
+    <script src="js/perlin.js"></script>
+    <script src="js/three.js"></script>
+    <script src="js/OrbitControls.js"></script>
+    <script src="js/simplex-noise.js"></script>
+    
+    <script src="map.js"></script>
+    <script src="utils.js"></script>
+    <script src="snake.js"></script>
+    <script src="food.js"></script>
+    <script src="egg.js"></script>
+    <script src="duck.js"></script>
+
+    <script src="app.js"></script>
+
+
+
+
+</body>
+
+</html>
+>>>>>>> b73c7f933c34e7d75c2c286e370aa4a1ee4954ea

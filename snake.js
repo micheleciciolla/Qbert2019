@@ -1,12 +1,18 @@
 var move = 0.15; // velocity of snake (used in moveHead)
+<<<<<<< HEAD
 var skinFile, headFile;
+=======
+>>>>>>> b73c7f933c34e7d75c2c286e370aa4a1ee4954ea
 
 class Snake {
     constructor(selectWorld) {
 
         this.selectWorld = selectWorld;
+<<<<<<< HEAD
 
         chooseTexture();
+=======
+>>>>>>> b73c7f933c34e7d75c2c286e370aa4a1ee4954ea
 
         this.isDead = false;
 
@@ -45,9 +51,25 @@ class Snake {
 
         // initially snake is oriented vs positive Z axis
         this.snakeDirection = new THREE.Vector3(0, 0, 1);
+
+        // selezione della texture per testa e corpo
+        if (selectWorld == 1) {
+            this.headTexture = 'textures/mars/head.jpg';
+            this.bodyTexture = 'textures/mars/skin.jpg';
+
+        }
+        if (selectWorld == 2) {
+            this.headTexture = 'textures/dark/head.jpg';
+            this.bodyTexture = 'textures/dark/skin.jpg';
+        }
+        if (selectWorld == 3) {
+            this.headTexture = 'textures/land/head.jpg';
+            this.bodyTexture = 'textures/land/skin.png';
+        }
     }
 
     buildHead() {
+
         this.snakeLenght = 0;
 
         this.snakeGroup.position.x = this.snakePosition.x;
@@ -60,17 +82,23 @@ class Snake {
 
         const head = new THREE.Group();
         head.position.set(0, 0.61, 0.5);
-        //head.rotation.set(0, -Math.PI, 0);
+
         this.snakeGroup.add(head);
 
+<<<<<<< HEAD
         var headTexture = new THREE.TextureLoader().load(headFile);
         this.skinMaterial = new THREE.MeshBasicMaterial({ map: headTexture });
         if (!textureAttive) this.skinMaterial = new THREE.MeshBasicMaterial({ color: Math.random() * 0xffff00 });
+=======
+        var headTexture = new THREE.TextureLoader().load(this.headTexture);
+        this.headMaterial = new THREE.MeshBasicMaterial({ map: headTexture });
+>>>>>>> b73c7f933c34e7d75c2c286e370aa4a1ee4954ea
 
+        if (!textureAttive) this.headMaterial = new THREE.MeshBasicMaterial({ color: Math.random() * 0xffff00 });
 
         // const faceGeometryBIG = new THREE.BoxGeometry(1.5, 1.5, 1.5);       
         const faceGeometryBIG = new THREE.CylinderGeometry(1, 1.2, 1.5, 5);
-        const faceBIG = new THREE.Mesh(faceGeometryBIG, this.skinMaterial);
+        const faceBIG = new THREE.Mesh(faceGeometryBIG, this.headMaterial);
         faceBIG.castShadow = true;
         faceBIG.receiveShadow = true;
         faceBIG.position.set(0, -0.2, -1.2);
@@ -78,7 +106,7 @@ class Snake {
         head.add(faceBIG);
 
         const faceGeometryBIGRIGHT = new THREE.BoxGeometry(0.15, 0.7, 2);
-        const faceBIGRIGHT = new THREE.Mesh(faceGeometryBIGRIGHT, this.skinMaterial);
+        const faceBIGRIGHT = new THREE.Mesh(faceGeometryBIGRIGHT, this.headMaterial);
         faceBIGRIGHT.castShadow = true;
         faceBIGRIGHT.receiveShadow = true;
         faceBIGRIGHT.position.set(0.8, -0.3, -1.2);
@@ -86,7 +114,7 @@ class Snake {
         head.add(faceBIGRIGHT);
 
         const faceGeometryBIGLEFT = new THREE.BoxGeometry(0.15, 0.7, 2);
-        const faceBIGLEFT = new THREE.Mesh(faceGeometryBIGLEFT, this.skinMaterial);
+        const faceBIGLEFT = new THREE.Mesh(faceGeometryBIGLEFT, this.headMaterial);
         faceBIGLEFT.castShadow = true;
         faceBIGLEFT.receiveShadow = true;
         faceBIGLEFT.position.set(-0.8, -0.3, -1.2);
@@ -118,7 +146,7 @@ class Snake {
         head.add(faceSQUAME3);
 
         const faceGeometryUP = new THREE.BoxGeometry(1, 0.4, 2.5);
-        const faceUP = new THREE.Mesh(faceGeometryUP, this.skinMaterial);
+        const faceUP = new THREE.Mesh(faceGeometryUP, this.headMaterial);
         faceUP.castShadow = true;
         faceUP.receiveShadow = true;
         faceUP.position.z = -0.2;
@@ -126,7 +154,7 @@ class Snake {
         head.add(faceUP);
 
         const faceGeometryDOWN = new THREE.BoxGeometry(1, 0.2, 2);
-        const faceDOWN = new THREE.Mesh(faceGeometryDOWN, this.skinMaterial);
+        const faceDOWN = new THREE.Mesh(faceGeometryDOWN, this.headMaterial);
         faceDOWN.castShadow = true;
         faceDOWN.receiveShadow = true;
         faceDOWN.position.set(0, -0.8, -0.25);
@@ -327,7 +355,7 @@ class Snake {
         eyeLEFT.add(pupilLEFT);
 
         const noseGeometryBIG = new THREE.BoxGeometry(0.4, 0.3, 2);
-        const noseBIG = new THREE.Mesh(noseGeometryBIG, this.skinMaterial);
+        const noseBIG = new THREE.Mesh(noseGeometryBIG, this.headMaterial);
         noseBIG.castShadow = true;
         noseBIG.receiveShadow = true;
         noseBIG.position.set(0, -0.1, -0.2);
@@ -375,8 +403,12 @@ class Snake {
 
     addBlockEgg() {
 
+<<<<<<< HEAD
         //TEXTURE
         var bodyTexture = new THREE.TextureLoader().load(skinFile);
+=======
+        var texture = new THREE.TextureLoader().load(this.bodyTexture);
+>>>>>>> b73c7f933c34e7d75c2c286e370aa4a1ee4954ea
 
         var materiale = new THREE.MeshBasicMaterial({ map: bodyTexture });
         if (!textureAttive) materiale = new THREE.MeshBasicMaterial({ color: Math.random() * 0xffff00 });
@@ -393,7 +425,7 @@ class Snake {
 
         var farawayinthegalaxy = 1; // not used anymore
 
-        console.log(this.blocks);
+        console.log("N° Blocchi : ",this.blocks);
         var lastNode = Number(this.blocks);
 
         blockMesh.position.x = this.snakeGroup.children[lastNode - 1].position.x - this.snakeDirection.x * 1.1;
@@ -425,27 +457,6 @@ class Snake {
         // quando snake perde un blocco il suo corpo per un secondo è red
 
         // TO-DO
-    }
-
-    swag(delta) {
-
-        /* 
-            I blocchi devono oscillare in base alla direzione di snake (al momento va in conflitto con updateBody)
-        */
-       
-        for (var i = 1; i < this.blocks; i++) {
-
-            if (this.isEqual(this.snakeDirection, [0, 0, 1]) || this.isEqual(this.snakeDirection, [0, 0, -1]))
-                this.snakeGroup.children[i].position.x = Math.cos(delta / 7 + i) / 8;
-
-            if (this.isEqual(this.snakeDirection, [0, 1, 0]) || this.isEqual(this.snakeDirection, [0, -1, 0]))
-                this.snakeGroup.children[i].position.y = Math.cos(delta / 7 + i) / 8;
-
-            if (this.isEqual(this.snakeDirection, [1, 0, 0]) || this.isEqual(this.snakeDirection, [1, 0, 0]))
-                this.snakeGroup.children[i].position.z = Math.cos(delta / 7 + i) / 8;
-            
-
-        }
     }
 
     setOrientation(x, y, z) {
@@ -511,7 +522,7 @@ class Snake {
 
             for (var i = this.snakeGroup.children.length - 1; i > 1; i--) {
 
-                this.snakeGroup.children[i].position.x = this.snakeGroup.children[i - 1].position.x - x * 1.1; //offset per garantire che ogni cubo si veda
+                this.snakeGroup.children[i].position.x = this.snakeGroup.children[i - 1].position.x - x * 1.1;
                 this.snakeGroup.children[i].position.y = this.snakeGroup.children[i - 1].position.y - y * 1.1;
                 this.snakeGroup.children[i].position.z = this.snakeGroup.children[i - 1].position.z - z * 1.1;
 
