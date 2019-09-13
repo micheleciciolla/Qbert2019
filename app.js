@@ -1,5 +1,5 @@
+// TOGGLE enable-disable textures
 var textureAttive = true;
-<<<<<<< HEAD
 var selectWorld;
 
 /*  selectWorld legenda:
@@ -36,16 +36,9 @@ document.getElementById("Dark").onclick = function (event) {
 var river, floor, albero, directory, snake, duck;
 var globalKeyPressed;
 
-=======
-var musicOn = false;
-var input = 0;
->>>>>>> b73c7f933c34e7d75c2c286e370aa4a1ee4954ea
 
 class Game {
-
-    constructor(input) {
-
-        this.selectWorld = input;
+    constructor() {
 
         this.width = window.innerWidth;
         this.height = window.innerHeight;
@@ -55,7 +48,7 @@ class Game {
 
         this.camera = new THREE.PerspectiveCamera(75, this.width / this.height, 0.1, 200);
         this.camera.lookAt(this.scene.position);
-        this.camera.position.set(0, 10, -15);
+        this.camera.position.set(0, 3, -10);
         this.camera.rotation.y -= 30 / (2 * Math.PI);
 
         this.renderer = new THREE.WebGLRenderer({ alpha: true });
@@ -77,13 +70,7 @@ class Game {
         this.timer = new THREE.Clock();
         this.timer.start();
 
-        // this.update = function dummyUpdate() { };
-
-        // select between 3 worlds
-        this.worldBuild();
-
-        this.music();
-
+        this.update = function dummyUpdate() { };
     }
 
     addLights() {
@@ -124,91 +111,13 @@ class Game {
         */
     }
 
-    music() {
-        if (musicOn == true) {
-
-            // create an AudioListener and add it to the camera
-            var listener = new THREE.AudioListener();
-            this.camera.add(listener);
-
-            // create a global audio source
-            var sound = new THREE.Audio(listener);
-
-            // load a sound and set it as the Audio object's buffer
-            var audioLoader = new THREE.AudioLoader();
-            audioLoader.load('sounds/audio.mp3', function (buffer) {
-                sound.setBuffer(buffer);
-                sound.setLoop(true);
-                sound.setVolume(0.5);
-                sound.play();
-            });
-        }
-    }
-
-    // metodo per selezionare direttamente il mondo che si vuole
-    worldBuild() {
-
-        if (this.selectWorld == 0) {
-            // intro
-            this.river = "textures/intro/floor.jpeg"
-            this.floorSx = "textures/intro/floor.jpeg"
-            this.floorDx = "textures/intro/floor.jpeg"
-            this.world = "textures/intro/"
-            // this.camera.position.x = 1200;
-
-            document.getElementById("go").style.visibility = 'hidden';
-        }
-
-        if (this.selectWorld == 1) {
-
-            console.log("TEST: WORLDBUILD", this.selectWorld);
-
-            this.river = "textures/mars/river.jpg"
-            this.floorSx = "textures/mars/floor.jpg"
-            this.floorDx = "textures/mars/floor.jpg"
-            this.world = "textures/mars/"
-
-            this.hideTitles();
-
-        }
-        if (this.selectWorld == 2) {
-            this.river = "textures/dark/river.jpg"
-            this.floorSx = "textures/dark/floor.jpg"
-            this.floorDx = "textures/dark/floor.jpg"
-            this.world = "textures/dark/"
-
-            this.hideTitles();
-        }
-        if (this.selectWorld == 3) {
-            this.river = "textures/land/river.jpg"
-            this.floorSx = "textures/land/floor.jpg"
-            this.floorDx = "textures/land/floor.jpg"
-            this.world = "textures/land/"
-
-            this.hideTitles();
-
-        }
-    }
-
-    hideTitles() {
-        document.getElementById("Dragon").style.visibility = 'hidden';
-        document.getElementById("Mars").style.visibility = 'hidden';
-        document.getElementById("Landscape").style.visibility = 'hidden';
-        document.getElementById("Dark").style.visibility = 'hidden';
-        document.getElementById("select").style.visibility = 'hidden';
-    }
-
     /* Creates river.  */
     createRiver(dimX, dimY, dimZ, posY, posZ) {
 
         var lRiver, lRiverGeometry, lRiverMaterial, lRiverTex;
 
         lRiverGeometry = new THREE.BoxGeometry(dimX, dimY, dimZ);
-<<<<<<< HEAD
         lRiverTex = applyTex(river, 0.5, 5);
-=======
-        lRiverTex = applyTex(this.river, 1, 5);
->>>>>>> b73c7f933c34e7d75c2c286e370aa4a1ee4954ea
 
         lRiverMaterial = new THREE.MeshBasicMaterial({ map: lRiverTex });
         lRiver = new THREE.Mesh(lRiverGeometry, lRiverMaterial);
@@ -219,17 +128,14 @@ class Game {
         this.scene.add(lRiver);
 
     }
+
     /* Creates texture for the floor.  */
     createFloorSx(dimX, dimY, dimZ, posX, posY, posZ) {
 
         var lFloor, lFloorGeometry, lFloorMaterial, lFloorTex;
 
         lFloorGeometry = new THREE.BoxGeometry(dimX, dimY, dimZ);
-<<<<<<< HEAD
         lFloorTex = applyTex(floor, 8, 8);
-=======
-        lFloorTex = applyTex(this.floorSx, 8, 8);
->>>>>>> b73c7f933c34e7d75c2c286e370aa4a1ee4954ea
 
         lFloorMaterial = new THREE.MeshBasicMaterial({ map: lFloorTex });
         lFloor = new THREE.Mesh(lFloorGeometry, lFloorMaterial);
@@ -247,11 +153,7 @@ class Game {
         var lFloor, lFloorGeometry, lFloorMaterial, lFloorTex;
 
         lFloorGeometry = new THREE.BoxGeometry(dimX, dimY, dimZ);
-<<<<<<< HEAD
         lFloorTex = applyTex(floor, 8, 8);
-=======
-        lFloorTex = applyTex(this.floorDx, 8, 8);
->>>>>>> b73c7f933c34e7d75c2c286e370aa4a1ee4954ea
 
         lFloorMaterial = new THREE.MeshBasicMaterial({ map: lFloorTex });
         lFloor = new THREE.Mesh(lFloorGeometry, lFloorMaterial);
@@ -281,39 +183,28 @@ class Game {
             w: window.innerWidth,
             h: window.innerHeight
         }
-<<<<<<< HEAD
 
         var i, tree;
         var treeTexture = THREE.ImageUtils.loadTexture(albero);
-=======
-        var i, tree;
-        var treeTexture = THREE.ImageUtils.loadTexture("textures/land/tree.png");
->>>>>>> b73c7f933c34e7d75c2c286e370aa4a1ee4954ea
 
         var treeMaterial = new THREE.SpriteMaterial({
             map: treeTexture,
             useScreenCoordinates:
                 false
         });
+
         for (i = 0; trees.posZRight - (i * 200) > -scr.w; i++) {
             //albero
             tree = new THREE.Sprite(treeMaterial);
-            /* 
-                Use sprites so that
-                the trees will
-                always point to 
-                the camera.  
-            */
+            /* Use sprites so that
+             * the trees will
+             * always point to 
+             * the camera.  */
 
             tree.position.set(trees.posXRight, trees.posYRight, trees.posZRight - (i * 400));
             tree.scale.set(trees.scaleX, trees.scaleY, 1.0);
-<<<<<<< HEAD
             this.scene.add(tree);
 
-=======
-            if (this.selectWorld == 3)
-                this.scene.add(tree);
->>>>>>> b73c7f933c34e7d75c2c286e370aa4a1ee4954ea
         }
 
     }
@@ -323,11 +214,7 @@ class Game {
 
         var path, urls, textureCube, shader, skyMaterial, sky;
 
-<<<<<<< HEAD
         path = directory;
-=======
-        path = this.world;
->>>>>>> b73c7f933c34e7d75c2c286e370aa4a1ee4954ea
 
         //front-px //back-nx //up-py //down-ny //right-pz //left-nz
 
@@ -368,7 +255,7 @@ class Game {
 
         this.stats.end();
 
-        this.update(); // here updateFunction is called / not dummyUpdate
+        this.update();
 
         this.render();
     }
@@ -379,7 +266,6 @@ class Game {
 }
 
 // THE GAME ITSELF (just like main() in c++)
-<<<<<<< HEAD
 var game = new Game();
 console.log("VAR GAME NEW GAME");
 var globalMap = makeMap();
@@ -397,25 +283,9 @@ function main() {
         game.createFloorSx(50, 0, 100, 30, -0.4, 0);
         game.createFloorDx(50, 0, 100, -30, -0.4, 0);
         game.createSkyBox();
-=======
-var globalKeyPressed;
-var game = new Game(input);
-var globalMap = makeMap();
-var snake, duck;
 
-/* °°°°°°°°°°°°°°°°°°° MAIN °°°°°°°°°°°°°°°°°°° */
-
-window.onload = function main() {
->>>>>>> b73c7f933c34e7d75c2c286e370aa4a1ee4954ea
-
-    document.getElementById("Mars").onclick = function (event) {
-        game.selectWorld = 1;
-        console.log("User selected Mars : ", game.selectWorld);
-        game = new Game(1);
-        loadGame();
     }
 
-<<<<<<< HEAD
     game.scene.add(globalMap);
 
     snake = new Snake(this.selectWorld);
@@ -432,23 +302,6 @@ window.onload = function main() {
     duck.build();
 
     game.animate();
-=======
-    document.getElementById("Dark").onclick = function (event) {
-        game.selectWorld = 2;
-        console.log("User selected Dark : ", game.selectWorld);
-        game = new Game(2);
-        loadGame();
-    }
-
-    document.getElementById("Landscape").onclick = function (event) {
-        game.selectWorld = 3;
-        console.log("User selected Landscape-Earth : ", game.selectWorld);
-        game = new Game(3);
-        loadGame();
-    }
-
-    if (game.selectWorld == 0) loadGame();
->>>>>>> b73c7f933c34e7d75c2c286e370aa4a1ee4954ea
 }
 
 document.onkeydown = function checkKey(e) {
@@ -464,67 +317,15 @@ document.onkeydown = function checkKey(e) {
 // Needed by Game class
 var updateFunction = function () {
 
-<<<<<<< HEAD
     snake.update();
     egg.update();
     duck.update();
-=======
-    console.log("TEST : updateFunction : ", this.selectWorld);
 
-    if (game.selectWorld != 0) {
-        snake.update();
-        egg.update();
-        duck.update();
-    }
+    // TODO
+    // if (snake.isDead == true) location.reload();
 
-    /* TODO
-        if (snake.isDead == true) location.reload();
-        globalKeyPressed = null;
-    */
-}
+    // globalKeyPressed = null;
 
-function loadGame() {
->>>>>>> b73c7f933c34e7d75c2c286e370aa4a1ee4954ea
-
-    game.addLights();
-
-    if (textureAttive) {
-        game.createRiver(10, 0, 100, -0.4, 0); //larghezza altezza lunghezza posY posZ
-        game.createFloorSx(50, 0, 100, 30, -0.4, 0);
-        game.createFloorDx(50, 0, 100, -30, -0.4, 0);
-        game.createSkyBox();
-        game.createTrees();
-    }
-    var globalMap = makeMap();
-    game.scene.add(globalMap);
-
-    console.log("TEST : loadGame : ", game.selectWorld);
-
-    if (game.selectWorld != 0) addCharacters();
-
-    game.update = updateFunction;
-
-    game.animate();
-}
-
-function addCharacters() {
-
-    this.console.log("TEST: addCharacters : ", game.selectWorld);
-
-    snake = new Snake(this.worldSelection);
-    snake.buildHead();
-    snake.addBlockEgg();
-    snake.addBlockEgg();
-    snake.addBlockEgg();
-
-    egg = new Egg(new THREE.Vector3(0, 2, 10));
-    egg.build();
-
-    duck = new Duck(new THREE.Vector3(0, 2, 20));
-    duck.build();
-}
-
-<<<<<<< HEAD
 }
 
 function chooseWorld(selection) {
@@ -557,5 +358,3 @@ function hideTitles() {
 }
 
 
-=======
->>>>>>> b73c7f933c34e7d75c2c286e370aa4a1ee4954ea

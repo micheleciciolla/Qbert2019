@@ -19,7 +19,7 @@ class Duck {
 
         this.blockGeometry = new THREE.LatheBufferGeometry(eggGeometry, 50);
         this.blockMaterial = new THREE.MeshPhongMaterial({
-            color: 0xFFD700,
+            color: 	0xFFD700,
             wireframe: false,
             depthTest: true,
         });
@@ -35,27 +35,27 @@ class Duck {
         });
 
         this.skinMaterial = new THREE.MeshPhongMaterial({
-            color: 0xFFD700,
+            color: 0xFFD700, 
             wireframe: false,
             depthTest: true,
-        });
+        });        
         this.whiteMaterial = new THREE.MeshPhongMaterial({
-            color: 0xFFFFFF,
+            color: 0xFFFFFF, 
             wireframe: false,
             depthTest: true,
         });
 
         this.blackMaterial = new THREE.MeshPhongMaterial({
-            color: 0x000000,
+            color: 0x000000, 
             wireframe: false,
             depthTest: true,
-        });
+        });       
 
         this.orangeMaterial = new THREE.MeshPhongMaterial({
-            color: 0xFF8C00,
+            color: 0xFF8C00, 
             wireframe: false,
             depthTest: true,
-        });
+        });         
         this.rayCaster = new THREE.Raycaster();
     }
 
@@ -79,7 +79,7 @@ class Duck {
         const wingsRIGHT = new THREE.Mesh(wingsGeometryRIGHT, this.skinMaterial);
         wingsRIGHT.castShadow = true;
         wingsRIGHT.receiveShadow = true;
-        wingsRIGHT.position.set(0.6, 0, -0.2);
+        wingsRIGHT.position.set(0.6, 0, -0.2);       
         wingsRIGHT.rotation.set(0.5, 0, -0.8);
         blockMesh.add(wingsRIGHT);
 
@@ -87,7 +87,7 @@ class Duck {
         const wingsLEFT = new THREE.Mesh(wingsGeometryLEFT, this.skinMaterial);
         wingsLEFT.castShadow = true;
         wingsLEFT.receiveShadow = true;
-        wingsLEFT.position.set(-0.6, 0, -0.2);
+        wingsLEFT.position.set(-0.6, 0, -0.2);      
         wingsLEFT.rotation.set(0.5, 0, 0.8);
         blockMesh.add(wingsLEFT);
 
@@ -95,7 +95,7 @@ class Duck {
 
 
         const head = new THREE.Group();
-        head.position.set(0, 1.5, -0.7);
+        head.position.set(0, 1.5, -0.7);       
         head.rotation.set(0, Math.PI, 0);
         this.group.add(head);
 
@@ -106,7 +106,7 @@ class Duck {
         faceUP.position.z = -0.2;
         faceUP.position.y = -0.5;
         head.add(faceUP);
-
+        
 
         const faceGeometryDOWN = new THREE.BoxGeometry(0.5, 0.05, 0.4);
         const faceDOWN = new THREE.Mesh(faceGeometryDOWN, this.orangeMaterial);
@@ -126,7 +126,7 @@ class Duck {
         faceDOWN2.rotation.set(0.5, 0, 0);
         head.add(faceDOWN2);
 
-        const eyeGeometryRIGHT = new THREE.SphereGeometry(0.15, 0.2, 0.2);
+        const eyeGeometryRIGHT = new THREE.SphereGeometry(0.15,0.2,0.2);
         const eyeRIGHT = new THREE.Mesh(eyeGeometryRIGHT, this.whiteMaterial);
         eyeRIGHT.castShadow = true;
         eyeRIGHT.receiveShadow = true;
@@ -134,15 +134,15 @@ class Duck {
         eyeRIGHT.rotation.set(1.65, 0, 0);
         head.add(eyeRIGHT);
 
-        const eyeGeometryLEFT = new THREE.SphereGeometry(0.15, 0.2, 0.2);
+        const eyeGeometryLEFT = new THREE.SphereGeometry(0.15,0.2,0.2);
         const eyeLEFT = new THREE.Mesh(eyeGeometryLEFT, this.whiteMaterial);
         eyeLEFT.castShadow = true;
         eyeLEFT.receiveShadow = true;
         eyeLEFT.position.set(-0.2, -0.35, 0.25);
         eyeLEFT.rotation.set(1.65, 0, 0);
-        head.add(eyeLEFT);
+        head.add(eyeLEFT);  
 
-        const pupilGeometryRIGHT = new THREE.SphereGeometry(0.05, 0.05, 0.05);
+        const pupilGeometryRIGHT = new THREE.SphereGeometry(0.05,0.05,0.05);
         const pupilRIGHT = new THREE.Mesh(pupilGeometryRIGHT, this.blackMaterial);
         pupilRIGHT.castShadow = true;
         pupilRIGHT.receiveShadow = true;
@@ -151,12 +151,12 @@ class Duck {
 
 
 
-        const pupilGeometryLEFT = new THREE.SphereGeometry(0.05, 0.05, 0.05);
+        const pupilGeometryLEFT = new THREE.SphereGeometry(0.05,0.05,0.05);
         const pupilLEFT = new THREE.Mesh(pupilGeometryLEFT, this.blackMaterial);
         pupilLEFT.castShadow = true;
         pupilLEFT.receiveShadow = true;
         pupilLEFT.position.set(0, 0.12, -0.02);
-        eyeLEFT.add(pupilLEFT);
+        eyeLEFT.add(pupilLEFT); 
 
 
         const noseGeometryRIGHT = new THREE.CylinderGeometry(0.015, 0.07, 0.2, 8);
@@ -173,11 +173,14 @@ class Duck {
         nosefaceLEFT.receiveShadow = true;
         nosefaceLEFT.position.set(-0.05, -0.6, 0.25);
         nosefaceLEFT.rotation.set(1.65, 0, 0);
-        head.add(nosefaceLEFT);
+        head.add(nosefaceLEFT);  
+
+
 
         this.group.position.x = this.position.x;
         this.group.position.y = this.position.y;
         this.group.position.z = this.position.z;
+
         game.scene.add(this.group);
 
         this.blocks = 1; // adding first Duck
@@ -220,7 +223,7 @@ class Duck {
         this.group.children[1].children[1].rotation.z += Math.sin(3 * t) / 100;
         this.group.children[1].children[0].rotation.z += Math.sin(3 * t) / 100;
         this.group.children[2].children[1].rotation.x += Math.sin(3 * t) / 100;
-        this.group.children[2].children[2].rotation.x += -Math.sin(3 * t) / 100;
+        this.group.children[2].children[2].rotation.x +=  -Math.sin(3 * t) / 100;
         this.group.children[1].rotation.x += Math.sin(3 * t) / 300;
         this.group.children[2].rotation.y += Math.sin(3 * t) / 150;
     }

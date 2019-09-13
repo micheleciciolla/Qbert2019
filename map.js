@@ -4,7 +4,7 @@ function makeMap()
     var mapGeometry = new THREE.PlaneGeometry(100, 100, 100, 100);
     
     // FLAT
-    
+    /*
     var simplex = new SimplexNoise();
     for(var i=0; i<100; i++)
     {
@@ -18,6 +18,7 @@ function makeMap()
                 (simplex.noise2D( (i+800)/6.25,j/6.25)) ) * 1.5;
         }
     }
+    */
 
     // map: texture,
     var mapMaterial = new THREE.MeshPhongMaterial({
