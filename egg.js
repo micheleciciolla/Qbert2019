@@ -81,8 +81,7 @@ class Egg {
         this.group.position.y = this.position.y;
         this.group.position.z = this.position.z;
 
-        if(selectWorld!=0)
-        	game.scene.add(this.group);
+        game.scene.add(this.group);
 
         this.blocks = 1; // adding first egg
 
@@ -96,12 +95,12 @@ class Egg {
         blockMesh.name = "Egg_" + this.blocks; // nomina gli Egg_2, Egg_3 ecc.. 
 
         // bisogna controllare che non si sovrappongano uova sulla stessa posizione
-        blockMesh.position.x = Math.random(-10)*10;
+        blockMesh.position.x = Math.random(-10) * 10;
         blockMesh.position.y = 2;
         blockMesh.position.z = 15;
 
         this.group.add(blockMesh);
-        
+
         this.blocks++;
 
         globalKeyPressed = null;
