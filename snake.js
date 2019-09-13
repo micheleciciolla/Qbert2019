@@ -1,6 +1,12 @@
 var move = 0.15; // velocity of snake (used in moveHead)
+var skinFile, headFile;
+
 class Snake {
-    constructor() {
+    constructor(selectWorld) {
+
+        this.selectWorld = selectWorld;
+
+        chooseTexture();
 
         this.isDead = false;
 
@@ -57,8 +63,8 @@ class Snake {
         //head.rotation.set(0, -Math.PI, 0);
         this.snakeGroup.add(head);
 
-        var textureH = new THREE.TextureLoader().load('textures/skin.png');
-        this.skinMaterial = new THREE.MeshBasicMaterial({ map: textureH });
+        var headTexture = new THREE.TextureLoader().load(headFile);
+        this.skinMaterial = new THREE.MeshBasicMaterial({ map: headTexture });
         if (!textureAttive) this.skinMaterial = new THREE.MeshBasicMaterial({ color: Math.random() * 0xffff00 });
 
 
@@ -351,9 +357,9 @@ class Snake {
         // not used anymore
 
         //TEXTURE
-        var texture = new THREE.TextureLoader().load('textures/skin.png');
+        var bodyTexture = new THREE.TextureLoader().load(skinFile);
 
-        var materiale = new THREE.MeshBasicMaterial({ map: texture });
+        var materiale = new THREE.MeshBasicMaterial({ map: bodyTexture });
         var blockMesh = new THREE.Mesh(this.blockGeometry, materiale);
 
         blockMesh.castShadow = true;
@@ -370,9 +376,9 @@ class Snake {
     addBlockEgg() {
 
         //TEXTURE
-        var texture = new THREE.TextureLoader().load('textures/skin.png');
+        var bodyTexture = new THREE.TextureLoader().load(skinFile);
 
-        var materiale = new THREE.MeshBasicMaterial({ map: texture });
+        var materiale = new THREE.MeshBasicMaterial({ map: bodyTexture });
         if (!textureAttive) materiale = new THREE.MeshBasicMaterial({ color: Math.random() * 0xffff00 });
 
         var blockMesh = new THREE.Mesh(this.blockGeometry, materiale);
@@ -648,3 +654,21 @@ class Snake {
     }
 
 };
+function chooseTexture() {
+    if (selectWorld == 0) {
+        // land 
+        skinFile = 'textures/land/skin.jpg';
+        headFile = 'textures/land/head.jpg';
+    }
+    if (selectWorld == 1) {
+        // mars 
+        skinFile = "textures/mars/skin.jpg";
+        headFile = "textures/mars/head.jpg";
+    }
+    if (selectWorld == 2) {
+        // dark 
+        skinFile = "textures/dark/skin.jpg";
+        headFile = "textures/dark/head.jpg";
+    }
+}
+

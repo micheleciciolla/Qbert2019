@@ -1,5 +1,41 @@
 // TOGGLE enable-disable textures
 var textureAttive = true;
+var selectWorld;
+
+/*  selectWorld legenda:
+    0 = land 
+    1 = mars 
+    2 = dark 
+*/
+
+document.getElementById("Landscape").onclick = function (event) {
+    selectWorld = 0;
+    console.log("User selected Landscape-Earth : ", selectWorld);
+    chooseWorld(selectWorld);
+    hideTitles();
+    main();
+}
+
+document.getElementById("Mars").onclick = function (event) {
+    selectWorld = 1;
+    console.log("User selected Mars : ", selectWorld);
+    chooseWorld(selectWorld);
+    hideTitles();
+    main();
+
+}
+
+document.getElementById("Dark").onclick = function (event) {
+    selectWorld = 2;
+    console.log("User selected Dark : ", selectWorld);
+    chooseWorld(selectWorld);
+    hideTitles();
+    main();
+
+}
+var river, floor, albero, directory, snake, duck;
+var globalKeyPressed;
+
 
 class Game {
     constructor() {
@@ -81,7 +117,7 @@ class Game {
         var lRiver, lRiverGeometry, lRiverMaterial, lRiverTex;
 
         lRiverGeometry = new THREE.BoxGeometry(dimX, dimY, dimZ);
-        lRiverTex = applyTex("textures/water.jpg", 4, 8);
+        lRiverTex = applyTex(river, 0.5, 5);
 
         lRiverMaterial = new THREE.MeshBasicMaterial({ map: lRiverTex });
         lRiver = new THREE.Mesh(lRiverGeometry, lRiverMaterial);
@@ -98,9 +134,8 @@ class Game {
 
         var lFloor, lFloorGeometry, lFloorMaterial, lFloorTex;
 
-
         lFloorGeometry = new THREE.BoxGeometry(dimX, dimY, dimZ);
-        lFloorTex = applyTex("textures/grass.jpg", 8, 8);
+        lFloorTex = applyTex(floor, 8, 8);
 
         lFloorMaterial = new THREE.MeshBasicMaterial({ map: lFloorTex });
         lFloor = new THREE.Mesh(lFloorGeometry, lFloorMaterial);
@@ -117,9 +152,8 @@ class Game {
 
         var lFloor, lFloorGeometry, lFloorMaterial, lFloorTex;
 
-
         lFloorGeometry = new THREE.BoxGeometry(dimX, dimY, dimZ);
-        lFloorTex = applyTex("textures/grass.jpg", 8, 8);
+        lFloorTex = applyTex(floor, 8, 8);
 
         lFloorMaterial = new THREE.MeshBasicMaterial({ map: lFloorTex });
         lFloor = new THREE.Mesh(lFloorGeometry, lFloorMaterial);
@@ -135,8 +169,23 @@ class Game {
     //Creazione di un oggetto immagine "albero" nel workspace
     createTrees() {
 
+        var trees =
+        {
+            scaleX: 64, /* Trees are 64*64.  */
+            scaleY: 64,
+
+            posXRight: 50,
+            posYRight: 30, /* + 32 = 64 / 2.  */
+            posZRight: 0
+        }
+        var scr = /* Screen dimensions.  */
+        {
+            w: window.innerWidth,
+            h: window.innerHeight
+        }
+
         var i, tree;
-        var treeTexture = THREE.ImageUtils.loadTexture("textures/tree.png");
+        var treeTexture = THREE.ImageUtils.loadTexture(albero);
 
         var treeMaterial = new THREE.SpriteMaterial({
             map: treeTexture,
@@ -156,7 +205,6 @@ class Game {
             tree.scale.set(trees.scaleX, trees.scaleY, 1.0);
             this.scene.add(tree);
 
-
         }
 
     }
@@ -166,12 +214,12 @@ class Game {
 
         var path, urls, textureCube, shader, skyMaterial, sky;
 
-        path = "textures/dark/";
+        path = directory;
 
         //front-px //back-nx //up-py //down-ny //right-pz //left-nz
 
-        urls = [path + "totality_ft.jpg", path + "totality_bk.jpg", path + "totality_up.jpg",
-        path + "totality_dn.jpg", path + "totality_rt.jpg", path + "totality_lf.jpg"];
+        urls = [path + "front.jpg", path + "back.jpg", path + "up.jpg",
+        path + "down.jpg", path + "right.jpg", path + "left.jpg"];
 
         textureCube = THREE.ImageUtils.loadTextureCube(urls);
         textureCube.format = THREE.RGBFormat;
@@ -192,6 +240,9 @@ class Game {
         sky = new THREE.Mesh(new THREE.BoxGeometry(4096, 4096, 4096),
             skyMaterial);
         this.scene.add(sky);
+
+        if (selectWorld == 0) game.createTrees();
+
 
     }
 
@@ -214,67 +265,30 @@ class Game {
     }
 }
 
-/*
-document.onmousedown = function onMouseDown()
-{ 
-    // Only for debug
-    //console.log("[onMouseDown()] Mouse button pressed.");
-    //console.log("Button pressed: " + event.button);
-    //console.log("At: " + event.clientX + ", " + event.clientY);
-};
-
-document.onmouseup = function onMouseUp()
-{
-    // Only for debug
-    //console.log("[onMouseUp()] Mouse button release");
-    //console.log("Button released: " + event.button)
-    //console.log("At: " + event.clientX + ", " + event.clientY);
-};
-*/
-
 // THE GAME ITSELF (just like main() in c++)
-var globalKeyPressed;
 var game = new Game();
+console.log("VAR GAME NEW GAME");
 var globalMap = makeMap();
-var snake;
-var food;
-var duck;
-var delta = 0;
 
-//ALBERI ///////////////////
-var trees =
-{
-    scaleX: 64, /* Trees are 64*64.  */
-    scaleY: 64,
+// removed window.onload to wait user to click
+function main() {
+    console.log("main function");
 
-    posXRight: 50,
-    posYRight: 30, /* + 32 = 64 / 2.  */
-    posZRight: 0
-}
-var scr = /* Screen dimensions.  */
-{
-    w: window.innerWidth,
-    h: window.innerHeight
-}
-//////////////////////////
-
-window.onload = function main() {
 
     game.update = updateFunction;
     game.addLights();
 
     if (textureAttive) {
-        game.createRiver(10, 0, 100, -0.4, 0);  // larghezza altezza lunghezza posY posZ
-	    game.createFloorSx(50,0,100,30,-0.4,0);
-	    game.createFloorDx(50,0,100,-30,-0.4,0);
+        game.createRiver(10, 0, 100, -0.4, 0);
+        game.createFloorSx(50, 0, 100, 30, -0.4, 0);
+        game.createFloorDx(50, 0, 100, -30, -0.4, 0);
         game.createSkyBox();
-        game.createTrees();
 
     }
 
     game.scene.add(globalMap);
 
-    snake = new Snake();
+    snake = new Snake(this.selectWorld);
     snake.buildHead();
 
     snake.addBlockEgg();
@@ -287,13 +301,6 @@ window.onload = function main() {
     duck = new Duck(new THREE.Vector3(0, 2, 20));
     duck.build();
 
-    /*
-
-    food = new Food(new THREE.Vector3(5,2,0));
-    food.build();
-    food.randomFood(); 
-
-    */
     game.animate();
 }
 
@@ -310,11 +317,7 @@ document.onkeydown = function checkKey(e) {
 // Needed by Game class
 var updateFunction = function () {
 
-    // snake.swag(delta);
-    // delta += 0.7;
-
     snake.update();
-    // food.update();
     egg.update();
     duck.update();
 
@@ -323,4 +326,35 @@ var updateFunction = function () {
 
     // globalKeyPressed = null;
 
-}   
+}
+
+function chooseWorld(selection) {
+    if (selection == 0) {
+        // landscape
+        river = "textures/land/river.jpg";
+        floor = "textures/land/floor.jpg";
+        albero = "textures/land/tree.png";
+        directory = "textures/land/";
+    }
+    if (selection == 1) {
+        // mars
+        river = "textures/mars/river.jpg";
+        floor = "textures/mars/floor.jpg";
+        directory = "textures/mars/";
+    }
+    if (selection == 2) {
+        // dark
+        river = "textures/dark/river.jpg";
+        floor = "textures/dark/floor.jpg";
+        directory = "textures/dark/";
+    }
+}
+
+function hideTitles() {
+    document.getElementById("Dragon").style.visibility = 'hidden';
+    document.getElementById("Mars").style.visibility = 'hidden';
+    document.getElementById("Landscape").style.visibility = 'hidden';
+    document.getElementById("Dark").style.visibility = 'hidden';
+}
+
+
