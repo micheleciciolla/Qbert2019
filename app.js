@@ -1,6 +1,7 @@
 // TOGGLE enable-disable textures
 var textureAttive = true;
 var selectWorld;
+var musicOn = true;
 
 /*  selectWorld legenda:
     0 = land 
@@ -12,16 +13,19 @@ document.getElementById("Landscape").onclick = function (event) {
     selectWorld = 0;
     console.log("User selected Landscape-Earth : ", selectWorld);
     chooseWorld(selectWorld);
-    hideTitles();
+    setTitles();
     main();
+    game.music(0);  //landscape
+
 }
 
 document.getElementById("Mars").onclick = function (event) {
     selectWorld = 1;
     console.log("User selected Mars : ", selectWorld);
     chooseWorld(selectWorld);
-    hideTitles();
+    setTitles();
     main();
+    game.music(1);	//mars
 
 }
 
@@ -29,8 +33,9 @@ document.getElementById("Dark").onclick = function (event) {
     selectWorld = 2;
     console.log("User selected Dark : ", selectWorld);
     chooseWorld(selectWorld);
-    hideTitles();
+    setTitles();
     main();
+    game.music(2);	//dark
 
 }
 var river, floor, albero, directory, snake, duck;
@@ -44,7 +49,15 @@ class Game {
         this.height = window.innerHeight;
 
         this.scene = new THREE.Scene();
+
+        this.scoreCounter=document.getElementById('Score');
+
+        /*var loader = new THREE.TextureLoader();
+		var bgTexture = loader.load('dg.jpg');
+		this.scene.background = bgTexture;
+        */
         this.scene.background = new THREE.Color(0x00);    // Dark black background
+
 
         this.camera = new THREE.PerspectiveCamera(75, this.width / this.height, 0.1, 200);
         this.camera.lookAt(this.scene.position);
@@ -71,6 +84,8 @@ class Game {
         this.timer.start();
 
         this.update = function dummyUpdate() { };
+
+        
     }
 
     addLights() {
@@ -109,6 +124,46 @@ class Game {
         const dlh2 = new THREE.DirectionalLightHelper( directLight2 );
         this.scene.add(dlh2);
         */
+    }
+
+
+    music(song){
+    	var song;
+        if(musicOn==true){
+            // create an AudioListener and add it to the camera
+            var listener = new THREE.AudioListener();
+            this.camera.add( listener );
+            // create a global audio source
+            var sound = new THREE.Audio( listener );
+            // load a sound and set it as the Audio object's buffer
+            var audioLoader = new THREE.AudioLoader();
+            if(song == 0){ //LANDSCAPE
+	            audioLoader.load( 'sounds/hobbit-compressed.mp3', function( buffer ) {
+	                sound.setBuffer( buffer );
+	                sound.setLoop( true );
+	                sound.setVolume( 0.5 );
+	                sound.play();
+	            });
+
+            } 
+            if(song == 1){ //MARS
+	            audioLoader.load( 'sounds/starwars2-compressed.mp3', function( buffer ) {
+	                sound.setBuffer( buffer );
+	                sound.setLoop( true );
+	                sound.setVolume( 0.5 );
+	                sound.play();
+	            });
+	        }
+
+	        if(song == 2){ //DARK
+	            audioLoader.load( 'sounds/avengers-compressed.mp3', function( buffer ) {
+	                sound.setBuffer( buffer );
+	                sound.setLoop( true );
+	                sound.setVolume( 0.5 );
+	                sound.play();
+	            });
+	        }
+        }
     }
 
     /* Creates river.  */
@@ -267,14 +322,10 @@ class Game {
 
 // THE GAME ITSELF (just like main() in c++)
 var game = new Game();
-console.log("VAR GAME NEW GAME");
 var globalMap = makeMap();
 
 // removed window.onload to wait user to click
 function main() {
-    console.log("main function");
-
-
     game.update = updateFunction;
     game.addLights();
 
@@ -335,6 +386,8 @@ function chooseWorld(selection) {
         floor = "textures/land/floor.jpg";
         albero = "textures/land/tree.png";
         directory = "textures/land/";
+
+
     }
     if (selection == 1) {
         // mars
@@ -350,11 +403,22 @@ function chooseWorld(selection) {
     }
 }
 
-function hideTitles() {
+function setTitles() {
     document.getElementById("Dragon").style.visibility = 'hidden';
     document.getElementById("Mars").style.visibility = 'hidden';
     document.getElementById("Landscape").style.visibility = 'hidden';
     document.getElementById("Dark").style.visibility = 'hidden';
+    document.getElementById("Select").style.visibility = 'hidden';
+    document.getElementById("Commands").style.visibility = 'hidden';
+    document.getElementById("intro-dark").style.visibility = 'hidden';
+    document.getElementById("intro-earth").style.visibility = 'hidden';
+    document.getElementById("intro-mars").style.visibility = 'hidden';
+
+    document.getElementById("Score").style.visibility = 'visible';
+
 }
 
+function scoreUpdate(value){
+    document.getElementById("Score").innerHTML = "SCORE: " +value;
+}
 

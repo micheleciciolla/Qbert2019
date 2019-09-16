@@ -45,6 +45,8 @@ class Snake {
 
         // initially snake is oriented vs positive Z axis
         this.snakeDirection = new THREE.Vector3(0, 0, 1);
+
+        this.score = -3;
     }
 
     buildHead() {
@@ -393,7 +395,7 @@ class Snake {
 
         var farawayinthegalaxy = 1; // not used anymore
 
-        console.log(this.blocks);
+        console.log("Snake lenght: ",this.blocks);
         var lastNode = Number(this.blocks);
 
         blockMesh.position.x = this.snakeGroup.children[lastNode - 1].position.x - this.snakeDirection.x * 1.1;
@@ -405,6 +407,9 @@ class Snake {
         this.snakeGroup.add(blockMesh);
         this.blocks++;
 
+        this.score += 1;
+        scoreUpdate(this.score);
+
         globalKeyPressed = null;
 
     }
@@ -414,6 +419,8 @@ class Snake {
         if (this.blocks > 4) {
             this.blocks--;
             this.snakeGroup.remove(this.snakeGroup.children[this.blocks]);
+            this.score +- 2;
+
             globalKeyPressed = null;
             // this.redAlert();
         }
