@@ -1,7 +1,7 @@
 // TOGGLE enable-disable textures
 var textureAttive = true;
 var selectWorld;
-var musicOn = true;
+var musicOn = false;
 var delta = 0;
 
 /*  selectWorld legenda:
@@ -10,7 +10,6 @@ var delta = 0;
     2 = dark 
 */
 
-
 document.getElementById("Landscape").onclick = function (event) {
     selectWorld = 0;
     console.log("User selected Landscape-Earth : ", selectWorld);
@@ -18,7 +17,7 @@ document.getElementById("Landscape").onclick = function (event) {
     setTitles();
     main();
     game.music(0);  //landscape
-    
+
 }
 
 document.getElementById("Mars").onclick = function (event) {
@@ -28,7 +27,6 @@ document.getElementById("Mars").onclick = function (event) {
     setTitles();
     main();
     game.music(1);	//mars
-    
 
 }
 
@@ -39,12 +37,11 @@ document.getElementById("Dark").onclick = function (event) {
     setTitles();
     main();
     game.music(2);	//dark
-    
 
 }
+
 var river, floor, albero, directory, snake, duck;
 var globalKeyPressed;
-
 
 class Game {
     constructor() {
@@ -54,19 +51,14 @@ class Game {
 
         this.scene = new THREE.Scene();
 
-        this.scoreCounter=document.getElementById('Score');
+        this.scoreCounter = document.getElementById('Score');
 
-        /*var loader = new THREE.TextureLoader();
-		var bgTexture = loader.load('dg.jpg');
-		this.scene.background = bgTexture;
-        */
         this.scene.background = new THREE.Color(0x00);    // Dark black background
-
 
         this.camera = new THREE.PerspectiveCamera(75, this.width / this.height, 0.1, 200);
         this.camera.lookAt(this.scene.position);
-        this.camera.position.set(0, 3, -10);
-        this.camera.rotation.y -= 30 / (2 * Math.PI);
+        this.camera.position.set(20, 20, -24); // NEW 
+        // this.camera.rotation.y -= 30 / (2 * Math.PI);
 
         this.renderer = new THREE.WebGLRenderer({ alpha: true });
         this.renderer.setPixelRatio(window.devicePixelRatio);
@@ -89,7 +81,6 @@ class Game {
 
         this.update = function dummyUpdate() { };
 
-        
     }
 
     addLights() {
@@ -120,7 +111,6 @@ class Game {
         const dlh1 = new THREE.DirectionalLightHelper( directLight1 );
         this.scene.add(dlh1);
         */
-        
 
         /*
         const directLight2 = new THREE.DirectionalLight(0xffffff, 2);
@@ -133,43 +123,45 @@ class Game {
     }
 
 
-    music(song){
-    	var song;
-        if(musicOn==true){
+    music(song) {
+
+        var song;
+
+        if (musicOn == true) {
             // create an AudioListener and add it to the camera
             var listener = new THREE.AudioListener();
-            this.camera.add( listener );
+            this.camera.add(listener);
             // create a global audio source
-            var sound = new THREE.Audio( listener );
+            var sound = new THREE.Audio(listener);
             // load a sound and set it as the Audio object's buffer
             var audioLoader = new THREE.AudioLoader();
 
-            if(song == 0){ //LANDSCAPE
-	            audioLoader.load( 'sounds/hobbit-compressed.mp3', function( buffer ) {
-	                sound.setBuffer( buffer );
-	                sound.setLoop( true );
-	                sound.setVolume( 0.5 );
-	                sound.play();
-	            });
+            if (song == 0) { //LANDSCAPE
+                audioLoader.load('sounds/hobbit-compressed.mp3', function (buffer) {
+                    sound.setBuffer(buffer);
+                    sound.setLoop(true);
+                    sound.setVolume(0.5);
+                    sound.play();
+                });
 
-            } 
-            if(song == 1){ //MARS
-	            audioLoader.load( 'sounds/odissea.mp3', function( buffer ) {
-	                sound.setBuffer( buffer );
-	                sound.setLoop( true );
-	                sound.setVolume( 0.5 );
-	                sound.play();
-	            });
-	        }
+            }
+            if (song == 1) { //MARS
+                audioLoader.load('sounds/odissea.mp3', function (buffer) {
+                    sound.setBuffer(buffer);
+                    sound.setLoop(true);
+                    sound.setVolume(0.5);
+                    sound.play();
+                });
+            }
 
-	        if(song == 2){ //DARK
-	            audioLoader.load( 'sounds/avengers-compressed.mp3', function( buffer ) {
-	                sound.setBuffer( buffer );
-	                sound.setLoop( true );
-	                sound.setVolume( 0.5 );
-	                sound.play();
-	            });
-	        }
+            if (song == 2) { //DARK
+                audioLoader.load('sounds/avengers-compressed.mp3', function (buffer) {
+                    sound.setBuffer(buffer);
+                    sound.setLoop(true);
+                    sound.setVolume(0.5);
+                    sound.play();
+                });
+            }
         }
     }
 
@@ -276,7 +268,7 @@ class Game {
 
         var sats =
         {
-            scaleX: 40, 
+            scaleX: 40,
             scaleY: 40,
 
             posXRight: 70,
@@ -354,6 +346,7 @@ class Game {
     }
 
     animate() {
+
         requestAnimationFrame(this.animate.bind(this));
 
         this.stats.begin();
@@ -376,7 +369,7 @@ class Game {
 var game = new Game();
 var globalMap = makeMap();
 
-// removed window.onload to wait user to click
+// I removed window.onload to wait user to click
 function main() {
     game.update = updateFunction;
     game.addLights();
@@ -386,7 +379,6 @@ function main() {
         game.createFloorSx(50, 0, 100, 30, -0.4, 0);
         game.createFloorDx(50, 0, 100, -30, -0.4, 0);
         game.createSkyBox();
-
     }
 
     game.scene.add(globalMap);
@@ -420,8 +412,12 @@ document.onkeydown = function checkKey(e) {
 // Needed by Game class
 var updateFunction = function () {
 
-    delta+=0.7;
+    delta += 0.7;
     snake.update();
+    game.camera.lookAt(snake.getPosition()); // NEW
+
+   /* QUI SI PUO' AGGIUNGERE CHE LA DISTANZA FRA SNAKE E CAMERA SEMPRE COSTANTE */
+
     egg.update();
     duck.update();
 
@@ -470,7 +466,7 @@ function setTitles() {
 
 }
 
-function scoreUpdate(value){
-    document.getElementById("Score").innerHTML = "Score: " +value;
+function scoreUpdate(value) {
+    document.getElementById("Score").innerHTML = "Score: " + value;
 }
 

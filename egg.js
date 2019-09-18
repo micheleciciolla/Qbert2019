@@ -33,6 +33,7 @@ class Egg {
             visible: false
         });
         this.rayCaster = new THREE.Raycaster();
+        this.blocks = 0;
     }
 
     build() {
@@ -50,59 +51,39 @@ class Egg {
 
         this.group.add(blockMesh);
 
-        /*
-        var blockMesh = new THREE.Mesh(this.blockGeometry, this.blockMaterial);
-        blockMesh.castShadow = true;
-        blockMesh.receiveShadow = true;
-        blockMesh.name = "Egg:Block_1";
-
-        blockMesh.rotation.x = 90 / (Math.PI / 2);
-        blockMesh.rotation.z = 90 / (Math.PI / 2);
-        blockMesh.position.x = +1;
-        blockMesh.position.y = +1;
-        blockMesh.position.z = +1;
-        this.group.add(blockMesh);
-
-        var blockMesh = new THREE.Mesh(this.blockGeometry, this.blockMaterial);
-        blockMesh.castShadow = true;
-        blockMesh.receiveShadow = true;
-        blockMesh.name = "Egg:Block_2";
-
-        blockMesh.rotation.x = 180 / (Math.PI / 2);
-        blockMesh.rotation.z = 180 / (Math.PI / 2);
-        blockMesh.position.x = -1;
-        blockMesh.position.y = +1;
-        blockMesh.position.z = +1;
-        this.group.add(blockMesh);
-
-        */
-
         this.group.position.x = this.position.x;
         this.group.position.y = this.position.y;
         this.group.position.z = this.position.z;
 
         game.scene.add(this.group);
 
-        this.blocks = 1; // adding first egg
+        this.blocks ++; // adding first egg
 
     }
 
     addEgg() {
 
+        // NEW
+
+        game.scene.remove(this.group);
+        egg = new Egg(new THREE.Vector3(Math.random(-10) * 10, 2, Math.random(-10) * 10));
+        egg.build();
+
+        /*
         var blockMesh = new THREE.Mesh(this.blockGeometry, this.blockMaterial);
         blockMesh.castShadow = true;
         blockMesh.receiveShadow = true;
         blockMesh.name = "Egg_" + this.blocks; // nomina gli Egg_2, Egg_3 ecc.. 
 
-        // bisogna controllare che non si sovrappongano uova sulla stessa posizione
         blockMesh.position.x = Math.random(-20)*20;
         // blockMesh.position.y = Math.random(-20)*20;;
         blockMesh.position.z = Math.random(-20)*20;;
 
         this.group.add(blockMesh);
         this.blocks++;
+        */
 
-        globalKeyPressed = null;
+        // globalKeyPressed = null;
 
     }
 
