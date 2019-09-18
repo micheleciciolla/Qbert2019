@@ -1,7 +1,7 @@
 // TOGGLE enable-disable textures
 var textureAttive = true;
 var selectWorld;
-var musicOn = false;
+var musicOn = true;
 var delta = 0;
 
 /*  selectWorld legenda:
@@ -414,9 +414,12 @@ var updateFunction = function () {
 
     delta += 0.7;
     snake.update();
-    game.camera.lookAt(snake.getPosition()); // NEW
+    game.camera.lookAt(snake.getPosition()); // NEW (a me gli fps calano molto se attivo)
 
    /* QUI SI PUO' AGGIUNGERE CHE LA DISTANZA FRA SNAKE E CAMERA SEMPRE COSTANTE */
+
+
+
 
     egg.update();
     duck.update();
