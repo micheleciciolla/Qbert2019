@@ -2,13 +2,13 @@
 var textureAttive = true;
 var selectWorld;
 var musicOn = true;
-var delta = 0;
 
 /*  selectWorld legenda:
     0 = land 
     1 = mars 
     2 = dark 
 */
+
 
 document.getElementById("Landscape").onclick = function (event) {
     selectWorld = 0;
@@ -17,6 +17,8 @@ document.getElementById("Landscape").onclick = function (event) {
     setTitles();
     main();
     game.music(0);  //landscape
+
+
 
 }
 
@@ -28,6 +30,7 @@ document.getElementById("Mars").onclick = function (event) {
     main();
     game.music(1);	//mars
 
+
 }
 
 document.getElementById("Dark").onclick = function (event) {
@@ -38,10 +41,11 @@ document.getElementById("Dark").onclick = function (event) {
     main();
     game.music(2);	//dark
 
-}
 
-var river, floor, albero, directory, snake, duck;
+}
+var river, floor, albero, directory, snake, duck, cloud, sheep;
 var globalKeyPressed;
+
 
 class Game {
     constructor() {
@@ -52,13 +56,20 @@ class Game {
         this.scene = new THREE.Scene();
 
         this.scoreCounter = document.getElementById('Score');
+        this.lengthCounter = document.getElementById('Length');
 
+        /*var loader = new THREE.TextureLoader();
+		var bgTexture = loader.load('dg.jpg');
+		this.scene.background = bgTexture;
+        */
+       
         this.scene.background = new THREE.Color(0x00);    // Dark black background
+
 
         this.camera = new THREE.PerspectiveCamera(75, this.width / this.height, 0.1, 200);
         this.camera.lookAt(this.scene.position);
-        this.camera.position.set(20, 20, -24); // NEW 
-        // this.camera.rotation.y -= 30 / (2 * Math.PI);
+        this.camera.position.set(-5, 10, -35);  //20 20 -24
+        this.camera.rotation.y -= 30 / (2 * Math.PI);
 
         this.renderer = new THREE.WebGLRenderer({ alpha: true });
         this.renderer.setPixelRatio(window.devicePixelRatio);
@@ -81,6 +92,8 @@ class Game {
 
         this.update = function dummyUpdate() { };
 
+        this.boxes = [];
+
     }
 
     addLights() {
@@ -98,7 +111,6 @@ class Game {
         this.scene.add(slh);
 
         const light = new THREE.HemisphereLight(0xffffff, 0xffffff, 0.9);
-        // light.castShadow = true;
         this.scene.add(light);
         const lh = new THREE.HemisphereLightHelper(light);
         this.scene.add(lh);
@@ -124,9 +136,7 @@ class Game {
 
 
     music(song) {
-
         var song;
-
         if (musicOn == true) {
             // create an AudioListener and add it to the camera
             var listener = new THREE.AudioListener();
@@ -156,6 +166,14 @@ class Game {
 
             if (song == 2) { //DARK
                 audioLoader.load('sounds/avengers-compressed.mp3', function (buffer) {
+                    sound.setBuffer(buffer);
+                    sound.setLoop(true);
+                    sound.setVolume(0.5);
+                    sound.play();
+                });
+            }
+            if (song == 3) { //GAME OVER
+                audioLoader.load('sounds/odissea.mp3', function (buffer) {
                     sound.setBuffer(buffer);
                     sound.setLoop(true);
                     sound.setVolume(0.5);
@@ -225,11 +243,11 @@ class Game {
 
         var trees =
         {
-            scaleX: 64, /* Trees are 64*64.  */
-            scaleY: 64,
+            scaleX: 30, /* Trees are 64*64.  */
+            scaleY: 30,
 
-            posXRight: 50,
-            posYRight: 30, /* + 32 = 64 / 2.  */
+            posXRight: 20,
+            posYRight: 15, /* + 32 = 64 / 2.  */
             posZRight: 0
         }
         var scr = /* Screen dimensions.  */
@@ -268,11 +286,11 @@ class Game {
 
         var sats =
         {
-            scaleX: 40,
-            scaleY: 40,
+            scaleX: 5,
+            scaleY: 5,
 
-            posXRight: 70,
-            posYRight: 35, /* + 32 = 64 / 2.  */
+            posXRight: 20,
+            posYRight: 10, /* + 32 = 64 / 2.  */
             posZRight: 0
         }
         var scr = /* Screen dimensions.  */
@@ -305,6 +323,49 @@ class Game {
         }
 
     }
+    //Creazione di un oggetto immagine nel workspace
+    createSkull() {
+
+        var skus =
+        {
+            scaleX: 40,
+            scaleY: 40,
+
+            posXRight: 14,
+            posYRight: 20, /* + 32 = 64 / 2.  */
+            posZRight: 0
+        }
+        var scr = /* Screen dimensions.  */
+        {
+            w: window.innerWidth,
+            h: window.innerHeight
+        }
+
+        var i, sku;
+        var skuTexture = THREE.ImageUtils.loadTexture(teschio);
+
+        var skuMaterial = new THREE.SpriteMaterial({
+            map: skuTexture,
+            useScreenCoordinates:
+                false
+        });
+
+        for (i = 0; skus.posZRight - (i * 200) > -scr.w; i++) {
+            //albero
+            sku = new THREE.Sprite(skuMaterial);
+            /* Use sprites so that
+             * the trees will
+             * always point to 
+             * the camera.  */
+
+            sku.position.set(skus.posXRight, skus.posYRight, skus.posZRight - (i * 1400));
+            sku.scale.set(skus.scaleX, skus.scaleY, 1.0);
+            this.scene.add(sku);
+
+        }
+
+    }
+
 
     /* Function that creates the skybox with 512*512 size pictures.  */
     createSkyBox() {
@@ -342,11 +403,12 @@ class Game {
 
         if (selectWorld == 1) game.createSat();
 
+        if (selectWorld == 2) game.createSkull();
+
 
     }
 
     animate() {
-
         requestAnimationFrame(this.animate.bind(this));
 
         this.stats.begin();
@@ -369,16 +431,17 @@ class Game {
 var game = new Game();
 var globalMap = makeMap();
 
-// I removed window.onload to wait user to click
+// removed window.onload to wait user to click
 function main() {
     game.update = updateFunction;
     game.addLights();
 
     if (textureAttive) {
-        game.createRiver(10, 0, 100, -0.4, 0);
-        game.createFloorSx(50, 0, 100, 30, -0.4, 0);
-        game.createFloorDx(50, 0, 100, -30, -0.4, 0);
+        game.createRiver(5, 0, 50, -0.4, 0);
+        game.createFloorSx(20, 0, 50, 12.5, -0.4, 0);
+        game.createFloorDx(20, 0, 50, -12.5, -0.4, 0);
         game.createSkyBox();
+
     }
 
     game.scene.add(globalMap);
@@ -396,6 +459,12 @@ function main() {
     duck = new Duck(new THREE.Vector3(0, 2, 20));
     duck.build();
 
+    sheep = new Sheep(new THREE.Vector3(0, 2, 20));
+    sheep.build();
+
+    cloud = new Cloud(new THREE.Vector3(0, 2, 20));
+    cloud.build();
+
     game.animate();
 }
 
@@ -406,29 +475,32 @@ document.onkeydown = function checkKey(e) {
     if (globalKeyPressed == 69) egg.addEgg();
     // [ R ] add duck
     if (globalKeyPressed == 82) duck.addDuck();
+    // T add sheep
+    if (globalKeyPressed == 84) sheep.addSheep();
+    // V add cloud
+    //if (globalKeyPressed == 86) cloud.addCloud();
+
 
 }
 
 // Needed by Game class
 var updateFunction = function () {
 
-    delta += 0.7;
     snake.update();
-    game.camera.lookAt(snake.getPosition()); // NEW (a me gli fps calano molto se attivo)
-
-   /* QUI SI PUO' AGGIUNGERE CHE LA DISTANZA FRA SNAKE E CAMERA SEMPRE COSTANTE */
-
-
-
-
+    game.camera.lookAt(snake.getPosition());  //FOLLOWING
     egg.update();
     duck.update();
+    sheep.update();
+    cloud.update();
+    if (snake.isDead == true) gameOver();
 
-    // TODO
-    // if (snake.isDead == true) location.reload();
+}
 
-    // globalKeyPressed = null;
-
+function gameOver() {
+    snake.snakeGroup.visible = false;
+    document.getElementById("GameoverTitle").style.visibility = 'visible';
+    document.getElementById("Reset").style.visibility = 'visible';
+    
 }
 
 function chooseWorld(selection) {
@@ -438,6 +510,7 @@ function chooseWorld(selection) {
         floor = "textures/land/floor.jpg";
         albero = "textures/land/tree.png";
         directory = "textures/land/";
+
 
     }
     if (selection == 1) {
@@ -452,6 +525,7 @@ function chooseWorld(selection) {
         river = "textures/dark/river.jpg";
         floor = "textures/dark/floor.jpg";
         directory = "textures/dark/";
+        teschio = "textures/dark/skull.png";
     }
 }
 
@@ -466,10 +540,17 @@ function setTitles() {
     document.getElementById("intro-earth").style.visibility = 'hidden';
     document.getElementById("intro-mars").style.visibility = 'hidden';
     document.getElementById("Score").style.visibility = 'visible';
+    document.getElementById("Length").style.visibility = 'visible';
 
 }
 
 function scoreUpdate(value) {
     document.getElementById("Score").innerHTML = "Score: " + value;
+}
+function lengthUpdate(value) {
+    document.getElementById("Length").innerHTML = "Length: " + value;
+}
+function restart() {
+    location.reload();
 }
 

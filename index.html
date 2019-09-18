@@ -15,7 +15,7 @@
                 background-repeat: no-repeat;
                 background-size: cover;
             }
-
+            
             input[type=button] {
                 font-family: monospace;
             }
@@ -116,7 +116,7 @@
                 visibility: hidden;
                 color: red;
                 transform: scale(1.5);
-                top: 10%;
+                top: 40%;
                 left: 36.5%;
             }
 
@@ -140,6 +140,17 @@
                 left: 5%;
                 color: red;
                 font-size: 1.5em;
+            }
+            #Length{
+                top: 14%;
+                left: 5%;
+                color: red;
+                font-size: 1.5em;
+            }
+            #Reset{
+                top: 60%;
+                right: 45%;
+                visibility: hidden;
             }
             
 
@@ -168,7 +179,9 @@
     <button class="link alignleft" style="font-size:3em;" id="Landscape">The Shire</button>
     <img src="./textures/intro-earth.png" style="position :absolute; top:16em; left:38%; width: 22.5%;"id="intro-earth">
 
+    <button onclick= "restart()" class="link alignleft" style="font-size:3em;" id="Reset">Restart</button>
     
+
     <!-- Nome del gioco e logo -->
 
     <p class="gametitle" id="Dragon"> DragonSnake
@@ -184,8 +197,11 @@
     <!-- use [W][S][A][D] + [Z][X] to go up in the sky -->
 
     <p class="gamevariants" id="Score">Score: 0</p>
+    <p class="gamevariants" id="Length">Length: 0</p>
 
-    <p class="gametitle" id="GameoverTitle"> GAME OVER </p>
+    <p class="gametitle" id="GameoverTitle"> GAME OVER 
+        <img src="./textures/dead.png" style="position :absolute; top:-3em; left:25%; width: 50%;">
+    </p>
 
     <script src="js/Stats.js"></script>
     <script src="js/perlin.js"></script>
@@ -199,7 +215,9 @@
     <script src="food.js"></script>
     <script src="egg.js"></script>
     <script src="duck.js"></script>
-
+    <script src="sheep.js"></script>
+    <script src="cloud.js"></script>
+    <script src="tree.js"></script>
     <script src="app.js"></script>
 
     

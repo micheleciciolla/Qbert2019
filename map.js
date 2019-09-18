@@ -1,7 +1,7 @@
 // Random map generator
 function makeMap()
 {
-    var mapGeometry = new THREE.PlaneGeometry(100, 100, 100, 100);
+    var mapGeometry = new THREE.PlaneGeometry(30, 30, 30, 30);
     
     // FLAT
     /*
