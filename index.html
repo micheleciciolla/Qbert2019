@@ -5,13 +5,15 @@
         <meta charset=utf-8>
         <link rel="shortcut icon">
         <title>IG-Project</title>
+        
         <style>
-            canvas {
-                width: 100%;
-                height: 100%;
+
+            canvas{
+                width: 720px;
+                height:  360px;
                 background: url('dg.jpg');
                 background-repeat: no-repeat;
-                background-size: cover
+                background-size: cover;
             }
 
             input[type=button] {
@@ -139,6 +141,7 @@
                 color: red;
                 font-size: 1.5em;
             }
+            
 
             @-moz-document url-prefix() {
                 #Gameover {
@@ -149,6 +152,8 @@
 
         </style>
     </head>
+    <body>
+    
 
     <!-- Titolo e immagine associata -->
 
@@ -164,7 +169,6 @@
     <img src="./textures/intro-earth.png" style="position :absolute; top:16em; left:38%; width: 22.5%;"id="intro-earth">
 
     
-
     <!-- Nome del gioco e logo -->
 
     <p class="gametitle" id="Dragon"> DragonSnake
@@ -177,7 +181,6 @@
         [W: nord] [S: sud] [A: west] [D: est] [Z: up] [X: down]
         [Click/Drag with Touchpad to move the camera]
     </p>
-
     <!-- use [W][S][A][D] + [Z][X] to go up in the sky -->
 
     <p class="gamevariants" id="Score">Score: 0</p>
@@ -198,6 +201,8 @@
     <script src="duck.js"></script>
 
     <script src="app.js"></script>
+
+    
 
 
     </body>

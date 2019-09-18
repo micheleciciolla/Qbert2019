@@ -95,16 +95,20 @@ class Egg {
         blockMesh.name = "Egg_" + this.blocks; // nomina gli Egg_2, Egg_3 ecc.. 
 
         // bisogna controllare che non si sovrappongano uova sulla stessa posizione
-        blockMesh.position.x = Math.random(-10)*10;
-        blockMesh.position.y = 2;
-        blockMesh.position.z = 15;
+        blockMesh.position.x = Math.random(-20)*20;
+        // blockMesh.position.y = Math.random(-20)*20;;
+        blockMesh.position.z = Math.random(-20)*20;;
 
         this.group.add(blockMesh);
-        
         this.blocks++;
 
         globalKeyPressed = null;
 
+    }
+
+    getPosition(){
+
+        return this.egg.position;
     }
 
     update() {

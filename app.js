@@ -1,13 +1,15 @@
 // TOGGLE enable-disable textures
 var textureAttive = true;
 var selectWorld;
-var musicOn = true;
+var musicOn = false;
+var delta = 0;
 
 /*  selectWorld legenda:
     0 = land 
     1 = mars 
     2 = dark 
 */
+
 
 document.getElementById("Landscape").onclick = function (event) {
     selectWorld = 0;
@@ -16,7 +18,7 @@ document.getElementById("Landscape").onclick = function (event) {
     setTitles();
     main();
     game.music(0);  //landscape
-
+    
 }
 
 document.getElementById("Mars").onclick = function (event) {
@@ -26,6 +28,7 @@ document.getElementById("Mars").onclick = function (event) {
     setTitles();
     main();
     game.music(1);	//mars
+    
 
 }
 
@@ -36,6 +39,7 @@ document.getElementById("Dark").onclick = function (event) {
     setTitles();
     main();
     game.music(2);	//dark
+    
 
 }
 var river, floor, albero, directory, snake, duck;
@@ -103,6 +107,7 @@ class Game {
         this.scene.add(slh);
 
         const light = new THREE.HemisphereLight(0xffffff, 0xffffff, 0.9);
+        // light.castShadow = true;
         this.scene.add(light);
         const lh = new THREE.HemisphereLightHelper(light);
         this.scene.add(lh);
@@ -115,6 +120,7 @@ class Game {
         const dlh1 = new THREE.DirectionalLightHelper( directLight1 );
         this.scene.add(dlh1);
         */
+        
 
         /*
         const directLight2 = new THREE.DirectionalLight(0xffffff, 2);
@@ -137,6 +143,7 @@ class Game {
             var sound = new THREE.Audio( listener );
             // load a sound and set it as the Audio object's buffer
             var audioLoader = new THREE.AudioLoader();
+
             if(song == 0){ //LANDSCAPE
 	            audioLoader.load( 'sounds/hobbit-compressed.mp3', function( buffer ) {
 	                sound.setBuffer( buffer );
@@ -147,7 +154,7 @@ class Game {
 
             } 
             if(song == 1){ //MARS
-	            audioLoader.load( 'sounds/starwars2-compressed.mp3', function( buffer ) {
+	            audioLoader.load( 'sounds/odissea.mp3', function( buffer ) {
 	                sound.setBuffer( buffer );
 	                sound.setLoop( true );
 	                sound.setVolume( 0.5 );
@@ -264,6 +271,49 @@ class Game {
 
     }
 
+    //Creazione di un oggetto immagine nel workspace
+    createSat() {
+
+        var sats =
+        {
+            scaleX: 40, 
+            scaleY: 40,
+
+            posXRight: 70,
+            posYRight: 35, /* + 32 = 64 / 2.  */
+            posZRight: 0
+        }
+        var scr = /* Screen dimensions.  */
+        {
+            w: window.innerWidth,
+            h: window.innerHeight
+        }
+
+        var i, sat;
+        var satTexture = THREE.ImageUtils.loadTexture(satellite);
+
+        var satMaterial = new THREE.SpriteMaterial({
+            map: satTexture,
+            useScreenCoordinates:
+                false
+        });
+
+        for (i = 0; sats.posZRight - (i * 200) > -scr.w; i++) {
+            //albero
+            sat = new THREE.Sprite(satMaterial);
+            /* Use sprites so that
+             * the trees will
+             * always point to 
+             * the camera.  */
+
+            sat.position.set(sats.posXRight, sats.posYRight, sats.posZRight - (i * 1400));
+            sat.scale.set(sats.scaleX, sats.scaleY, 1.0);
+            this.scene.add(sat);
+
+        }
+
+    }
+
     /* Function that creates the skybox with 512*512 size pictures.  */
     createSkyBox() {
 
@@ -297,6 +347,8 @@ class Game {
         this.scene.add(sky);
 
         if (selectWorld == 0) game.createTrees();
+
+        if (selectWorld == 1) game.createSat();
 
 
     }
@@ -368,6 +420,7 @@ document.onkeydown = function checkKey(e) {
 // Needed by Game class
 var updateFunction = function () {
 
+    delta+=0.7;
     snake.update();
     egg.update();
     duck.update();
@@ -382,11 +435,10 @@ var updateFunction = function () {
 function chooseWorld(selection) {
     if (selection == 0) {
         // landscape
-        river = "textures/land/river.jpg";
+        river = "textures/land/river.gif";
         floor = "textures/land/floor.jpg";
         albero = "textures/land/tree.png";
         directory = "textures/land/";
-
 
     }
     if (selection == 1) {
@@ -394,6 +446,7 @@ function chooseWorld(selection) {
         river = "textures/mars/river.jpg";
         floor = "textures/mars/floor.jpg";
         directory = "textures/mars/";
+        satellite = "textures/mars/sat.png";
     }
     if (selection == 2) {
         // dark
@@ -413,12 +466,11 @@ function setTitles() {
     document.getElementById("intro-dark").style.visibility = 'hidden';
     document.getElementById("intro-earth").style.visibility = 'hidden';
     document.getElementById("intro-mars").style.visibility = 'hidden';
-
     document.getElementById("Score").style.visibility = 'visible';
 
 }
 
 function scoreUpdate(value){
-    document.getElementById("Score").innerHTML = "SCORE: " +value;
+    document.getElementById("Score").innerHTML = "Score: " +value;
 }
 
