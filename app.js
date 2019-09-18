@@ -1,7 +1,7 @@
 // TOGGLE enable-disable textures
 var textureAttive = true;
 var selectWorld;
-var musicOn = false;
+var musicOn = true;
 var delta = 0;
 
 /*  selectWorld legenda:
