@@ -16,7 +16,7 @@ class Duck {
     constructor(position) {
 
         this.position = position;
-        // this.rotation = new THREE.Vector3(0, 0, 0);
+        this.rotation = new THREE.Vector3(0, 0, 0);
 
         this.group = new THREE.Group();
         this.group.name = "DuckGroup";
@@ -233,14 +233,6 @@ class Duck {
         nosefaceLEFT.rotation.set(1.65, 0, 0);
         head.add(nosefaceLEFT);
 
-        const Circularduck = new THREE.TorusBufferGeometry( 2.5, 0.15, 180, 50 );
-        const circoduck = new THREE.Mesh(Circularduck, this.orangeMaterial);
-        circoduck.castShadow = true;
-        circoduck.receiveShadow = true;
-        circoduck.position.y = -0.15;
-
-        this.group.add(circoduck);  
-
         this.group.position.x = this.position.x;
         this.group.position.y = this.position.y;
         this.group.position.z = this.position.z;
@@ -256,9 +248,9 @@ class Duck {
             Impartisce i comandi 
         */
 
-        this.group.children[0].position.x += x;
-        this.group.children[0].position.y += y;
-        this.group.children[0].position.z += z;
+        this.group.position.x += x;
+        this.group.position.y += y;
+        this.group.position.z += z;
 
     }
 
@@ -267,11 +259,133 @@ class Duck {
         return this.group.position;
     }
 
+    setOrientation(x, y, z) {
+
+        this.duckDirection = new THREE.Vector3(x, y, z);
+
+        /*
+            Questa sezione qui sotto serve a capire come girare la testa
+            in base alla direzione del movimento
+        */
+
+        if (x != 0) {
+
+            if (this.group.children[0].rotation.x > 0) {
+                this.group.children[0].rotation.x += - 0.1;
+            }
+            else if (this.group.children[0].rotation.x < 0) {
+                this.group.children[0].rotation.x += 0.1;
+            }
+
+            if (this.group.children[0].rotation.z > 0) {
+                this.group.children[0].rotation.z += - 0.1;
+            }
+            else if (this.group.children[0].rotation.z < 0) {
+                this.group.children[0].rotation.z += 0.1;
+            }
+
+
+            //1 Premo A e sto in posizione 0: arrivo in posizione y = 1.5
+            if ((x > 0) && (this.group.children[0].rotation.y >= 0) && (this.group.children[0].rotation.y < 1.45)) {
+                this.group.children[0].rotation.y += 0.1;
+                if (this.group.children[0].rotation.y > 1.4) {
+                    this.group.children[0].rotation.y = 1.5;
+                };
+            }
+
+
+            //5 Premo D e sto in posizione 0: arrivo in posizione y = 1.5
+            else if ((x < 0) && (this.group.children[0].rotation.y < 1)) {
+                this.group.children[0].rotation.y = 6;
+            }
+            else if ((x < 0) && (this.group.children[0].rotation.y > 4.65) && (this.group.children[0].rotation.y < 6.05)) {
+                this.group.children[0].rotation.y += -0.1;
+                if (this.group.children[0].rotation.y < 4.65) {
+                    this.group.children[0].rotation.y = 4.6;
+                };
+            }
+            //7 Premo A e sto in posizione 3.4 o -3.4: arrivo in posizione y = 1.7
+            else if ((x > 0) && (this.group.children[0].rotation.y > 1.55) && (this.group.children[0].rotation.y < 3.2)) {
+                this.group.children[0].rotation.y += -0.1;
+                if (this.group.children[0].rotation.y < 1.6) {
+                    this.group.children[0].rotation.y = 1.5;
+                };
+            }
+
+            //3 Premo D e sto in posizione 3.1 o -3.1: arrivo in posizione y = 1.5
+            else if ((x < 0) && ((this.group.children[0].rotation.y >= 3.1) && (this.group.children[0].rotation.y < 4.55))) {
+                this.group.children[0].rotation.y += 0.1;
+                if (this.group.children[0].rotation.y > 4.5) {
+                    this.group.children[0].rotation.y = 4.6;
+                };
+            }
+
+
+        }
+
+        if (y != 0) {
+            this.group.children[0].rotation.z = 0;
+            this.group.children[0].rotation.x = -y * Math.PI / 2;
+            this.group.children[0].rotation.y = 0;
+        }
+
+
+        if (z != 0) {
+
+
+            if (this.group.children[0].rotation.x > 0) {
+                this.group.children[0].rotation.x += -0.1;
+            }
+            else if (this.group.children[0].rotation.x < 0) {
+                this.group.children[0].rotation.x += 0.1;
+            }
+
+            if (this.group.children[0].rotation.z > 0) {
+                this.group.children[0].rotation.z += -0.1;
+            }
+            else if (this.group.children[0].rotation.z < 0) {
+                this.group.children[0].rotation.z += 0.1;
+            }
+
+
+            //4 Premo W e sto in posizione 1.5: arrivo in posizione y = 0
+            if ((z > 0) && (this.group.children[0].rotation.y >= 4.55) && (this.group.children[0].rotation.y < 6.05)) {
+                this.group.children[0].rotation.y += 0.1;
+                if (this.group.children[0].rotation.y > 6) {
+                    this.group.children[0].rotation.y = 0;
+                };
+            }
+            //6 Premo S e sto in posizione -1.5: arrivo in posizione y = -3.4
+            else if ((z < 0) && (this.group.children[0].rotation.y <= 4.65) && (this.group.children[0].rotation.y >= 3.15)) {
+                this.group.children[0].rotation.y += -0.1;
+                if (this.group.children[0].rotation.y < 3.2) {
+                    this.group.children[0].rotation.y = 3.1;
+                };
+            }
+
+            //8 Premo W e sto in posizione -1.5: arrivo in posizione y = 0
+            else if ((z > 0) && (this.group.children[0].rotation.y > 0.05) && (this.group.children[0].rotation.y < 1.75)) {
+                this.group.children[0].rotation.y += -0.1;
+                if (this.group.children[0].rotation.y < 0.1) {
+                    this.group.children[0].rotation.y = 0;
+                };
+            }
+
+            //2 Premo S e sto in posizione 1.5: arrivo in posizione y = 3.1
+            else if ((z < 0) && (this.group.children[0].rotation.y >= 1.45) && (this.group.children[0].rotation.y < 3.05)) {
+                this.group.children[0].rotation.y += 0.1;
+                if (this.group.children[0].rotation.y > 3) {
+                    this.group.children[0].rotation.y = 3.1;
+                };
+            }
+        }
+    }
+
     addDuck() {
 
         // NEW : 
-        game.scene.remove(this.group);
-        duck = new Duck(new THREE.Vector3(Math.random(-25) * 25, 2, Math.random(-25) * 25));
+        game.scene.remove(duck.group);
+        duck = new Duck(new THREE.Vector3(Math.random(-30), 2, Math.random(-30)));
         duck.build();
 
     }
@@ -319,8 +433,9 @@ class Duck {
         }
 
         // MATTEO collision box
-        var BB = new THREE.Box3().setFromObject(this.group);
+        var BB = new THREE.Box3().setFromObject(duck.group.children[0]);
         BB.name = "duckBB";    
         game.boxes.push(BB);
+        // console.log("DUCK POS : ", this.getPosition());
     }
 }

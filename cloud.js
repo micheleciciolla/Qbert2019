@@ -31,9 +31,8 @@ class Cloud {
             depthTest: true,
         });
 
-
-
-
+        // MATTEO la hitbox non è più utile
+        /*
         this.hitBoxGeometry = new THREE.SphereGeometry(1.5, 10, 10);
         this.hitBoxMaterial = new THREE.MeshPhongMaterial({
             color: 0xFFD700,
@@ -43,7 +42,7 @@ class Cloud {
             opacity: 0.1,
             visible: false
         });
-
+        */
 
         this.woolMaterial = new THREE.MeshStandardMaterial({
             color: 0xffffff,
@@ -79,7 +78,8 @@ class Cloud {
             depthTest: true,
         });     
 
-        this.rayCaster = new THREE.Raycaster();
+        // MATTEO rayCaster non è più utile
+        //this.rayCaster = new THREE.Raycaster();
 
         // initially cloud is oriented vs positive Z axis
         this.cloudDirection = new THREE.Vector3(0, 0, 1);
@@ -87,11 +87,14 @@ class Cloud {
 
     build() {
 
+        // MATTEO la hitbox non è più utile
+        /*
         var hitBoxMesh = new THREE.Mesh(this.hitBoxGeometry, this.hitBoxMaterial);
         hitBoxMesh.castShadow = true;
         hitBoxMesh.receiveShadow = true;
         hitBoxMesh.name = "Cloud:HitBox";
         this.group.add(hitBoxMesh);
+        */
 
         var blockMesh = new THREE.Mesh(this.blockGeometry, this.blockMaterial);
         blockMesh.castShadow = true;
@@ -316,10 +319,9 @@ class Cloud {
 
 
     update() {
-        
-
-    
-
-    
+        // MATTEO collision box
+        var BB = new THREE.Box3().setFromObject(this.group.children[0]);
+        BB.name = "cloudBB";    
+        game.boxes.push(BB);
     }
 }

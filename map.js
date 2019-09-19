@@ -1,7 +1,7 @@
 // Random map generator
 function makeMap()
 {
-    var mapGeometry = new THREE.PlaneGeometry(30, 30, 30, 30);
+    var mapGeometry = new THREE.PlaneGeometry(45, 50, 50, 50); //refactored: coincidono col terreno
     
     // FLAT
     /*
@@ -38,5 +38,4 @@ function makeMap()
     map.name = "Ground"
     
     return map;
-
 }

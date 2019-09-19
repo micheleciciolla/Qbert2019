@@ -9,7 +9,6 @@ var musicOn = true;
     2 = dark 
 */
 
-
 document.getElementById("Landscape").onclick = function (event) {
     selectWorld = 0;
     console.log("User selected Landscape-Earth : ", selectWorld);
@@ -17,9 +16,7 @@ document.getElementById("Landscape").onclick = function (event) {
     setTitles();
     main();
     game.music(0);  //landscape
-
-
-
+    
 }
 
 document.getElementById("Mars").onclick = function (event) {
@@ -30,7 +27,6 @@ document.getElementById("Mars").onclick = function (event) {
     main();
     game.music(1);	//mars
 
-
 }
 
 document.getElementById("Dark").onclick = function (event) {
@@ -40,10 +36,10 @@ document.getElementById("Dark").onclick = function (event) {
     setTitles();
     main();
     game.music(2);	//dark
-
+    
 
 }
-var river, floor, albero, directory, snake, duck, cloud, sheep;
+var river, floor, albero, directory, snake, duck,cloud, sheep;
 var globalKeyPressed;
 
 
@@ -55,20 +51,19 @@ class Game {
 
         this.scene = new THREE.Scene();
 
-        this.scoreCounter = document.getElementById('Score');
-        this.lengthCounter = document.getElementById('Length');
+        this.scoreCounter=document.getElementById('Score');
+        this.lengthCounter=document.getElementById('Length');
 
         /*var loader = new THREE.TextureLoader();
 		var bgTexture = loader.load('dg.jpg');
 		this.scene.background = bgTexture;
         */
-       
         this.scene.background = new THREE.Color(0x00);    // Dark black background
 
 
         this.camera = new THREE.PerspectiveCamera(75, this.width / this.height, 0.1, 200);
         this.camera.lookAt(this.scene.position);
-        this.camera.position.set(-5, 10, -35);  //20 20 -24
+        this.camera.position.set(-10, 20, -25);  
         this.camera.rotation.y -= 30 / (2 * Math.PI);
 
         this.renderer = new THREE.WebGLRenderer({ alpha: true });
@@ -93,7 +88,7 @@ class Game {
         this.update = function dummyUpdate() { };
 
         this.boxes = [];
-
+        
     }
 
     addLights() {
@@ -135,48 +130,48 @@ class Game {
     }
 
 
-    music(song) {
-        var song;
-        if (musicOn == true) {
+    music(song){
+    	var song;
+        if(musicOn==true){
             // create an AudioListener and add it to the camera
             var listener = new THREE.AudioListener();
-            this.camera.add(listener);
+            this.camera.add( listener );
             // create a global audio source
-            var sound = new THREE.Audio(listener);
+            var sound = new THREE.Audio( listener );
             // load a sound and set it as the Audio object's buffer
             var audioLoader = new THREE.AudioLoader();
 
-            if (song == 0) { //LANDSCAPE
-                audioLoader.load('sounds/hobbit-compressed.mp3', function (buffer) {
-                    sound.setBuffer(buffer);
-                    sound.setLoop(true);
-                    sound.setVolume(0.5);
-                    sound.play();
-                });
+            if(song == 0){ //LANDSCAPE
+	            audioLoader.load( 'sounds/hobbit-compressed.mp3', function( buffer ) {
+	                sound.setBuffer( buffer );
+	                sound.setLoop( true );
+	                sound.setVolume( 0.5 );
+	                sound.play();
+	            });
 
-            }
-            if (song == 1) { //MARS
-                audioLoader.load('sounds/odissea.mp3', function (buffer) {
-                    sound.setBuffer(buffer);
-                    sound.setLoop(true);
-                    sound.setVolume(0.5);
-                    sound.play();
-                });
-            }
+            } 
+            if(song == 1){ //MARS
+	            audioLoader.load( 'sounds/odissea.mp3', function( buffer ) {
+	                sound.setBuffer( buffer );
+	                sound.setLoop( true );
+	                sound.setVolume( 0.5 );
+	                sound.play();
+	            });
+	        }
 
-            if (song == 2) { //DARK
-                audioLoader.load('sounds/avengers-compressed.mp3', function (buffer) {
-                    sound.setBuffer(buffer);
-                    sound.setLoop(true);
-                    sound.setVolume(0.5);
-                    sound.play();
-                });
-            }
-            if (song == 3) { //GAME OVER
-                audioLoader.load('sounds/odissea.mp3', function (buffer) {
-                    sound.setBuffer(buffer);
-                    sound.setLoop(true);
-                    sound.setVolume(0.5);
+	        if(song == 2){ //DARK
+	            audioLoader.load( 'sounds/avengers-compressed.mp3', function( buffer ) {
+	                sound.setBuffer( buffer );
+	                sound.setLoop( true );
+	                sound.setVolume( 0.5 );
+	                sound.play();
+	            });
+	        }
+            if(song == 3){ //GAME OVER
+                audioLoader.load( 'sounds/gameover.mp3', function( buffer ) {
+                    sound.setBuffer( buffer );
+                    sound.setLoop( true );
+                    sound.setVolume( 0.5 );
                     sound.play();
                 });
             }
@@ -286,7 +281,7 @@ class Game {
 
         var sats =
         {
-            scaleX: 5,
+            scaleX: 5, 
             scaleY: 5,
 
             posXRight: 20,
@@ -328,7 +323,7 @@ class Game {
 
         var skus =
         {
-            scaleX: 40,
+            scaleX: 40, 
             scaleY: 40,
 
             posXRight: 14,
@@ -456,13 +451,13 @@ function main() {
     egg = new Egg(new THREE.Vector3(0, 2, 10));
     egg.build();
 
-    duck = new Duck(new THREE.Vector3(0, 2, 20));
+    duck = new Duck(new THREE.Vector3(20, 2, 20));
     duck.build();
 
     sheep = new Sheep(new THREE.Vector3(0, 2, 20));
     sheep.build();
 
-    cloud = new Cloud(new THREE.Vector3(0, 2, 20));
+    cloud = new Cloud(new THREE.Vector3(1110, 2, 20));
     cloud.build();
 
     game.animate();
@@ -477,14 +472,23 @@ document.onkeydown = function checkKey(e) {
     if (globalKeyPressed == 82) duck.addDuck();
     // T add sheep
     if (globalKeyPressed == 84) sheep.addSheep();
+
     // V add cloud
     //if (globalKeyPressed == 86) cloud.addCloud();
-
+    
 
 }
 
 // Needed by Game class
 var updateFunction = function () {
+
+    // MATTEO collision box for map
+    //var mapBB = new THREE.Box3().setFromObject(globalMap.Mesh.BoxGeometry);
+    //mapBB.name = "mapBB";    
+    //game.boxes.push(mapBB);
+    //console.log(globalMap);
+    //var mapHelper = new THREE.Box3Helper( mapHelper, 0xffff00 );
+    //game.scene.add( mapHelper );
 
     snake.update();
     game.camera.lookAt(snake.getPosition());  //FOLLOWING
@@ -492,15 +496,19 @@ var updateFunction = function () {
     duck.update();
     sheep.update();
     cloud.update();
-    if (snake.isDead == true) gameOver();
+    
+    gameOver();
 
 }
 
-function gameOver() {
-    snake.snakeGroup.visible = false;
-    document.getElementById("GameoverTitle").style.visibility = 'visible';
-    document.getElementById("Reset").style.visibility = 'visible';
-    
+function gameOver(){
+    if (snake.isDead == true){
+        snake.snakeGroup.visible = false;
+        document.getElementById("GameoverTitle").style.visibility = 'visible'; 
+        document.getElementById("Reset").style.visibility = 'visible';
+        //game.music(3);
+        
+    }
 }
 
 function chooseWorld(selection) {
@@ -544,13 +552,13 @@ function setTitles() {
 
 }
 
-function scoreUpdate(value) {
-    document.getElementById("Score").innerHTML = "Score: " + value;
+function scoreUpdate(value){
+    document.getElementById("Score").innerHTML = "Score: " +value;
 }
-function lengthUpdate(value) {
-    document.getElementById("Length").innerHTML = "Length: " + value;
+function lengthUpdate(value){
+    document.getElementById("Length").innerHTML = "Length: " +value;
 }
-function restart() {
+function restart(){
     location.reload();
 }
 

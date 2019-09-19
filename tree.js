@@ -31,9 +31,8 @@ class Tree {
             depthTest: true,
         });
 
-
-
-
+        // MATTEO la hitbox non serve più
+        /*
         this.hitBoxGeometry = new THREE.SphereGeometry(1.5, 10, 10);
         this.hitBoxMaterial = new THREE.MeshPhongMaterial({
             color: 0xFFD700,
@@ -43,7 +42,7 @@ class Tree {
             opacity: 0.1,
             visible: false
         });
-
+        */
 
         this.foliageMaterial = new THREE.MeshStandardMaterial({
             color: 0xffffff,
@@ -87,12 +86,15 @@ class Tree {
 
     build() {
 
+        // MATTEO la hitbox non serve più
+        /*
         var hitBoxMesh = new THREE.Mesh(this.hitBoxGeometry, this.hitBoxMaterial);
         hitBoxMesh.castShadow = true;
         hitBoxMesh.receiveShadow = true;
         hitBoxMesh.name = "Tree:HitBox";
         this.group.add(hitBoxMesh);
-
+        */
+       
         var blockMesh = new THREE.Mesh(this.blockGeometry, this.blockMaterial);
         blockMesh.castShadow = true;
         blockMesh.receiveShadow = true;
@@ -314,8 +316,10 @@ class Tree {
 
 
     update() {
-        
-
+        // MATTEO collision box
+        var BB = new THREE.Box3().setFromObject(this.group.children[0]);
+        BB.name = "threeBB";    
+        game.boxes.push(BB);
 
     
     }

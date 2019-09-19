@@ -65,13 +65,13 @@ class Egg {
 
 
 
-        const Circularegg = new THREE.TorusBufferGeometry( 2.5, 0.15, 180, 50 );
-        const circoegg = new THREE.Mesh(Circularegg, this.redMaterial);
-        circoegg.castShadow = true;
-        circoegg.receiveShadow = true;
-        circoegg.position.y = -0.15;
+        const Circularsheep = new THREE.TorusBufferGeometry( 2.5, 0.15, 180, 50 );
+        const circosheep = new THREE.Mesh(Circularsheep, this.redMaterial);
+        circosheep.castShadow = true;
+        circosheep.receiveShadow = true;
+        circosheep.position.y = -0.15;
 
-        this.group.add(circoegg);  
+        this.group.add(circosheep);  
 
         this.group.position.x = this.position.x;
         this.group.position.y = this.position.y;

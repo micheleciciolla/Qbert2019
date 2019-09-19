@@ -47,7 +47,7 @@ class Snake {
         // initially snake is oriented vs positive Z axis
         this.snakeDirection = new THREE.Vector3(0, 0, 1);
 
-        this.score = -30;
+        this.score = 0;
         this.length = -3;
     }
 
@@ -122,7 +122,6 @@ class Snake {
         head.add(hornbackLEFT);
 
 
-
         // Squame    (children[0].childer[5 e 6 e 7])       
         const faceGeometrySQUAME1 = new THREE.BoxGeometry(0.2, 0.5, 0.5);
         const faceSQUAME1 = new THREE.Mesh(faceGeometrySQUAME1, this.redMaterial);
@@ -131,8 +130,6 @@ class Snake {
         faceSQUAME1.position.set(0, 0.57, -0.85);
         faceSQUAME1.rotation.set(0.77, 0, 0);
         head.add(faceSQUAME1);
-
-
 
 
         const faceGeometrySQUAME2 = new THREE.BoxGeometry(0.2, 0.5, 0.5);
@@ -173,8 +170,6 @@ class Snake {
         faceDOWN.position.set(0, -0.8, -0.25);
         faceDOWN.rotation.set(0, 0, 0);
         head.add(faceDOWN);
-
-
 
 
         // Horn - Mouth 
@@ -491,9 +486,7 @@ class Snake {
             cosi poi quando ci si muove la testa li richiama tutti a se
         */
 
-        var farawayinthegalaxy = 1; // not used anymore
-
-        console.log("Snake lenght: ", this.blocks);
+        // console.log("Snake lenght: ", this.blocks);
         var lastNode = Number(this.blocks);
 
         blockMesh.position.x = this.snakeGroup.children[lastNode - 1].position.x - this.snakeDirection.x * 1.1;
@@ -505,16 +498,10 @@ class Snake {
         this.snakeGroup.add(blockMesh);
         this.blocks++;
 
-        //if(checkcollision == uovo) this.score += 10
-        //if(checkcollision == papera) this.score += 20
-        //if(checkcollision == pecora) this.score += 30
-        this.score += 10;
-
-        //uovo +1 //animali +2
         this.length += 1;
+
         scoreUpdate(this.score);
         lengthUpdate(this.length);
-        globalKeyPressed = null;
 
     }
     redRemoveBlock() {
@@ -702,8 +689,6 @@ class Snake {
 
     move() {
 
-        // user inputs are disabled when snake's dead
-
         if (!this.isDead) {
 
             switch (globalKeyPressed) {
@@ -718,107 +703,172 @@ class Snake {
                 // [ Z ]
                 case (90):
 
-                    if (snake.isEqual(this.snakeDirection, [0, -1, 0])) {
-                        console.log("Game Over");
-                        this.isDead = true;
+                    if (this.isEqual(this.snakeDirection, [0, -1, 0])) {
+                        console.log("Auto eat");
+                        if (this.length == 0) this.isDead = true;
                         break;
                     }
 
-                    snake.moveHead(0, +move, 0);
-                    snake.setOrientation(0, +1, 0);
+                    this.moveHead(0, +move, 0);
+                    this.setOrientation(0, +1, 0);
                     this.updateBody(0, +1, 0);
                     break;
 
                 // [ X ]
                 case (88):
 
-                    if (snake.isEqual(this.snakeDirection, [0, 1, 0])) {
-                        console.log("Game Over");
-                        this.isDead = true;
+                    if (this.isEqual(this.snakeDirection, [0, 1, 0])) {
+                        console.log("Auto eat");
+                        if (this.length == 0) this.isDead = true;
+
                         break;
                     }
 
-                    snake.moveHead(0, -move, 0);
-                    snake.setOrientation(0, -1, 0);
+                    this.moveHead(0, -move, 0);
+                    this.setOrientation(0, -1, 0);
                     this.updateBody(0, -1, 0);
                     break;
 
 
                 // [ W ]
                 case (87):
-                    if (snake.isEqual(this.snakeDirection, [0, 0, -1])) {
-                        console.log("Game Over");
-                        this.isDead = true;
+                    if (this.isEqual(this.snakeDirection, [0, 0, -1])) {
+                        console.log("Auto eat");
+                        if (this.length == 0) this.isDead = true;
+
                         break;
                     }
-                    snake.moveHead(0, 0, +move);
-                    snake.setOrientation(0, 0, 1);
+                    this.moveHead(0, 0, +move);
+                    this.setOrientation(0, 0, 1);
                     this.updateBody(0, 0, 1);
                     break;
 
                 // [ S ] 
                 case (83):
-                    if (snake.isEqual(this.snakeDirection, [0, 0, 1])) {
-                        console.log("Game Over");
-                        this.isDead = true;
+                    if (this.isEqual(this.snakeDirection, [0, 0, 1])) {
+                        console.log("Auto eat");
+                        if (this.length == 0) this.isDead = true;
+
                         break;
                     }
-                    snake.moveHead(0, 0, -move);
-                    snake.setOrientation(0, 0, -1);
+                    this.moveHead(0, 0, -move);
+                    this.setOrientation(0, 0, -1);
                     this.updateBody(0, 0, -1);
                     break;
 
                 // [ A ]
                 case (65):
-                    if (snake.isEqual(this.snakeDirection, [-1, 0, 0])) {
-                        console.log("Game Over");
-                        this.isDead = true;
+                    if (this.isEqual(this.snakeDirection, [-1, 0, 0])) {
+                        console.log("Auto eat");
+                        if (this.length == 0) this.isDead = true;
+
                         break;
                     }
-                    snake.moveHead(+move, 0, 0);
-                    snake.setOrientation(+1, 0, 0);
+                    this.moveHead(+move, 0, 0);
+                    this.setOrientation(+1, 0, 0);
                     this.updateBody(+1, 0, 0);
                     break;
 
                 // [ D ]
                 case (68):
-                    if (snake.isEqual(this.snakeDirection, [1, 0, 0])) {
-                        console.log("Game Over");
-                        this.isDead = true;
+                    if (this.isEqual(this.snakeDirection, [1, 0, 0])) {
+                        console.log("Auto eat");
+                        if (this.length == 0) this.isDead = true;
                         break;
                     }
-                    snake.moveHead(-move, 0, 0);
-                    snake.setOrientation(-1, 0, 0);
+                    this.moveHead(-move, 0, 0);
+                    this.setOrientation(-1, 0, 0);
                     this.updateBody(-1, 0, 0);
                     break;
 
+                /* 
                 // shift = add 1
                 case (16):
-                    snake.addBlockEgg();
+                    this.addBlockEgg();
                     break;
 
                 // MAIUSC = add 2
                 case (20):
-                    snake.addBlockEgg();
-                    snake.addBlockEgg();
+                    this.addBlockEgg();
+                    this.addBlockEgg();
                     break;
 
                 // spacebar = remove 1
                 case (32):
-                    snake.redRemoveBlock();
+                    this.redRemoveBlock();
                     break;
+                */
+
             }
         }
     }
 
+    eatEgg() {
+
+        egg.addEgg();
+        this.addBlockEgg();
+        this.score += 10;
+
+
+    }
+    eatDuck() {
+
+        duck.addDuck();
+        this.addBlockEgg();
+        this.score += 20;
+
+    }
+    eatSheep() {
+
+        sheep.addSheep();
+        this.addBlockEgg();
+        this.score = 20 * this.length;
+
+    }
+
+    // MATTEO collision box check
+    checkCollision() {
+        var BB = new THREE.Box3().setFromObject(this.snakeGroup.children[0]);
+        BB.name = "snakeBB";
+        //var helper = new THREE.Box3Helper( BB, 0xffff00 );
+        //game.scene.add( helper );
+
+
+        var listCollisions = [];
+        for (var i = 0; i < game.boxes.length; i++) {
+            var collision = BB.intersectsBox(game.boxes[i]);
+            if (collision == true) {
+                listCollisions.push(game.boxes[i].name);
+                if (game.boxes[i].name == "eggBB")
+                    this.eatEgg();
+
+                if (game.boxes[i].name == "duckBB")
+                    this.eatDuck();
+
+                if (game.boxes[i].name == "sheepBB")
+                    this.eatSheep();
+            }
+
+
+        }
+
+        //console.log(collision + " " + game.boxes);
+        console.log(listCollisions);
+        game.boxes = []; // Cleaning hit boxes buffer
+
+    }
+
     update() {
-        snake.move();
+
+        this.move();
+        // MATTEO collision box check
+        this.checkCollision();
+
     }
 
     //checkposition
 
 };
-
 function chooseTexture() {
     if (selectWorld == 0) {
         // land 

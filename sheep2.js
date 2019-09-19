@@ -4,12 +4,9 @@
 var sheepGeometry = [];
 for (var deg = 0; deg <= 180; deg += 6) {
     var rad = Math.PI * deg / 180;
-    var point = new THREE.Vector2((0.92 + .08 * Math.cos(rad)) * Math.sin(rad), - Math.cos(rad)); // the "egg equation"
+    var point = new THREE.Vector2((0.92 + .08 * Math.cos(rad)) * Math.sin(rad), - Math.cos(rad) ); // the "egg equation"
     sheepGeometry.push(point);
 }
-
-
-
 
 class Sheep {
 
@@ -31,9 +28,6 @@ class Sheep {
             depthTest: true,
         });
 
-
-
-
         this.hitBoxGeometry = new THREE.SphereGeometry(1.5, 10, 10);
         this.hitBoxMaterial = new THREE.MeshPhongMaterial({
             color: 0xFFD700,
@@ -49,35 +43,35 @@ class Sheep {
             color: 0xffffff,
             roughness: 1,
             shading: THREE.FlatShading
-        });
-        this.skinMaterial = new THREE.MeshStandardMaterial({
+          });
+          this.skinMaterial = new THREE.MeshStandardMaterial({
             color: 0xffaf8b,
             roughness: 1,
             shading: THREE.FlatShading
-        });
-        this.darkMaterial = new THREE.MeshStandardMaterial({
+          });
+          this.darkMaterial = new THREE.MeshStandardMaterial({
             color: 0x4b4553,
             roughness: 1,
             shading: THREE.FlatShading
-        });
-
+          });
+        
         this.whiteMaterial = new THREE.MeshPhongMaterial({
-            color: 0xFFFFFF,
+            color: 0xFFFFFF, 
             wireframe: false,
             depthTest: true,
         });
 
         this.blackMaterial = new THREE.MeshPhongMaterial({
-            color: 0x000000,
+            color: 0x000000, 
             wireframe: false,
             depthTest: true,
-        });
+        });       
 
         this.orangeMaterial = new THREE.MeshPhongMaterial({
-            color: 0xFF8C00,
+            color: 0xFF8C00, 
             wireframe: false,
             depthTest: true,
-        });
+        });     
 
         // MATTEO rayCaster non serve più
         //this.rayCaster = new THREE.Raycaster();
@@ -96,7 +90,7 @@ class Sheep {
         hitBoxMesh.name = "Sheep:HitBox";
         this.group.add(hitBoxMesh);
         */
-
+       
         var blockMesh = new THREE.Mesh(this.blockGeometry, this.blockMaterial);
         blockMesh.castShadow = true;
         blockMesh.receiveShadow = true;
@@ -105,54 +99,37 @@ class Sheep {
         blockMesh.name = "Sheep:Block_0";
 
         this.group.add(blockMesh);
-
-        const Circularsheep = new THREE.TorusBufferGeometry(2.5, 0.15, 180, 50);
-        const circosheep = new THREE.Mesh(Circularsheep, this.whiteMaterial);
-        circosheep.castShadow = true;
-        circosheep.receiveShadow = true;
-        circosheep.position.y = -0.15;
-
-        this.group.add(circosheep);
-
-        /*         const textgeometrysheep = new THREE.TextBufferGeometry( 'Hello three.js!', {
-                      size: 100,
-                      height: 50,
-                      curveSegments: 12,
-                      bevelEnabled: true,
-                      bevelThickness: 10,
-                      bevelSize: 8,
-                      bevelOffset: 0,
-                      bevelSegments: 5
-                    } );   */
+        
+/*         const textgeometrysheep = new THREE.TextBufferGeometry( 'Hello three.js!', {
+              size: 100,
+              height: 50,
+              curveSegments: 12,
+              bevelEnabled: true,
+              bevelThickness: 10,
+              bevelSize: 8,
+              bevelOffset: 0,
+              bevelSegments: 5
+            } );   */
 
         // blockMesh.add(textgeometrysheep);
 
-        /* 
-                const bodyGeometry = new THREE.IcosahedronGeometry(1.7, 0);
-                const body = new THREE.Mesh(bodyGeometry, this.woolMaterial);
-                body.castShadow = true;
-                body.receiveShadow = true;
-                this.group.add(body);
-             */
-
+/* 
+        const bodyGeometry = new THREE.IcosahedronGeometry(1.7, 0);
+        const body = new THREE.Mesh(bodyGeometry, this.woolMaterial);
+        body.castShadow = true;
+        body.receiveShadow = true;
+        this.group.add(body);
+     */
+        
 
         // HEAD (children[0].childer[1 e 2])
         const head = new THREE.Group();
-        head.position.set(0, 0.65, 1.2);
+        head.position.set(0, 0.65, 1.2);      
         head.rotation.set(-0.4, 0, 0);
         this.group.add(head);
 
 
-
-        // la coda della pecora
-
-        const tailGeometry = new THREE.OctahedronBufferGeometry(0.3, 1);
-        const tail = new THREE.Mesh(tailGeometry, this.blockMaterial);
-        tail.position.set(0, 0.1, -1);
-        this.group.add(tail);
-
-
-
+ 
         const foreheadGeometry = new THREE.BoxGeometry(0.7, 0.6, 0.7);
         const forehead = new THREE.Mesh(foreheadGeometry, this.skinMaterial);
         forehead.castShadow = true;
@@ -195,7 +172,7 @@ class Sheep {
         head.add(woolGeometry04);
 
 
-
+        
 
         const woolGeometry05 = wool.clone();
         woolGeometry05.position.set(0, 0.25, 0);
@@ -207,7 +184,7 @@ class Sheep {
         head.add(woolGeometry06);
 
 
-
+        
 
 
         const woolGeometry08 = wool.clone();
@@ -215,21 +192,21 @@ class Sheep {
         head.add(woolGeometry08);
 
 
-        /* 
-                const woolGeometry10 = new THREE.OctahedronBufferGeometry(0.2, 1);
-                const wool10 = new THREE.Mesh(woolGeometry10, this.blockMaterial);
-                wool10.position.set(0, -1, 0);
-                head.add(wool10); */
+/* 
+        const woolGeometry10 = new THREE.OctahedronBufferGeometry(0.2, 1);
+        const wool10 = new THREE.Mesh(woolGeometry10, this.blockMaterial);
+        wool10.position.set(0, -1, 0);
+        head.add(wool10); */
 
 
 
-        const sheephornGeometry = new THREE.ConeBufferGeometry(0.12, 0.55, 8);
+        const sheephornGeometry = new THREE.ConeBufferGeometry( 0.12, 0.55, 8 );
         const sheephorn = new THREE.Mesh(sheephornGeometry, this.blackMaterial);
         sheephorn.position.set(0.22, 0.4, 0.22);
         head.add(sheephorn);
 
 
-        const sheephornGeometry2 = new THREE.ConeBufferGeometry(0.12, 0.55, 8);
+        const sheephornGeometry2 = new THREE.ConeBufferGeometry( 0.12, 0.55, 8 );
         const sheephorn2 = new THREE.Mesh(sheephornGeometry2, this.blackMaterial);
         sheephorn2.position.set(-0.22, 0.4, 0.22);
         head.add(sheephorn2);
@@ -270,19 +247,19 @@ class Sheep {
         this.frontRightLeg.castShadow = true;
         this.frontRightLeg.receiveShadow = true;
         this.frontRightLeg.position.set(0.7, -0.2, 0.5);
-        this.frontRightLeg.rotation.x = 0;
+        this.frontRightLeg.rotation.x = -0.21;
         this.group.add(this.frontRightLeg);
 
         this.frontLeftLeg = this.frontRightLeg.clone();
         this.frontLeftLeg.position.x = -this.frontRightLeg.position.x;
         this.frontLeftLeg.rotation.z = -this.frontRightLeg.rotation.z;
-        this.frontLeftLeg.rotation.x = 0;
+        this.frontLeftLeg.rotation.x = -0.25;
         this.group.add(this.frontLeftLeg);
 
         this.backRightLeg = this.frontRightLeg.clone();
         this.backRightLeg.position.z = -this.frontRightLeg.position.z;
         this.backRightLeg.rotation.x = -this.frontRightLeg.rotation.x;
-        this.backRightLeg.rotation.x = 0;
+        this.backRightLeg.rotation.x = -0.25;
         this.group.add(this.backRightLeg);
 
         this.backLeftLeg = this.frontLeftLeg.clone();
@@ -310,17 +287,18 @@ class Sheep {
             Impartisce i comandi alla testa
             Aggiunto per pulizia e per usi futuri (if WallHit then goRight)  
         */
-
+        
 
         this.sheepGroup.children[0].position.x += x;
         this.sheepGroup.children[0].position.y += y;
         this.sheepGroup.children[0].position.z += z;
 
         /*         this.sheepGroup.children[0].children[1].position.x = 3;
-                this.sheepGroup.children[0].children[2].position.x = 3; */
-
+        this.sheepGroup.children[0].children[2].position.x = 3; */
 
     }
+
+
 
     addSheep() {
         game.scene.remove(sheep.group);
@@ -329,31 +307,33 @@ class Sheep {
 
     }
 
+
+
+
+
     update() {
         var t = game.timer.getElapsedTime();
-
         // this.group.rotation.y = t * 16 / (2 * Math.PI);
         // this.group.rotation.z = t * 10 / (2 * Math.PI);
         // this.group.rotation.x = t * 35 / (2 * Math.PI);
-        /* var causalmove = 0;
-        var duckdirection = 'x';
-        var duckrotation = 'x'; */
+/* var causalmove = 0;
+var duckdirection = 'x';
+var duckrotation = 'x'; */
 
-        this.group.position.z += 0.1;
-        if (Math.abs(this.group.position.z) >= 25) this.group.position.z = 0.5;
-        if (Math.abs(this.group.position.x) >= 20) this.group.position.x = 0.5;
+        this.group.position.z += 0.01;
+        this.group.position.z += 0.01;
 
-        this.group.children[1].rotation.z += Math.sin(3 * t) / 90;
-        this.group.children[2].rotation.y += Math.sin(3 * t) / 45;
-        this.group.children[3].position.x += Math.sin(3 * t) / 200;
 
-        this.group.children[4].rotation.x += Math.sin(3 * t) / 35;
-        this.group.children[5].rotation.x += -Math.sin(3 * t) / 35;
-        this.group.children[6].rotation.x += Math.sin(3 * t) / 35;
-        this.group.children[7].rotation.x += -Math.sin(3 * t) / 35;
+        this.group.children[0].rotation.z += Math.sin(3 * t) / 90;
+        this.group.children[1].rotation.y += Math.sin(3 * t) / 45;
+
+        this.group.children[2].rotation.x += Math.sin(3 * t) / 45;
+        this.group.children[3].rotation.x += Math.sin(3 * t) / 45;
+        this.group.children[4].rotation.x += Math.sin(3 * t) / 45;
+        this.group.children[5].rotation.x += Math.sin(3 * t) / 45;
 
         var BB = new THREE.Box3().setFromObject(this.group.children[0]);
-        BB.name = "sheepBB";
+        BB.name = "sheepBB";    
         game.boxes.push(BB);
 
     }
