@@ -530,7 +530,7 @@ class Snake {
     swag(delta) {
 
         /* 
-            I blocchi devono oscillare in base alla direzione di snake (al momento va in conflitto con updateBody)
+            non è piu' usato, l' effetto è ottenuto dentro updateBody
         */
 
         for (var i = 1; i < this.blocks; i++) {

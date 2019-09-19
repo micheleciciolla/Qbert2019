@@ -347,6 +347,12 @@ class Sheep {
         this.group.children[2].rotation.y += Math.sin(3 * t) / 45;
         this.group.children[3].position.x += Math.sin(3 * t) / 200;
 
+        this.group.children[1].rotation.x += 0.02;
+        this.group.children[1].rotation.y += 0.02;
+        this.group.children[1].rotation.z += 0.02;
+
+
+
         this.group.children[4].rotation.x += Math.sin(3 * t) / 35;
         this.group.children[5].rotation.x += -Math.sin(3 * t) / 35;
         this.group.children[6].rotation.x += Math.sin(3 * t) / 35;

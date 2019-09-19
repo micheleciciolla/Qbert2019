@@ -455,7 +455,7 @@ function main() {
     duck = new Duck(new THREE.Vector3(20, 2, 20));
     duck.build();
 
-    sheep = new Sheep(new THREE.Vector3(0, 2, 20));
+    sheep = new Sheep(new THREE.Vector3(0, 2, -20));
     sheep.build();
 
     cloud = new Cloud(new THREE.Vector3(1110, 2, 20));

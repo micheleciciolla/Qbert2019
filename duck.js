@@ -288,6 +288,10 @@ class Duck {
         this.group.children[0].rotation.x += Math.sin(3 * t) / 90;
         this.group.children[1].rotation.y += Math.sin(3 * t) / 45;
 
+        this.group.children[2].rotation.y += 0.02;
+        this.group.children[2].rotation.x += 0.02;
+        this.group.children[2].rotation.z += 0.02;
+
         causalmove += 1;
 
         if (causalmove < 100) {

@@ -121,6 +121,12 @@ class Egg {
 
         this.group.position.y += Math.sin(3 * t) / 100;
 
+        // rotazione cerchio
+        this.group.children[1].rotation.y += 0.02;
+        this.group.children[1].rotation.z += 0.02;
+        this.group.children[1].rotation.x += 0.02;
+
+
         // MATTEO collision box
         var BB = new THREE.Box3().setFromObject(this.group);
         BB.name = "eggBB";    
