@@ -94,7 +94,7 @@ class Egg {
     addEgg() {
 
         game.scene.remove(this.group);
-        egg = new Egg(new THREE.Vector3(Math.random(-35) * 35, Math.random(0) * 7), Math.random(-35) * 35);
+        egg = new Egg(new THREE.Vector3(randomPosition(25,-25), randomPosition(7,1), randomPosition(25,-25)));
         egg.build();
 
     }
