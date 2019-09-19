@@ -332,7 +332,7 @@ class Sheep {
 
     addSheep() {
         game.scene.remove(sheep.group);
-        sheep = new Sheep(new THREE.Vector3(Math.random(-10) * 10, 2, Math.random(-10) * 10));
+        sheep = new Sheep(new THREE.Vector3(Math.random(-35) * 35, 2, Math.random(-35) * 35));
         sheep.build();
 
     }

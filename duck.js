@@ -282,7 +282,7 @@ class Duck {
 
         // NEW : 
         game.scene.remove(this.group);
-        duck = new Duck(new THREE.Vector3(Math.random(-25) * 25, 2, Math.random(-25) * 25));
+        duck = new Duck(new THREE.Vector3(Math.random(-35) * 35, 2, Math.random(-35) * 35));
         duck.build();
 
     }

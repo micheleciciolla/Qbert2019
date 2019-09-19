@@ -24,24 +24,38 @@ class Snake {
             color: 0xAAFF55,
             wireframe: false,
             depthTest: true,
+            castShadow: true,
+            receiveShadow : true,
+
         });
 
         this.whiteMaterial = new THREE.MeshPhongMaterial({
             color: 0xFFFFFF,
             wireframe: false,
             depthTest: true,
+            castShadow: true,
+            receiveShadow : true,
+
+
         });
 
         this.blackMaterial = new THREE.MeshPhongMaterial({
             color: 0x000000,
             wireframe: false,
             depthTest: true,
+            castShadow: true,
+                        receiveShadow : true,
+
+
         });
 
         this.redMaterial = new THREE.MeshPhongMaterial({
             color: 0xB22222,
             wireframe: false,
             depthTest: true,
+            castShadow: true,
+            receiveShadow : true,
+
         });
         this.rayCaster = new THREE.Raycaster();
 

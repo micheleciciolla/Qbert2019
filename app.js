@@ -108,6 +108,7 @@ class Game {
 
         const light = new THREE.HemisphereLight(0xffffff, 0xffffff, 0.9);
         this.scene.add(light);
+        
         // const lh = new THREE.HemisphereLightHelper(light);
         // this.scene.add(lh);
 
