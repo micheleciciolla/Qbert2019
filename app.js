@@ -16,7 +16,7 @@ document.getElementById("Landscape").onclick = function (event) {
     setTitles();
     main();
     game.music(0);  //landscape
-    
+
 }
 
 document.getElementById("Mars").onclick = function (event) {
@@ -36,10 +36,10 @@ document.getElementById("Dark").onclick = function (event) {
     setTitles();
     main();
     game.music(2);	//dark
-    
+
 
 }
-var river, floor, albero, directory, snake, duck,cloud,cloudsmall, sheep;
+var river, floor, albero, directory, snake, duck, cloud, cloudsmall, sheep;
 var globalKeyPressed;
 var delta = 0;
 
@@ -52,8 +52,8 @@ class Game {
 
         this.scene = new THREE.Scene();
 
-        this.scoreCounter=document.getElementById('Score');
-        this.lengthCounter=document.getElementById('Length');
+        this.scoreCounter = document.getElementById('Score');
+        this.lengthCounter = document.getElementById('Length');
 
         /*var loader = new THREE.TextureLoader();
 		var bgTexture = loader.load('dg.jpg');
@@ -64,7 +64,7 @@ class Game {
 
         this.camera = new THREE.PerspectiveCamera(75, this.width / this.height, 0.1, 200);
         this.camera.lookAt(this.scene.position);
-        this.camera.position.set(-10, 20, -25);  
+        this.camera.position.set(-10, 20, -25);
         this.camera.rotation.y -= 30 / (2 * Math.PI);
 
         this.renderer = new THREE.WebGLRenderer({ alpha: true });
@@ -89,90 +89,87 @@ class Game {
         this.update = function dummyUpdate() { };
 
         this.boxes = [];
-        
+
     }
 
     addLights() {
         var spotLight = new THREE.SpotLight(0xDDDDDD, 0.5);
         spotLight.castShadow = true;
-        this.scene.add(spotLight);
 
         //Set up shadow properties for the light
         spotLight.position.set(10, 40, -20);
         spotLight.shadow.mapSize.width = 512;  // default
         spotLight.shadow.mapSize.height = 512; // default
+        this.scene.add(spotLight);
 
         // Helper
-        const slh = new THREE.SpotLightHelper(spotLight);
-        this.scene.add(slh);
+        // const slh = new THREE.SpotLightHelper(spotLight);
+        /// this.scene.add(slh);
 
         const light = new THREE.HemisphereLight(0xffffff, 0xffffff, 0.9);
         this.scene.add(light);
-        const lh = new THREE.HemisphereLightHelper(light);
-        this.scene.add(lh);
+        // const lh = new THREE.HemisphereLightHelper(light);
+        // this.scene.add(lh);
 
-        /*
-        const directLight1 = new THREE.DirectionalLight(0xffffff, 0.8);
-        directLight1.castShadow = true;
-        directLight1.position.set(9.5, 8.2, 8.3);
-        this.scene.add(directLight1);
-        const dlh1 = new THREE.DirectionalLightHelper( directLight1 );
-        this.scene.add(dlh1);
-        */
+        var directLight = new THREE.DirectionalLight(0xffffff, 0.8);
+        directLight.castShadow = true;
+        directLight.position.set(10,10,10);
+        this.scene.add(directLight);
 
+        // const dlh1 = new THREE.DirectionalLightHelper(directLight1);
+        // this.scene.add(dlh1);
         /*
         const directLight2 = new THREE.DirectionalLight(0xffffff, 2);
         directLight2.castShadow = true;
         directLight2.position.set(-15.8, 5.2, 8);
         this.scene.add(directLight2);
-        const dlh2 = new THREE.DirectionalLightHelper( directLight2 );
-        this.scene.add(dlh2);
         */
+        
     }
 
 
-    music(song){
-    	var song;
-        if(musicOn==true){
+    music(song) {
+        var song;
+        if (musicOn == true) {
             // create an AudioListener and add it to the camera
             var listener = new THREE.AudioListener();
-            this.camera.add( listener );
+            this.camera.add(listener);
             // create a global audio source
-            var sound = new THREE.Audio( listener );
+            var sound = new THREE.Audio(listener);
             // load a sound and set it as the Audio object's buffer
             var audioLoader = new THREE.AudioLoader();
 
-            if(song == 0){ //LANDSCAPE
-	            audioLoader.load( 'sounds/hobbit-compressed.mp3', function( buffer ) {
-	                sound.setBuffer( buffer );
-	                sound.setLoop( true );
-	                sound.setVolume( 0.5 );
-	                sound.play();
-	            });
+            if (song == 0) { //LANDSCAPE
+                audioLoader.load('sounds/hobbit-compressed.mp3', function (buffer) {
+                    sound.setBuffer(buffer);
+                    sound.setLoop(true);
+                    sound.setVolume(0.5);
+                    sound.play();
+                });
 
-            } 
-            if(song == 1){ //MARS
-	            audioLoader.load( 'sounds/odissea.mp3', function( buffer ) {
-	                sound.setBuffer( buffer );
-	                sound.setLoop( true );
-	                sound.setVolume( 0.5 );
-	                sound.play();
-	            });
-	        }
+            }
+            if (song == 1) { //MARS
+                audioLoader.load('sounds/odissea.mp3', function (buffer) {
+                    sound.setBuffer(buffer);
+                    sound.setLoop(true);
+                    sound.setVolume(0.5);
+                    sound.play();
+                });
+            }
 
-	        if(song == 2){ //DARK
-	            audioLoader.load( 'sounds/avengers-compressed.mp3', function( buffer ) {
-	                sound.setBuffer( buffer );
-	                sound.setLoop( true );
-	                sound.setVolume( 0.5 );
-	                sound.play();
-	            });
-	        }
-            if(song == 3){ //GAME OVER
-                audioLoader.load( 'sounds/gameover.mp3', function( buffer ) {
-                    sound.setBuffer( buffer );
-                    sound.setLoop( true );
-                    sound.setVolume( 0.5 );
+            if (song == 2) { //DARK
+                audioLoader.load('sounds/avengers-compressed.mp3', function (buffer) {
+                    sound.setBuffer(buffer);
+                    sound.setLoop(true);
+                    sound.setVolume(0.5);
+                    sound.play();
+                });
+            }
+            if (song == 3) { //GAME OVER
+                audioLoader.load('sounds/gameover.mp3', function (buffer) {
+                    sound.setBuffer(buffer);
+                    sound.setLoop(true);
+                    sound.setVolume(0.5);
                     sound.play();
                 });
             }
@@ -185,10 +182,13 @@ class Game {
         var lRiver, lRiverGeometry, lRiverMaterial, lRiverTex;
 
         lRiverGeometry = new THREE.BoxGeometry(dimX, dimY, dimZ);
+        lRiverGeometry.receiveShadow = true;
         lRiverTex = applyTex(river, 0.5, 5);
 
         lRiverMaterial = new THREE.MeshBasicMaterial({ map: lRiverTex });
+        lRiverMaterial.receiveShadow = true;
         lRiver = new THREE.Mesh(lRiverGeometry, lRiverMaterial);
+        lRiver.receiveShadow = true;
 
         lRiver.position.y = posY;
         lRiver.position.z = posZ;
@@ -203,10 +203,13 @@ class Game {
         var lFloor, lFloorGeometry, lFloorMaterial, lFloorTex;
 
         lFloorGeometry = new THREE.BoxGeometry(dimX, dimY, dimZ);
+        lFloorGeometry.receiveShadow = true;
         lFloorTex = applyTex(floor, 8, 8);
 
         lFloorMaterial = new THREE.MeshBasicMaterial({ map: lFloorTex });
+        lFloorMaterial.receiveShadow = true;
         lFloor = new THREE.Mesh(lFloorGeometry, lFloorMaterial);
+        lFloor.receiveShadow = true;
 
         lFloor.position.x = posX;
         lFloor.position.y = posY;
@@ -221,10 +224,13 @@ class Game {
         var lFloor, lFloorGeometry, lFloorMaterial, lFloorTex;
 
         lFloorGeometry = new THREE.BoxGeometry(dimX, dimY, dimZ);
+        lFloorGeometry.receiveShadow = true;
         lFloorTex = applyTex(floor, 8, 8);
 
         lFloorMaterial = new THREE.MeshBasicMaterial({ map: lFloorTex });
+        lFloorMaterial.receiveShadow = true;
         lFloor = new THREE.Mesh(lFloorGeometry, lFloorMaterial);
+        lFloor.receiveShadow = true;
 
         lFloor.position.x = posX;
         lFloor.position.y = posY;
@@ -282,7 +288,7 @@ class Game {
 
         var sats =
         {
-            scaleX: 5, 
+            scaleX: 5,
             scaleY: 5,
 
             posXRight: 20,
@@ -324,7 +330,7 @@ class Game {
 
         var skus =
         {
-            scaleX: 40, 
+            scaleX: 40,
             scaleY: 40,
 
             posXRight: 14,
@@ -387,12 +393,13 @@ class Game {
                 vertexShader: shader.vertexShader,
                 uniforms: shader.uniforms,
                 depthWrite: false,
-                side: THREE.BackSide
+                side: THREE.BackSide,
             });
 
         /*  Define the skybox: it's a cube 4096*4096*4096.  */
-        sky = new THREE.Mesh(new THREE.BoxGeometry(4096, 4096, 4096),
-            skyMaterial);
+        sky = new THREE.Mesh(new THREE.BoxGeometry(4096, 4096, 4096), skyMaterial);
+
+
         this.scene.add(sky);
 
         if (selectWorld == 0) game.createTrees();
@@ -429,6 +436,7 @@ var globalMap = makeMap();
 
 // removed window.onload to wait user to click
 function main() {
+
     game.update = updateFunction;
     game.addLights();
 
@@ -478,7 +486,7 @@ document.onkeydown = function checkKey(e) {
 
     // V add cloud
     //if (globalKeyPressed == 86) cloud.addCloud();
-    
+
 
 }
 
@@ -493,33 +501,30 @@ var updateFunction = function () {
     //var mapHelper = new THREE.Box3Helper( mapHelper, 0xffff00 );
     //game.scene.add( mapHelper );
 
-    delta+=0.5;
-    
+    delta += 0.5;
+
     snake.update();
     game.camera.lookAt(snake.getPosition());  //FOLLOWING
+
     egg.update();
     duck.update();
     sheep.update();
     cloud.update();
     cloudsmall.update();
 
-    
-    
-    gameOver();
 
-    
-    
+    gameOver();
 
 }
 
 
-function gameOver(){
-    if (snake.isDead == true){
+function gameOver() {
+    if (snake.isDead == true) {
         snake.snakeGroup.visible = false;
-        document.getElementById("GameoverTitle").style.visibility = 'visible'; 
+        document.getElementById("GameoverTitle").style.visibility = 'visible';
         document.getElementById("Reset").style.visibility = 'visible';
         //sound.pause();
-        
+
     }
 }
 
@@ -565,13 +570,13 @@ function setTitles() {
 
 }
 
-function scoreUpdate(value){
-    document.getElementById("Score").innerHTML = "Score: " +value;
+function scoreUpdate(value) {
+    document.getElementById("Score").innerHTML = "Score: " + value;
 }
-function lengthUpdate(value){
-    document.getElementById("Length").innerHTML = "Length: " +value;
+function lengthUpdate(value) {
+    document.getElementById("Length").innerHTML = "Length: " + value;
 }
-function restart(){
+function restart() {
     location.reload();
 }
 

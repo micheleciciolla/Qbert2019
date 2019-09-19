@@ -38,7 +38,15 @@ class Egg {
             color: 0xCF1919, 
             wireframe: false,
             depthTest: true,
-        });         
+        }); 
+        
+        this.redMaterialCircle = new THREE.MeshPhongMaterial({
+            color: 0xCF1919, 
+            wireframe: false,
+            depthTest: true,
+            opacity : 0.70,
+            transparent : true,
+        }); 
 
         // MATTEO rayCaster non serve più
         //this.rayCaster = new THREE.Raycaster();
@@ -66,7 +74,7 @@ class Egg {
 
 
         const Circularegg = new THREE.TorusBufferGeometry( 2.5, 0.15, 180, 50 );
-        const circoegg = new THREE.Mesh(Circularegg, this.redMaterial);
+        const circoegg = new THREE.Mesh(Circularegg, this.redMaterialCircle);
         circoegg.castShadow = true;
         circoegg.receiveShadow = true;
         circoegg.position.y = -0.15;
@@ -88,22 +96,6 @@ class Egg {
         game.scene.remove(this.group);
         egg = new Egg(new THREE.Vector3(Math.random(-20) * 30, 2, Math.random(-60) * 30));
         egg.build();
-
-        /*
-        var blockMesh = new THREE.Mesh(this.blockGeometry, this.blockMaterial);
-        blockMesh.castShadow = true;
-        blockMesh.receiveShadow = true;
-        blockMesh.name = "Egg_" + this.blocks; // nomina gli Egg_2, Egg_3 ecc.. 
-
-        blockMesh.position.x = Math.random(-20)*20;
-        // blockMesh.position.y = Math.random(-20)*20;;
-        blockMesh.position.z = Math.random(-20)*20;;
-
-        this.group.add(blockMesh);
-        this.blocks++;
-        */
-
-        // globalKeyPressed = null;
 
     }
 

@@ -62,6 +62,15 @@ class Duck {
             depthTest: true,
         });
 
+        this.orangeMaterialCircle = new THREE.MeshPhongMaterial({
+            color: 0xFF8C00,
+            wireframe: false,
+            depthTest: true,
+            opacity : 0.60,
+            transparent : true,
+        });
+        
+
         // MATTEO il raycaster non serve più
         // this.rayCaster = new THREE.Raycaster();
 
@@ -79,7 +88,7 @@ class Duck {
         hitBoxMesh.name = "Duck:HitBox";
         this.group.add(hitBoxMesh);
         */
-       
+
         var blockMesh = new THREE.Mesh(this.blockGeometry, this.blockMaterial);
         blockMesh.castShadow = true;
         blockMesh.receiveShadow = true;
@@ -233,14 +242,15 @@ class Duck {
         nosefaceLEFT.rotation.set(1.65, 0, 0);
         head.add(nosefaceLEFT);
 
-        const Circularduck = new THREE.TorusBufferGeometry( 2.5, 0.15, 180, 50 );
-        var circoduck = new THREE.Mesh(Circularduck, this.orangeMaterial);
+        var Circularduck = new THREE.TorusBufferGeometry(2.5, 0.15, 180, 50);
+        var circoduck = new THREE.Mesh(Circularduck, this.orangeMaterialCircle);
         circoduck.castShadow = true;
         circoduck.receiveShadow = true;
         circoduck.position.y = -0.15;
         circoduck.name = "circle";
 
-        this.group.add(circoduck);  
+
+        this.group.add(circoduck);
 
         this.group.position.x = this.position.x;
         this.group.position.y = this.position.y;
@@ -325,7 +335,7 @@ class Duck {
 
         // MATTEO collision box
         var BB = new THREE.Box3().setFromObject(this.group);
-        BB.name = "duckBB";    
+        BB.name = "duckBB";
         game.boxes.push(BB);
     }
 }

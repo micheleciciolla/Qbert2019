@@ -1,15 +1,9 @@
-
-
-
 var cloudGeometry = [];
 for (var deg = 0; deg <= 180; deg += 6) {
     var rad = Math.PI * deg / 180;
     var point = new THREE.Vector2((0.92 + .08 * Math.cos(rad)) * Math.sin(rad), - Math.cos(rad) ); // the "egg equation"
     cloudGeometry.push(point);
 }
-
-
-
 
 class Cloud {
 
@@ -25,42 +19,31 @@ class Cloud {
         this.blockGeometry = new THREE.OctahedronBufferGeometry(1, 1);
         this.blockMaterial = new THREE.MeshBasicMaterial({
             color: 0xffffff,
-            roughness: 1,
-            shading: THREE.FlatShading,
             wireframe: false,
             depthTest: false,
             transparent: true,
-            opacity: 0.97,
+            opacity: 0.70,
             fog: true
         });
 
-
-
         this.skyMaterial = new THREE.MeshBasicMaterial({
             color: 0xFAFFFF,
-            roughness: 1,
             wireframe: false,
             depthTest: true,
           });
 
           this.skygreyMaterial = new THREE.MeshBasicMaterial({
             color: 0xffffff,
-            roughness: 1,
-            shading: THREE.FlatShading,
             wireframe: false,
             depthTest: true,
           });
           this.skinMaterial = new THREE.MeshBasicMaterial({
             color: 0xffaf8b,
-            roughness: 1,
-            shading: THREE.FlatShading,
             wireframe: false,
             depthTest: true,
           });
           this.darkMaterial = new THREE.MeshStandardMaterial({
             color: 0x4b4553,
-            roughness: 1,
-            shading: THREE.FlatShading,
             wireframe: false,
             depthTest: true,
           });
@@ -215,17 +198,11 @@ class Cloud {
         cloud = new Cloud(new THREE.Vector3(Math.random(-10) * 10, 2, Math.random(-10) * 10));
         cloud.build();
 
-        globalKeyPressed = null;
-
     }
-
-
-
-
 
     update() {
         
-      var velocityair = 2;
+      var velocityair = 5;
 
       this.group.position.x += (0.02)/velocityair;
       this.group.position.z += (0.02)/velocityair;
@@ -243,6 +220,10 @@ class Cloud {
       var BB = new THREE.Box3().setFromObject(this.group);
       BB.name = "cloudBB";    
       game.boxes.push(BB);
+
+      if (Math.abs(this.group.position.x) > 30) {
+        this.addCloud;
+      }
     
     }
 }

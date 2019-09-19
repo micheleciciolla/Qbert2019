@@ -25,8 +25,7 @@ class Sheep {
         this.blockGeometry = new THREE.OctahedronBufferGeometry(1.1, 1);
         this.blockMaterial = new THREE.MeshPhongMaterial({
             color: 0xffffff,
-            roughness: 1,
-            shading: THREE.FlatShading,
+            // roughness: 1,
             wireframe: false,
             depthTest: true,
         });
@@ -48,17 +47,17 @@ class Sheep {
         this.woolMaterial = new THREE.MeshStandardMaterial({
             color: 0xffffff,
             roughness: 1,
-            shading: THREE.FlatShading
+            // FlatShading : true,
         });
         this.skinMaterial = new THREE.MeshStandardMaterial({
             color: 0xffaf8b,
             roughness: 1,
-            shading: THREE.FlatShading
+            // FlatShading : true,
         });
         this.darkMaterial = new THREE.MeshStandardMaterial({
             color: 0x4b4553,
             roughness: 1,
-            shading: THREE.FlatShading
+            // FlatShading : true,
         });
 
         this.whiteMaterial = new THREE.MeshPhongMaterial({
@@ -66,6 +65,15 @@ class Sheep {
             wireframe: false,
             depthTest: true,
         });
+
+        this.whiteMaterialCircle = new THREE.MeshPhongMaterial({
+            color: 0xFFFFFF,
+            wireframe: false,
+            depthTest: true,
+            opacity : 0.80,
+            transparent : true,
+        });
+
 
         this.blackMaterial = new THREE.MeshPhongMaterial({
             color: 0x000000,
@@ -107,7 +115,7 @@ class Sheep {
         this.group.add(blockMesh);
 
         const Circularsheep = new THREE.TorusBufferGeometry(2.5, 0.15, 180, 50);
-        const circosheep = new THREE.Mesh(Circularsheep, this.whiteMaterial);
+        const circosheep = new THREE.Mesh(Circularsheep, this.whiteMaterialCircle);
         circosheep.castShadow = true;
         circosheep.receiveShadow = true;
         circosheep.position.y = -0.15;

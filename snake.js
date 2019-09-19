@@ -348,20 +348,6 @@ class Snake {
         toothLEFTUPCENTRAL.rotation.set(3.14, 0, 0);
         faceUP.add(toothLEFTUPCENTRAL);
 
-
-
-
-        //  Tongue        
-        /*          
-        const tongueGeometry = new THREE.SphereGeometry(0.5,3,6,1.2,0.8,3,2.2);
-        const tongue = new THREE.Mesh(tongueGeometry, this.redMaterial);
-        tongue.castShadow = true;
-        tongue.receiveShadow = true;
-        tongue.position.set(0, 0, 0.3);
-        tongue.rotation.set(0, 0, 0);
-        faceUP.add(tongue);  
-        */
-
         const tongueGeometry = new THREE.SphereGeometry(0.5, 3, 6, 1.2, 0.8, 2.5, 2.6);
         const tongue = new THREE.Mesh(tongueGeometry, this.redMaterial);
         tongue.castShadow = true;
@@ -369,17 +355,6 @@ class Snake {
         tongue.position.set(0, 0, 0.3);
         tongue.rotation.set(0, 0, 0);
         faceUP.add(tongue);
-
-        /*         
-        const tongueGeometry = new THREE.SphereGeometry(0.5,3,6,1.2,0.8,2,3);
-        const tongue = new THREE.Mesh(tongueGeometry, this.redMaterial);
-        tongue.castShadow = true;
-        tongue.receiveShadow = true;
-        tongue.position.set(0, 0, 0.3);
-        tongue.rotation.set(0, 0, 0);
-        faceUP.add(tongue);
-        */
-
 
 
         // Eye  (children[0].childer[10 e 11])
@@ -398,9 +373,6 @@ class Snake {
         eyeLEFT.position.set(-0.5, 0.2, -0.45);
         eyeLEFT.rotation.set(1.65, 0, 0);
         head.add(eyeLEFT);
-
-
-
 
         // Pupil 
         const pupilGeometryRIGHT = new THREE.SphereGeometry(0.05, 0.05, 0.05);
@@ -862,14 +834,12 @@ class Snake {
                     this.eatSheep();
                 if (game.boxes[i].name == "cloudBB")
                     this.length -= 2;
-
             }
-
 
         }
 
-        //console.log(collision + " " + game.boxes);
-        console.log(listCollisions);
+        // console.log(collision + " " + game.boxes);
+        // console.log(listCollisions);
         game.boxes = []; // Cleaning hit boxes buffer
 
     }
@@ -880,7 +850,6 @@ class Snake {
         this.outOfBound();
         // MATTEO collision box check
         this.checkCollision();
-        console.log(this.isDead)
     }
 
     //checkposition
