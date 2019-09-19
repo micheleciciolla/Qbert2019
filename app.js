@@ -41,6 +41,7 @@ document.getElementById("Dark").onclick = function (event) {
 }
 var river, floor, albero, directory, snake, duck,cloud, sheep;
 var globalKeyPressed;
+var delta = 0;
 
 
 class Game {
@@ -490,6 +491,8 @@ var updateFunction = function () {
     //var mapHelper = new THREE.Box3Helper( mapHelper, 0xffff00 );
     //game.scene.add( mapHelper );
 
+    delta+=0.5;
+    
     snake.update();
     game.camera.lookAt(snake.getPosition());  //FOLLOWING
     egg.update();

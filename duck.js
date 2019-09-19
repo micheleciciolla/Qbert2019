@@ -234,10 +234,11 @@ class Duck {
         head.add(nosefaceLEFT);
 
         const Circularduck = new THREE.TorusBufferGeometry( 2.5, 0.15, 180, 50 );
-        const circoduck = new THREE.Mesh(Circularduck, this.orangeMaterial);
+        var circoduck = new THREE.Mesh(Circularduck, this.orangeMaterial);
         circoduck.castShadow = true;
         circoduck.receiveShadow = true;
         circoduck.position.y = -0.15;
+        circoduck.name = "circle";
 
         this.group.add(circoduck);  
 
