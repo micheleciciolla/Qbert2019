@@ -1,6 +1,7 @@
 var move = 0.15; // velocity of snake (used in moveHead)
 var skinFile, headFile;
 var updown = true;
+var t = false;
 
 class Snake {
     constructor(selectWorld) {
@@ -543,9 +544,8 @@ class Snake {
 
             if (this.isEqual(this.snakeDirection, [1, 0, 0]) || this.isEqual(this.snakeDirection, [1, 0, 0]))
                 this.snakeGroup.children[i].position.z = Math.cos(delta / 7 + i) / 8;
-
-
         }
+
     }
 
     setOrientation(x, y, z) {
@@ -685,6 +685,17 @@ class Snake {
         */
 
         return this.snakeGroup.children[0].position;
+    }
+
+    outOfBound() {
+
+        if (Math.abs(this.snakeGroup.children[0].position.x) > 25)
+            this.isDead = true;
+        if (this.snakeGroup.children[0].position.y > 20 || this.snakeGroup.children[0].position.y < -3)
+            this.isDead = true;
+        if (Math.abs(this.snakeGroup.children[0].position.z) > 30)
+            this.isDead = true;
+
     }
 
     move() {
@@ -832,6 +843,8 @@ class Snake {
         BB.name = "snakeBB";
         //var helper = new THREE.Box3Helper( BB, 0xffff00 );
         //game.scene.add( helper );
+        var CC = new THREE.Box3().setFromObject(this.snakeGroup);
+        CC.name = "tail"
 
 
         var listCollisions = [];
@@ -847,6 +860,9 @@ class Snake {
 
                 if (game.boxes[i].name == "sheepBB")
                     this.eatSheep();
+                if (game.boxes[i].name == "cloudBB")
+                    this.length -= 2;
+
             }
 
 
@@ -861,9 +877,10 @@ class Snake {
     update() {
 
         this.move();
+        this.outOfBound();
         // MATTEO collision box check
         this.checkCollision();
-
+        console.log(this.isDead)
     }
 
     //checkposition
@@ -887,18 +904,9 @@ function chooseTexture() {
     }
 }
 
+function turbo() {
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    t = !t;
+    if (t == true) move = 0.3;
+    else move = 0.15;
+}

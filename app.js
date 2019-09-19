@@ -39,7 +39,7 @@ document.getElementById("Dark").onclick = function (event) {
     
 
 }
-var river, floor, albero, directory, snake, duck,cloud, sheep;
+var river, floor, albero, directory, snake, duck,cloud,cloudsmall, sheep;
 var globalKeyPressed;
 var delta = 0;
 
@@ -458,8 +458,10 @@ function main() {
     sheep = new Sheep(new THREE.Vector3(0, 2, -20));
     sheep.build();
 
-    cloud = new Cloud(new THREE.Vector3(1110, 2, 20));
+    cloud = new Cloud(new THREE.Vector3(0, 12, 0));
     cloud.build();
+    cloudsmall = new Cloudsmall(new THREE.Vector3(0, 12, 0));
+    cloudsmall.build();
 
     game.animate();
 }
@@ -499,17 +501,24 @@ var updateFunction = function () {
     duck.update();
     sheep.update();
     cloud.update();
+    cloudsmall.update();
+
+    
     
     gameOver();
 
+    
+    
+
 }
+
 
 function gameOver(){
     if (snake.isDead == true){
         snake.snakeGroup.visible = false;
         document.getElementById("GameoverTitle").style.visibility = 'visible'; 
         document.getElementById("Reset").style.visibility = 'visible';
-        //game.music(3);
+        //sound.pause();
         
     }
 }
@@ -552,6 +561,7 @@ function setTitles() {
     document.getElementById("intro-mars").style.visibility = 'hidden';
     document.getElementById("Score").style.visibility = 'visible';
     document.getElementById("Length").style.visibility = 'visible';
+    document.getElementById("Turbo").style.visibility = 'visible';
 
 }
 
