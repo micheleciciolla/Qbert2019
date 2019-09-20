@@ -1,7 +1,6 @@
 var move = 0.15; // velocity of snake (used in moveHead)
 var skinFile, headFile;
 var updown = true;
-var t = false;
 
 class Snake {
     constructor(selectWorld) {
@@ -796,6 +795,8 @@ class Snake {
                     break;
                 */
 
+                default: console.log("")
+
             }
         }
     }
@@ -886,11 +887,4 @@ function chooseTexture() {
         skinFile = "textures/dark/skin.jpg";
         headFile = "textures/dark/head.jpg";
     }
-}
-
-function turbo() {
-
-    t = !t;
-    if (t == true) move = 0.3;
-    else move = 0.15;
 }

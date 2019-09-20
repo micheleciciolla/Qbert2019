@@ -524,6 +524,7 @@ function gameOver() {
         snake.snakeGroup.visible = false;
         document.getElementById("GameoverTitle").style.visibility = 'visible';
         document.getElementById("Reset").style.visibility = 'visible';
+        game.camera.position.z += 2;
         //sound.pause();
 
     }
@@ -567,7 +568,7 @@ function setTitles() {
     document.getElementById("intro-mars").style.visibility = 'hidden';
     document.getElementById("Score").style.visibility = 'visible';
     document.getElementById("Length").style.visibility = 'visible';
-    document.getElementById("Turbo").style.visibility = 'visible';
+    
     document.getElementById("Music").style.visibility = 'visible';
 
 }
