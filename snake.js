@@ -675,11 +675,11 @@ class Snake {
 
     outOfBound() {
 
-        if (Math.abs(this.snakeGroup.children[0].position.x) > 25)
+        if (Math.abs(this.snakeGroup.children[0].position.x) > 35)
             this.isDead = true;
         if (this.snakeGroup.children[0].position.y > 20 || this.snakeGroup.children[0].position.y < -3)
             this.isDead = true;
-        if (Math.abs(this.snakeGroup.children[0].position.z) > 30)
+        if (Math.abs(this.snakeGroup.children[0].position.z) > 45)
             this.isDead = true;
 
     }
@@ -864,6 +864,7 @@ class Snake {
         this.outOfBound();
         // MATTEO collision box check
         this.checkCollision();
+        move = this.score/550 + 0.15;
     }
 
     //checkposition
