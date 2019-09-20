@@ -25,7 +25,7 @@ class Snake {
             wireframe: false,
             depthTest: true,
             castShadow: true,
-            receiveShadow : true,
+            receiveShadow: true,
 
         });
 
@@ -34,7 +34,7 @@ class Snake {
             wireframe: false,
             depthTest: true,
             castShadow: true,
-            receiveShadow : true,
+            receiveShadow: true,
 
 
         });
@@ -44,7 +44,7 @@ class Snake {
             wireframe: false,
             depthTest: true,
             castShadow: true,
-                        receiveShadow : true,
+            receiveShadow: true,
 
 
         });
@@ -54,7 +54,7 @@ class Snake {
             wireframe: false,
             depthTest: true,
             castShadow: true,
-            receiveShadow : true,
+            receiveShadow: true,
 
         });
         this.rayCaster = new THREE.Raycaster();
@@ -806,14 +806,12 @@ class Snake {
         this.addBlockEgg();
         this.score += 10;
 
-
     }
     eatDuck() {
 
         duck.addDuck();
         this.addBlockEgg();
         this.score += 20;
-
     }
     eatSheep() {
 
@@ -848,7 +846,9 @@ class Snake {
                     this.eatSheep();
                 if (game.boxes[i].name == "cloudBB")
                     this.length -= 2;
+
             }
+
 
         }
 

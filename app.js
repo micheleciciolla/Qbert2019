@@ -568,6 +568,7 @@ function setTitles() {
     document.getElementById("Score").style.visibility = 'visible';
     document.getElementById("Length").style.visibility = 'visible';
     document.getElementById("Turbo").style.visibility = 'visible';
+    document.getElementById("Music").style.visibility = 'visible';
 
 }
 
