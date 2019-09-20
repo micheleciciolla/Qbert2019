@@ -561,7 +561,7 @@ function setTitles() {
     document.getElementById("Landscape").style.visibility = 'hidden';
     document.getElementById("Dark").style.visibility = 'hidden';
     document.getElementById("Select").style.visibility = 'hidden';
-    document.getElementById("Commands").style.visibility = 'hidden';
+    // document.getElementById("Commands").style.visibility = 'hidden';
     document.getElementById("intro-dark").style.visibility = 'hidden';
     document.getElementById("intro-earth").style.visibility = 'hidden';
     document.getElementById("intro-mars").style.visibility = 'hidden';
