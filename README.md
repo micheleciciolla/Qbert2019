@@ -21,5 +21,4 @@ You can read our technical documentation about this project here PDF [DOCUMENTAT
 
 
 ## License
-This project is under MIT license - [LICENSE](./LICENSE) 
-
+This project is under MIT license - [LICENSE](./LICENSE)

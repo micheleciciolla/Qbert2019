@@ -413,11 +413,11 @@ class Game {
 
         this.scene.add(sky);
 
-        if (selectWorld == 0) game.createTrees();
+        // if (selectWorld == 0) game.createTrees();
 
         if (selectWorld == 1) game.createSat();
 
-        if (selectWorld == 2) game.createSkull();
+        // if (selectWorld == 2) game.createSkull();
 
 
     }
