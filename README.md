@@ -4,6 +4,11 @@ Final Project for Interactive Graphics course 2018-2019, Università La Sapienza
 
 <a href="https://www.dis.uniroma1.it/"><img src="http://www.dis.uniroma1.it/sites/default/files/marchio%20logo%20eng%20jpg.jpg" width="400"></a>
 
+## Project status
+```bash
+Completed
+```
+
 ## Demo
 Click here for the DEMO VERSION: https://sapienzainteractivegraphicscourse.github.io/finalproject-dragonsnake21
 
