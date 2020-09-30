@@ -1,13 +1,13 @@
 # Dragonsnake21
 
+![Puppet Forge endorsement](https://img.shields.io/puppetforge/e/camptocamp/openssl?color=light%20green&label=Ubuntu%2016.04%20LTS&logo=Ubuntu)
+
 Final Project for Interactive Graphics course 2018-2019, Università La Sapienza Roma
 
 <a href="https://www.dis.uniroma1.it/"><img src="http://www.dis.uniroma1.it/sites/default/files/marchio%20logo%20eng%20jpg.jpg" width="400"></a>
 
 ## Project status
-```bash
-Completed
-```
+Completed <a href="https://github.com/micheleciciolla/vehicles-platooning"><img src="https://www.flaticon.com/svg/static/icons/svg/214/214353.svg" width="30"></a>
 
 ## Demo
 Click here for the DEMO VERSION: https://sapienzainteractivegraphicscourse.github.io/finalproject-dragonsnake21
