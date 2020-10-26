@@ -1,4 +1,4 @@
-# Dragonsnake21
+# A Videogame implementation using THREE.js
 
 ![Puppet Forge endorsement](https://img.shields.io/puppetforge/e/camptocamp/openssl?color=light%20green&label=Ubuntu%2016.04%20LTS&logo=Ubuntu)
 
