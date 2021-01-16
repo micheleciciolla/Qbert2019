@@ -10,7 +10,7 @@ Final Project for Interactive Graphics course 2018-2019, Università La Sapienza
 Completed <a href="https://github.com/micheleciciolla/vehicles-platooning"><img src="https://www.flaticon.com/svg/static/icons/svg/214/214353.svg" width="30"></a>
 
 ## Homeworks completed to obtain the final grade : 2
-You can read technical review of the [First Homework](https://github.com/micheleciciolla/hw1-interactive-graphics/blob/master/Homework1.pdf) and [Second Homework](https://github.com/micheleciciolla/hw2-interactive-graphics/blob/master/review.pdf)
+You can read technical review of the [First Homework](https://github.com/micheleciciolla/hw1-interactive-graphics/blob/master/Homework1.pdf) here while testing it [here](https://micheleciciolla.github.io/hw1-interactive-graphics/). The report for the [Second Homework](https://github.com/micheleciciolla/hw2-interactive-graphics/blob/master/review.pdf) and the [test](https://micheleciciolla.github.io/hw2-interactive-graphics/) are available too.
 
 ## Demo
 Click here for the DEMO VERSION: https://sapienzainteractivegraphicscourse.github.io/finalproject-dragonsnake21
