@@ -2,6 +2,9 @@
 
 ![Puppet Forge endorsement](https://img.shields.io/puppetforge/e/camptocamp/openssl?color=light%20green&label=Ubuntu%2016.04%20LTS&logo=Ubuntu)
 
+![Swagger Validator](https://badgen.net/github/status/micromatch/micromatch/4.0.1)
+
+
 Final Project for Interactive Graphics course 2018-2019, Università La Sapienza Roma
 
 <a href="https://www.dis.uniroma1.it/"><img src="http://www.dis.uniroma1.it/sites/default/files/marchio%20logo%20eng%20jpg.jpg" width="400"></a>
